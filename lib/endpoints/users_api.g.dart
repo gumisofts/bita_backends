@@ -19,6 +19,11 @@ Router _$UsersApiRouter(UsersApi service) {
     service.delAUser,
   );
   router.add(
+    'PATCH',
+    r'/<id>',
+    service.updateUser,
+  );
+  router.add(
     'POST',
     r'/getStartedWithEmail',
     service.getStartedEmail,
