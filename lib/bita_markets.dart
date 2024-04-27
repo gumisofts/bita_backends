@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bita_markets/endpoints/users_api.dart';
-import 'package:bita_markets/middlewares/authenticaation.dart';
+import 'package:bita_markets/middlewares/authentication.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_hotreload/shelf_hotreload.dart';
