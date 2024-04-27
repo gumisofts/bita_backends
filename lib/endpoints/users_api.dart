@@ -14,13 +14,13 @@ class UsersApi {
   Router get router => _$UsersApiRouter(this);
   @Route.put('/<id>')
   Future<Response> getAUser(Request request, String id) async {
-    final data = await form(
-      request,
-      fields: [
-        FieldValidator(name: 'data'),
-        FieldValidator(name: 'extra_data'),
-      ],
-    );
+    // final data = await form(
+    //   request,
+    //   fields: [
+    //     FieldValidator(name: 'data'),
+    //     FieldValidator(name: 'extra_data'),
+    //   ],
+    // );
 
     return Response.forbidden(
       jsonEncode({'detail': 'you don have permission'}),

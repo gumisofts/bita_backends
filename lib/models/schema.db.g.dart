@@ -2,7 +2,7 @@ part of 'schema.dart';
 
 extension FileTbDb on FileTb {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'url': url,
@@ -22,9 +22,9 @@ extension FileTbDb on FileTb {
   static FileTb fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return FileTb(
-      id: map["filetbId"] as int,
-      url: map["url"] as String,
-      isAbsolute: map["isAbsolute"] as bool?,
+      id: map['filetbId'] as int,
+      url: map['url'] as String,
+      isAbsolute: map['isAbsolute'] as bool?,
     );
   }
 
@@ -55,7 +55,7 @@ extension FileTbDb on FileTb {
 
   static Future<bool> delete(FileTb filetb) async {
     final q = Query.delete(
-      table: "filetb",
+      table: 'filetb',
       operation: Operation('filetbId'.safeTk, Operator.eq, filetb.id),
     );
     try {
@@ -86,7 +86,7 @@ extension FileTbDb on FileTb {
   }
 
   static Future<FileTb?> get(
-      {required Operation Function(FileTbQuery) where}) async {
+      {required Operation Function(FileTbQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -95,7 +95,7 @@ extension FileTbDb on FileTb {
 
 extension UserDb on User {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'firstName': firstName,
@@ -119,13 +119,13 @@ extension UserDb on User {
   static User fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return User(
-      id: map["userId"] as int,
-      firstName: map["firstName"] as String?,
-      lastName: map["lastName"] as String?,
-      phoneNumber: map["phoneNumber"] as String?,
-      email: map["email"] as String?,
-      createdAt: map["createdAt"] as DateTime?,
-      updatedAt: map["updatedAt"] as DateTime?,
+      id: map['userId'] as int,
+      firstName: map['firstName'] as String?,
+      lastName: map['lastName'] as String?,
+      phoneNumber: map['phoneNumber'] as String?,
+      email: map['email'] as String?,
+      createdAt: map['createdAt'] as DateTime?,
+      updatedAt: map['updatedAt'] as DateTime?,
     );
   }
 
@@ -164,7 +164,7 @@ extension UserDb on User {
 
   static Future<bool> delete(User user) async {
     final q = Query.delete(
-      table: "user",
+      table: 'user',
       operation: Operation('userId'.safeTk, Operator.eq, user.id),
     );
     try {
@@ -195,7 +195,7 @@ extension UserDb on User {
   }
 
   static Future<User?> get(
-      {required Operation Function(UserQuery) where}) async {
+      {required Operation Function(UserQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -204,7 +204,7 @@ extension UserDb on User {
 
 extension PasswordDb on Password {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'password': password,
@@ -228,13 +228,13 @@ extension PasswordDb on Password {
   static Password fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Password(
-      id: map["passwordId"] as int,
-      password: map["password"] as String?,
-      emailOtp: map["emailOtp"] as String?,
-      phoneOtp: map["phoneOtp"] as String?,
-      isEmailVerified: map["isEmailVerified"] as bool?,
-      isPhoneVerified: map["isPhoneVerified"] as bool?,
-      userId: map["userId"] as int,
+      id: map['passwordId'] as int,
+      password: map['password'] as String?,
+      emailOtp: map['emailOtp'] as String?,
+      phoneOtp: map['phoneOtp'] as String?,
+      isEmailVerified: map['isEmailVerified'] as bool?,
+      isPhoneVerified: map['isPhoneVerified'] as bool?,
+      userId: map['userId'] as int,
     );
   }
 
@@ -273,7 +273,7 @@ extension PasswordDb on Password {
 
   static Future<bool> delete(Password password) async {
     final q = Query.delete(
-      table: "password",
+      table: 'password',
       operation: Operation('passwordId'.safeTk, Operator.eq, password.id),
     );
     try {
@@ -304,7 +304,7 @@ extension PasswordDb on Password {
   }
 
   static Future<Password?> get(
-      {required Operation Function(PasswordQuery) where}) async {
+      {required Operation Function(PasswordQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -313,7 +313,7 @@ extension PasswordDb on Password {
 
 extension InfoChangeRequestDb on InfoChangeRequest {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'newEmail': newEmail,
@@ -335,11 +335,11 @@ extension InfoChangeRequestDb on InfoChangeRequest {
   static InfoChangeRequest fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return InfoChangeRequest(
-      id: map["infochangerequestId"] as int,
-      newEmail: map["newEmail"] as String?,
-      newPhone: map["newPhone"] as String?,
-      createdAt: map["createdAt"] as DateTime?,
-      userId: map["userId"] as int,
+      id: map['infochangerequestId'] as int,
+      newEmail: map['newEmail'] as String?,
+      newPhone: map['newPhone'] as String?,
+      createdAt: map['createdAt'] as DateTime?,
+      userId: map['userId'] as int,
     );
   }
 
@@ -374,9 +374,9 @@ extension InfoChangeRequestDb on InfoChangeRequest {
 
   static Future<bool> delete(InfoChangeRequest infochangerequest) async {
     final q = Query.delete(
-      table: "infochangerequest",
+      table: 'infochangerequest',
       operation: Operation(
-          'infochangerequestId'.safeTk, Operator.eq, infochangerequest.id),
+          'infochangerequestId'.safeTk, Operator.eq, infochangerequest.id,),
     );
     try {
       await (await Database().pool).execute(q.toString());
@@ -406,7 +406,7 @@ extension InfoChangeRequestDb on InfoChangeRequest {
   }
 
   static Future<InfoChangeRequest?> get(
-      {required Operation Function(InfoChangeRequestQuery) where}) async {
+      {required Operation Function(InfoChangeRequestQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -415,7 +415,7 @@ extension InfoChangeRequestDb on InfoChangeRequest {
 
 extension UserInterestAndInteractionDb on UserInterestAndInteraction {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'catagoryId': catagoryId,
@@ -435,9 +435,9 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
   static UserInterestAndInteraction fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return UserInterestAndInteraction(
-      id: map["userinterestandinteractionId"] as int,
-      catagoryId: map["catagoryId"] as int,
-      userId: map["userId"] as int,
+      id: map['userinterestandinteractionId'] as int,
+      catagoryId: map['catagoryId'] as int,
+      userId: map['userId'] as int,
     );
   }
 
@@ -467,11 +467,11 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
   }
 
   static Future<bool> delete(
-      UserInterestAndInteraction userinterestandinteraction) async {
+      UserInterestAndInteraction userinterestandinteraction,) async {
     final q = Query.delete(
-      table: "userinterestandinteraction",
+      table: 'userinterestandinteraction',
       operation: Operation('userinterestandinteractionId'.safeTk, Operator.eq,
-          userinterestandinteraction.id),
+          userinterestandinteraction.id,),
     );
     try {
       await (await Database().pool).execute(q.toString());
@@ -502,7 +502,7 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
 
   static Future<UserInterestAndInteraction?> get(
       {required Operation Function(UserInterestAndInteractionQuery)
-          where}) async {
+          where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -511,7 +511,7 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
 
 extension CatagoryDb on Catagory {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'name': name,
@@ -531,9 +531,9 @@ extension CatagoryDb on Catagory {
   static Catagory fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Catagory(
-      id: map["catagoryId"] as int,
-      name: map["name"] as String,
-      desc: map["desc"] as String?,
+      id: map['catagoryId'] as int,
+      name: map['name'] as String,
+      desc: map['desc'] as String?,
     );
   }
 
@@ -564,7 +564,7 @@ extension CatagoryDb on Catagory {
 
   static Future<bool> delete(Catagory catagory) async {
     final q = Query.delete(
-      table: "catagory",
+      table: 'catagory',
       operation: Operation('catagoryId'.safeTk, Operator.eq, catagory.id),
     );
     try {
@@ -595,7 +595,7 @@ extension CatagoryDb on Catagory {
   }
 
   static Future<Catagory?> get(
-      {required Operation Function(CatagoryQuery) where}) async {
+      {required Operation Function(CatagoryQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -604,7 +604,7 @@ extension CatagoryDb on Catagory {
 
 extension BrandDb on Brand {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'name': name,
@@ -625,10 +625,10 @@ extension BrandDb on Brand {
   static Brand fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Brand(
-      id: map["brandId"] as int,
-      name: map["name"] as String,
-      desc: map["desc"] as String?,
-      catagoryId: map["catagoryId"] as int?,
+      id: map['brandId'] as int,
+      name: map['name'] as String,
+      desc: map['desc'] as String?,
+      catagoryId: map['catagoryId'] as int?,
     );
   }
 
@@ -661,7 +661,7 @@ extension BrandDb on Brand {
 
   static Future<bool> delete(Brand brand) async {
     final q = Query.delete(
-      table: "brand",
+      table: 'brand',
       operation: Operation('brandId'.safeTk, Operator.eq, brand.id),
     );
     try {
@@ -692,7 +692,7 @@ extension BrandDb on Brand {
   }
 
   static Future<Brand?> get(
-      {required Operation Function(BrandQuery) where}) async {
+      {required Operation Function(BrandQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -701,7 +701,7 @@ extension BrandDb on Brand {
 
 extension AddressDb on Address {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'lat': lat,
@@ -727,15 +727,15 @@ extension AddressDb on Address {
   static Address fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Address(
-      id: map["addressId"] as int,
-      lat: map["lat"] as double?,
-      lng: map["lng"] as double?,
-      plusCode: map["plusCode"] as String?,
-      sublocality: map["sublocality"] as String?,
-      locality: map["locality"] as String?,
-      admin1: map["admin1"] as String?,
-      admin2: map["admin2"] as String?,
-      country: map["country"] as String?,
+      id: map['addressId'] as int,
+      lat: map['lat'] as double?,
+      lng: map['lng'] as double?,
+      plusCode: map['plusCode'] as String?,
+      sublocality: map['sublocality'] as String?,
+      locality: map['locality'] as String?,
+      admin1: map['admin1'] as String?,
+      admin2: map['admin2'] as String?,
+      country: map['country'] as String?,
     );
   }
 
@@ -778,7 +778,7 @@ extension AddressDb on Address {
 
   static Future<bool> delete(Address address) async {
     final q = Query.delete(
-      table: "address",
+      table: 'address',
       operation: Operation('addressId'.safeTk, Operator.eq, address.id),
     );
     try {
@@ -809,7 +809,7 @@ extension AddressDb on Address {
   }
 
   static Future<Address?> get(
-      {required Operation Function(AddressQuery) where}) async {
+      {required Operation Function(AddressQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -818,7 +818,7 @@ extension AddressDb on Address {
 
 extension ShopDb on Shop {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'name': name,
@@ -843,14 +843,14 @@ extension ShopDb on Shop {
   static Shop fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Shop(
-      id: map["shopId"] as int,
-      name: map["name"] as String,
-      logo: map["logo"] as String?,
-      bgImage: map["bgImage"] as String?,
-      createdAt: map["createdAt"] as DateTime?,
-      ownerId: map["ownerId"] as int,
-      addressId: map["addressId"] as int,
-      catagoryId: map["catagoryId"] as int?,
+      id: map['shopId'] as int,
+      name: map['name'] as String,
+      logo: map['logo'] as String?,
+      bgImage: map['bgImage'] as String?,
+      createdAt: map['createdAt'] as DateTime?,
+      ownerId: map['ownerId'] as int,
+      addressId: map['addressId'] as int,
+      catagoryId: map['catagoryId'] as int?,
     );
   }
 
@@ -891,7 +891,7 @@ extension ShopDb on Shop {
 
   static Future<bool> delete(Shop shop) async {
     final q = Query.delete(
-      table: "shop",
+      table: 'shop',
       operation: Operation('shopId'.safeTk, Operator.eq, shop.id),
     );
     try {
@@ -922,7 +922,7 @@ extension ShopDb on Shop {
   }
 
   static Future<Shop?> get(
-      {required Operation Function(ShopQuery) where}) async {
+      {required Operation Function(ShopQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -931,7 +931,7 @@ extension ShopDb on Shop {
 
 extension ShopPrefrencesDb on ShopPrefrences {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'isAvailableOnline': isAvailableOnline,
@@ -953,11 +953,11 @@ extension ShopPrefrencesDb on ShopPrefrences {
   static ShopPrefrences fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return ShopPrefrences(
-      id: map["shopprefrencesId"] as int,
-      isAvailableOnline: map["isAvailableOnline"] as bool?,
-      notifyNewProduct: map["notifyNewProduct"] as bool?,
-      receiveOrder: map["receiveOrder"] as bool?,
-      shopId: map["shopId"] as int?,
+      id: map['shopprefrencesId'] as int,
+      isAvailableOnline: map['isAvailableOnline'] as bool?,
+      notifyNewProduct: map['notifyNewProduct'] as bool?,
+      receiveOrder: map['receiveOrder'] as bool?,
+      shopId: map['shopId'] as int?,
     );
   }
 
@@ -992,7 +992,7 @@ extension ShopPrefrencesDb on ShopPrefrences {
 
   static Future<bool> delete(ShopPrefrences shopprefrences) async {
     final q = Query.delete(
-      table: "shopprefrences",
+      table: 'shopprefrences',
       operation:
           Operation('shopprefrencesId'.safeTk, Operator.eq, shopprefrences.id),
     );
@@ -1024,7 +1024,7 @@ extension ShopPrefrencesDb on ShopPrefrences {
   }
 
   static Future<ShopPrefrences?> get(
-      {required Operation Function(ShopPrefrencesQuery) where}) async {
+      {required Operation Function(ShopPrefrencesQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1033,7 +1033,7 @@ extension ShopPrefrencesDb on ShopPrefrences {
 
 extension ShopAcitiviyDb on ShopAcitiviy {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'action': action,
@@ -1053,9 +1053,9 @@ extension ShopAcitiviyDb on ShopAcitiviy {
   static ShopAcitiviy fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return ShopAcitiviy(
-      id: map["shopacitiviyId"] as int,
-      action: map["action"] as String?,
-      userId: map["userId"] as int,
+      id: map['shopacitiviyId'] as int,
+      action: map['action'] as String?,
+      userId: map['userId'] as int,
     );
   }
 
@@ -1086,7 +1086,7 @@ extension ShopAcitiviyDb on ShopAcitiviy {
 
   static Future<bool> delete(ShopAcitiviy shopacitiviy) async {
     final q = Query.delete(
-      table: "shopacitiviy",
+      table: 'shopacitiviy',
       operation:
           Operation('shopacitiviyId'.safeTk, Operator.eq, shopacitiviy.id),
     );
@@ -1118,7 +1118,7 @@ extension ShopAcitiviyDb on ShopAcitiviy {
   }
 
   static Future<ShopAcitiviy?> get(
-      {required Operation Function(ShopAcitiviyQuery) where}) async {
+      {required Operation Function(ShopAcitiviyQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1127,7 +1127,7 @@ extension ShopAcitiviyDb on ShopAcitiviy {
 
 extension ShopReviewDb on ShopReview {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'userId': userId,
@@ -1147,9 +1147,9 @@ extension ShopReviewDb on ShopReview {
   static ShopReview fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return ShopReview(
-      id: map["shopreviewId"] as int,
-      userId: map["userId"] as int,
-      shopId: map["shopId"] as int,
+      id: map['shopreviewId'] as int,
+      userId: map['userId'] as int,
+      shopId: map['shopId'] as int,
     );
   }
 
@@ -1180,7 +1180,7 @@ extension ShopReviewDb on ShopReview {
 
   static Future<bool> delete(ShopReview shopreview) async {
     final q = Query.delete(
-      table: "shopreview",
+      table: 'shopreview',
       operation: Operation('shopreviewId'.safeTk, Operator.eq, shopreview.id),
     );
     try {
@@ -1211,7 +1211,7 @@ extension ShopReviewDb on ShopReview {
   }
 
   static Future<ShopReview?> get(
-      {required Operation Function(ShopReviewQuery) where}) async {
+      {required Operation Function(ShopReviewQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1220,7 +1220,7 @@ extension ShopReviewDb on ShopReview {
 
 extension ProductDb on Product {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'name': name,
@@ -1243,12 +1243,12 @@ extension ProductDb on Product {
   static Product fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Product(
-      id: map["productId"] as int,
-      name: map["name"] as String,
-      buyingPrice: map["buyingPrice"] as double,
-      sellingPrice: map["sellingPrice"] as double,
-      quantity: map["quantity"] as int,
-      desc: map["desc"] as String?,
+      id: map['productId'] as int,
+      name: map['name'] as String,
+      buyingPrice: map['buyingPrice'] as double,
+      sellingPrice: map['sellingPrice'] as double,
+      quantity: map['quantity'] as int,
+      desc: map['desc'] as String?,
     );
   }
 
@@ -1285,7 +1285,7 @@ extension ProductDb on Product {
 
   static Future<bool> delete(Product product) async {
     final q = Query.delete(
-      table: "product",
+      table: 'product',
       operation: Operation('productId'.safeTk, Operator.eq, product.id),
     );
     try {
@@ -1316,7 +1316,7 @@ extension ProductDb on Product {
   }
 
   static Future<Product?> get(
-      {required Operation Function(ProductQuery) where}) async {
+      {required Operation Function(ProductQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1325,7 +1325,7 @@ extension ProductDb on Product {
 
 extension LikeDb on Like {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'productId': productId,
@@ -1344,8 +1344,8 @@ extension LikeDb on Like {
   static Like fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Like(
-      id: map["likeId"] as int,
-      productId: map["productId"] as int,
+      id: map['likeId'] as int,
+      productId: map['productId'] as int,
     );
   }
 
@@ -1374,7 +1374,7 @@ extension LikeDb on Like {
 
   static Future<bool> delete(Like like) async {
     final q = Query.delete(
-      table: "like",
+      table: 'like',
       operation: Operation('likeId'.safeTk, Operator.eq, like.id),
     );
     try {
@@ -1405,7 +1405,7 @@ extension LikeDb on Like {
   }
 
   static Future<Like?> get(
-      {required Operation Function(LikeQuery) where}) async {
+      {required Operation Function(LikeQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1414,7 +1414,7 @@ extension LikeDb on Like {
 
 extension FollowDb on Follow {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'shopId': shopId,
@@ -1434,9 +1434,9 @@ extension FollowDb on Follow {
   static Follow fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Follow(
-      id: map["followId"] as int,
-      shopId: map["shopId"] as int,
-      userId: map["userId"] as int,
+      id: map['followId'] as int,
+      shopId: map['shopId'] as int,
+      userId: map['userId'] as int,
     );
   }
 
@@ -1467,7 +1467,7 @@ extension FollowDb on Follow {
 
   static Future<bool> delete(Follow follow) async {
     final q = Query.delete(
-      table: "follow",
+      table: 'follow',
       operation: Operation('followId'.safeTk, Operator.eq, follow.id),
     );
     try {
@@ -1498,7 +1498,7 @@ extension FollowDb on Follow {
   }
 
   static Future<Follow?> get(
-      {required Operation Function(FollowQuery) where}) async {
+      {required Operation Function(FollowQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1507,7 +1507,7 @@ extension FollowDb on Follow {
 
 extension OrderDb on Order {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'status': status,
@@ -1530,12 +1530,12 @@ extension OrderDb on Order {
   static Order fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Order(
-      id: map["orderId"] as int,
-      status: map["status"] as String?,
-      type: map["type"] as String?,
-      msg: map["msg"] as String?,
-      shopId: map["shopId"] as int,
-      userId: map["userId"] as int,
+      id: map['orderId'] as int,
+      status: map['status'] as String?,
+      type: map['type'] as String?,
+      msg: map['msg'] as String?,
+      shopId: map['shopId'] as int,
+      userId: map['userId'] as int,
     );
   }
 
@@ -1572,7 +1572,7 @@ extension OrderDb on Order {
 
   static Future<bool> delete(Order order) async {
     final q = Query.delete(
-      table: "order",
+      table: 'order',
       operation: Operation('orderId'.safeTk, Operator.eq, order.id),
     );
     try {
@@ -1603,7 +1603,7 @@ extension OrderDb on Order {
   }
 
   static Future<Order?> get(
-      {required Operation Function(OrderQuery) where}) async {
+      {required Operation Function(OrderQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1612,7 +1612,7 @@ extension OrderDb on Order {
 
 extension ItemsDb on Items {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'quantity': quantity,
@@ -1634,11 +1634,11 @@ extension ItemsDb on Items {
   static Items fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Items(
-      id: map["itemsId"] as int,
-      quantity: map["quantity"] as int,
-      createdAt: map["createdAt"] as DateTime?,
-      productId: map["productId"] as int,
-      orderId: map["orderId"] as int?,
+      id: map['itemsId'] as int,
+      quantity: map['quantity'] as int,
+      createdAt: map['createdAt'] as DateTime?,
+      productId: map['productId'] as int,
+      orderId: map['orderId'] as int?,
     );
   }
 
@@ -1673,7 +1673,7 @@ extension ItemsDb on Items {
 
   static Future<bool> delete(Items items) async {
     final q = Query.delete(
-      table: "items",
+      table: 'items',
       operation: Operation('itemsId'.safeTk, Operator.eq, items.id),
     );
     try {
@@ -1704,7 +1704,7 @@ extension ItemsDb on Items {
   }
 
   static Future<Items?> get(
-      {required Operation Function(ItemsQuery) where}) async {
+      {required Operation Function(ItemsQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1713,10 +1713,10 @@ extension ItemsDb on Items {
 
 extension NotificationDb on Notification {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
-      'timestamp': timestamp?.toIso8601String(),
+      'timestamp': timestamp.toIso8601String(),
       'title': title,
       'content': content,
       'type': type,
@@ -1736,12 +1736,12 @@ extension NotificationDb on Notification {
   static Notification fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Notification(
-      id: map["notificationId"] as int,
-      timestamp: map["timestamp"] as DateTime,
-      title: map["title"] as String,
-      content: map["content"] as String,
-      type: map["type"] as String,
-      userId: map["userId"] as int,
+      id: map['notificationId'] as int,
+      timestamp: map['timestamp'] as DateTime,
+      title: map['title'] as String,
+      content: map['content'] as String,
+      type: map['type'] as String,
+      userId: map['userId'] as int,
     );
   }
 
@@ -1778,7 +1778,7 @@ extension NotificationDb on Notification {
 
   static Future<bool> delete(Notification notification) async {
     final q = Query.delete(
-      table: "notification",
+      table: 'notification',
       operation:
           Operation('notificationId'.safeTk, Operator.eq, notification.id),
     );
@@ -1810,7 +1810,7 @@ extension NotificationDb on Notification {
   }
 
   static Future<Notification?> get(
-      {required Operation Function(NotificationQuery) where}) async {
+      {required Operation Function(NotificationQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1819,7 +1819,7 @@ extension NotificationDb on Notification {
 
 extension GiftCardDb on GiftCard {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'couponId': couponId,
@@ -1844,14 +1844,14 @@ extension GiftCardDb on GiftCard {
   static GiftCard fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return GiftCard(
-      id: map["giftcardId"] as int,
-      couponId: map["couponId"] as String,
-      redeemed: map["redeemed"] as bool?,
-      expireDate: map["expireDate"] as DateTime?,
-      ownerId: map["ownerId"] as int,
-      createdById: map["createdById"] as int?,
-      productId: map["productId"] as int?,
-      shopId: map["shopId"] as int?,
+      id: map['giftcardId'] as int,
+      couponId: map['couponId'] as String,
+      redeemed: map['redeemed'] as bool?,
+      expireDate: map['expireDate'] as DateTime?,
+      ownerId: map['ownerId'] as int,
+      createdById: map['createdById'] as int?,
+      productId: map['productId'] as int?,
+      shopId: map['shopId'] as int?,
     );
   }
 
@@ -1892,7 +1892,7 @@ extension GiftCardDb on GiftCard {
 
   static Future<bool> delete(GiftCard giftcard) async {
     final q = Query.delete(
-      table: "giftcard",
+      table: 'giftcard',
       operation: Operation('giftcardId'.safeTk, Operator.eq, giftcard.id),
     );
     try {
@@ -1923,7 +1923,7 @@ extension GiftCardDb on GiftCard {
   }
 
   static Future<GiftCard?> get(
-      {required Operation Function(GiftCardQuery) where}) async {
+      {required Operation Function(GiftCardQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1932,7 +1932,7 @@ extension GiftCardDb on GiftCard {
 
 extension BlockedDb on Blocked {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'endDate': endDate?.toIso8601String(),
@@ -1954,11 +1954,11 @@ extension BlockedDb on Blocked {
   static Blocked fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Blocked(
-      id: map["blockedId"] as int,
-      endDate: map["endDate"] as DateTime?,
-      userId: map["userId"] as int?,
-      shopId: map["shopId"] as int?,
-      productId: map["productId"] as int?,
+      id: map['blockedId'] as int,
+      endDate: map['endDate'] as DateTime?,
+      userId: map['userId'] as int?,
+      shopId: map['shopId'] as int?,
+      productId: map['productId'] as int?,
     );
   }
 
@@ -1993,7 +1993,7 @@ extension BlockedDb on Blocked {
 
   static Future<bool> delete(Blocked blocked) async {
     final q = Query.delete(
-      table: "blocked",
+      table: 'blocked',
       operation: Operation('blockedId'.safeTk, Operator.eq, blocked.id),
     );
     try {
@@ -2024,7 +2024,7 @@ extension BlockedDb on Blocked {
   }
 
   static Future<Blocked?> get(
-      {required Operation Function(BlockedQuery) where}) async {
+      {required Operation Function(BlockedQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -2033,12 +2033,12 @@ extension BlockedDb on Blocked {
 
 extension PolicyDb on Policy {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'number': number,
       'detail': detail,
-      'createdAt': createdAt?.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
     };
     if (excludeNull) {
       json.removeWhere((key, value) => value == null);
@@ -2054,10 +2054,10 @@ extension PolicyDb on Policy {
   static Policy fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Policy(
-      id: map["policyId"] as int,
-      createdAt: map["createdAt"] as DateTime,
-      number: map["number"] as int?,
-      detail: map["detail"] as String?,
+      id: map['policyId'] as int,
+      createdAt: map['createdAt'] as DateTime,
+      number: map['number'] as int?,
+      detail: map['detail'] as String?,
     );
   }
 
@@ -2090,7 +2090,7 @@ extension PolicyDb on Policy {
 
   static Future<bool> delete(Policy policy) async {
     final q = Query.delete(
-      table: "policy",
+      table: 'policy',
       operation: Operation('policyId'.safeTk, Operator.eq, policy.id),
     );
     try {
@@ -2121,7 +2121,7 @@ extension PolicyDb on Policy {
   }
 
   static Future<Policy?> get(
-      {required Operation Function(PolicyQuery) where}) async {
+      {required Operation Function(PolicyQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -2130,7 +2130,7 @@ extension PolicyDb on Policy {
 
 extension ReportDb on Report {
   Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only}) {
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'desc': desc,
@@ -2154,13 +2154,13 @@ extension ReportDb on Report {
   static Report fromRow(ResultRow row) {
     final map = row.toColumnMap();
     return Report(
-      id: map["reportId"] as int,
-      desc: map["desc"] as String?,
-      shopId: map["shopId"] as int,
-      userId: map["userId"] as int,
-      policyId: map["policyId"] as int?,
-      violatorId: map["violatorId"] as int?,
-      productId: map["productId"] as int?,
+      id: map['reportId'] as int,
+      desc: map['desc'] as String?,
+      shopId: map['shopId'] as int,
+      userId: map['userId'] as int,
+      policyId: map['policyId'] as int?,
+      violatorId: map['violatorId'] as int?,
+      productId: map['productId'] as int?,
     );
   }
 
@@ -2169,9 +2169,7 @@ extension ReportDb on Report {
   }
 
   static Future<Report?> create({
-    int? policyId,
-    required int shopId,
-    required int userId,
+    required int shopId, required int userId, int? policyId,
     int? violatorId,
     int? productId,
     String? desc,
@@ -2199,7 +2197,7 @@ extension ReportDb on Report {
 
   static Future<bool> delete(Report report) async {
     final q = Query.delete(
-      table: "report",
+      table: 'report',
       operation: Operation('reportId'.safeTk, Operator.eq, report.id),
     );
     try {
@@ -2230,7 +2228,7 @@ extension ReportDb on Report {
   }
 
   static Future<Report?> get(
-      {required Operation Function(ReportQuery) where}) async {
+      {required Operation Function(ReportQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
