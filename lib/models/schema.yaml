@@ -28,10 +28,27 @@ Password:
     password: Text
     emailOtp: Text
     phoneOtp: Text
+    isEmailVerified:
+      type: boolean
+      default: false
+    isPhoneVerified:
+      type: boolean
+      default: false
     user:
       type: ForeignKey
       references: User
       isnull: false
+InfoChangeRequest:
+  columns:
+    newEmail: Text
+    newPhone: Text
+    user: 
+      type: ForeignKey
+      references: User
+      isnull: false
+    createdAt: 
+      type: timestamp
+      default: DateTime.now()
 UserInterestAndInteraction:
   columns:
     catagory:

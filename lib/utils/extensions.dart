@@ -1,9 +1,10 @@
-
-import 'package:d_orm/models/schema.dart';
+import 'package:bita_markets/models/schema.dart';
 import 'package:shelf/shelf.dart';
 
 extension RequestAddon on Request {
-  User? get contextUser => context['user'] as User?;
+  User? get contextUser =>
+      context['user'] is bool ? null : context['user'] as User?;
+  bool get isAuthenticated => context['user'] is User;
 }
 
 extension ApiUser on User? {

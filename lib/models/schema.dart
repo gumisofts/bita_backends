@@ -1,8 +1,8 @@
-import 'package:d_orm/database/database.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:d_orm/database/extensions.dart';
-import 'package:d_orm/database/models.dart';
+import 'package:d_orm/database/database.dart';
 import 'package:postgres/postgres.dart';
-
+import 'package:d_orm/database/models.dart';
 part 'schema.db.g.dart';
 part 'schema.query.g.dart';
 
@@ -21,9 +21,9 @@ class FileTb {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'filetb',
+        table: "filetb",
         columns: _updatedFields,
-        operation: Operation('filetbId'.safeTk, Operator.eq, id),
+        operation: Operation("filetbId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -71,9 +71,9 @@ class User {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'user',
+        table: "user",
         columns: _updatedFields,
-        operation: Operation('userId'.safeTk, Operator.eq, id),
+        operation: Operation("userId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -133,23 +133,27 @@ class Password {
     String? password,
     String? emailOtp,
     String? phoneOtp,
+    bool? isEmailVerified,
+    bool? isPhoneVerified,
   }) {
     _password = password;
     _emailOtp = emailOtp;
     _phoneOtp = phoneOtp;
+    _isEmailVerified = isEmailVerified;
+    _isPhoneVerified = isPhoneVerified;
     _userId = userId;
   }
   late int _userId;
   int get userId => _userId;
   set userId(int id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
     return _getuser!.instance;
   }
 
@@ -158,9 +162,9 @@ class Password {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'password',
+        table: "password",
         columns: _updatedFields,
-        operation: Operation('passwordId'.safeTk, Operator.eq, id),
+        operation: Operation("passwordId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -190,6 +194,86 @@ class Password {
     _updatedFields['phoneOtp'] = m;
     _phoneOtp = m;
   }
+
+  bool? _isEmailVerified;
+  bool? get isEmailVerified => _isEmailVerified;
+  set isEmailVerified(bool? m) {
+    _updatedFields['isEmailVerified'] = m;
+    _isEmailVerified = m;
+  }
+
+  bool? _isPhoneVerified;
+  bool? get isPhoneVerified => _isPhoneVerified;
+  set isPhoneVerified(bool? m) {
+    _updatedFields['isPhoneVerified'] = m;
+    _isPhoneVerified = m;
+  }
+}
+
+class InfoChangeRequest {
+  InfoChangeRequest({
+    required int userId,
+    this.id,
+    String? newEmail,
+    String? newPhone,
+    DateTime? createdAt,
+  }) {
+    _newEmail = newEmail;
+    _newPhone = newPhone;
+    _createdAt = createdAt;
+    _userId = userId;
+  }
+  late int _userId;
+  int get userId => _userId;
+  set userId(int id) {
+    _updatedFields["user"] = id;
+    _userId = id;
+  }
+
+  ModelHolder<User>? _getuser;
+  Future<User?> get user {
+    _getuser ??= ModelHolder<User>(
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
+    return _getuser!.instance;
+  }
+
+  final _updatedFields = <String, dynamic>{};
+  int? id;
+  Future<void> save() async {
+    if (_updatedFields.isNotEmpty) {
+      final query = Query.update(
+        table: "infochangerequest",
+        columns: _updatedFields,
+        operation: Operation("infochangerequestId".safeTk, Operator.eq, id),
+      );
+      final res = await (await Database().pool).execute(query.toString());
+    }
+  }
+
+  Future<bool> delete() async {
+    return InfoChangeRequestDb.delete(this);
+  }
+
+  String? _newEmail;
+  String? get newEmail => _newEmail;
+  set newEmail(String? m) {
+    _updatedFields['newEmail'] = m;
+    _newEmail = m;
+  }
+
+  String? _newPhone;
+  String? get newPhone => _newPhone;
+  set newPhone(String? m) {
+    _updatedFields['newPhone'] = m;
+    _newPhone = m;
+  }
+
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  set createdAt(DateTime? m) {
+    _updatedFields['createdAt'] = m;
+    _createdAt = m;
+  }
 }
 
 class UserInterestAndInteraction {
@@ -204,7 +288,7 @@ class UserInterestAndInteraction {
   late int _catagoryId;
   int get catagoryId => _catagoryId;
   set catagoryId(int id) {
-    _updatedFields['catagory'] = id;
+    _updatedFields["catagory"] = id;
     _catagoryId = id;
   }
 
@@ -212,21 +296,21 @@ class UserInterestAndInteraction {
   Future<Catagory?> get catagory {
     _getcatagory ??= ModelHolder<Catagory>(
         getModelInstance: () =>
-            CatagoryDb.get(where: (t) => t.id.equals(catagoryId)),);
+            CatagoryDb.get(where: (t) => t.id.equals(catagoryId)));
     return _getcatagory!.instance;
   }
 
   late int _userId;
   int get userId => _userId;
   set userId(int id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
     return _getuser!.instance;
   }
 
@@ -235,10 +319,10 @@ class UserInterestAndInteraction {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'userinterestandinteraction',
+        table: "userinterestandinteraction",
         columns: _updatedFields,
         operation:
-            Operation('userinterestandinteractionId'.safeTk, Operator.eq, id),
+            Operation("userinterestandinteractionId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -264,9 +348,9 @@ class Catagory {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'catagory',
+        table: "catagory",
         columns: _updatedFields,
-        operation: Operation('catagoryId'.safeTk, Operator.eq, id),
+        operation: Operation("catagoryId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -305,7 +389,7 @@ class Brand {
   int? _catagoryId;
   int? get catagoryId => _catagoryId;
   set catagoryId(int? id) {
-    _updatedFields['catagory'] = id;
+    _updatedFields["catagory"] = id;
     _catagoryId = id;
   }
 
@@ -313,7 +397,7 @@ class Brand {
   Future<Catagory?> get catagory {
     _getcatagory ??= ModelHolder<Catagory>(
         getModelInstance: () =>
-            CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),);
+            CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)));
     return _getcatagory!.instance;
   }
 
@@ -322,9 +406,9 @@ class Brand {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'brand',
+        table: "brand",
         columns: _updatedFields,
-        operation: Operation('brandId'.safeTk, Operator.eq, id),
+        operation: Operation("brandId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -376,9 +460,9 @@ class Address {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'address',
+        table: "address",
         columns: _updatedFields,
-        operation: Operation('addressId'.safeTk, Operator.eq, id),
+        operation: Operation("addressId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -467,21 +551,21 @@ class Shop {
   late int _ownerId;
   int get ownerId => _ownerId;
   set ownerId(int id) {
-    _updatedFields['owner'] = id;
+    _updatedFields["owner"] = id;
     _ownerId = id;
   }
 
   ModelHolder<User>? _getowner;
   Future<User?> get owner {
     _getowner ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(ownerId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(ownerId)));
     return _getowner!.instance;
   }
 
   late int _addressId;
   int get addressId => _addressId;
   set addressId(int id) {
-    _updatedFields['address'] = id;
+    _updatedFields["address"] = id;
     _addressId = id;
   }
 
@@ -489,14 +573,14 @@ class Shop {
   Future<Address?> get address {
     _getaddress ??= ModelHolder<Address>(
         getModelInstance: () =>
-            AddressDb.get(where: (t) => t.id.equals(addressId)),);
+            AddressDb.get(where: (t) => t.id.equals(addressId)));
     return _getaddress!.instance;
   }
 
   int? _catagoryId;
   int? get catagoryId => _catagoryId;
   set catagoryId(int? id) {
-    _updatedFields['catagory'] = id;
+    _updatedFields["catagory"] = id;
     _catagoryId = id;
   }
 
@@ -504,7 +588,7 @@ class Shop {
   Future<Catagory?> get catagory {
     _getcatagory ??= ModelHolder<Catagory>(
         getModelInstance: () =>
-            CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),);
+            CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)));
     return _getcatagory!.instance;
   }
 
@@ -513,9 +597,9 @@ class Shop {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'shop',
+        table: "shop",
         columns: _updatedFields,
-        operation: Operation('shopId'.safeTk, Operator.eq, id),
+        operation: Operation("shopId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -570,14 +654,14 @@ class ShopPrefrences {
   int? _shopId;
   int? get shopId => _shopId;
   set shopId(int? id) {
-    _updatedFields['shop'] = id;
+    _updatedFields["shop"] = id;
     _shopId = id;
   }
 
   ModelHolder<Shop>? _getshop;
   Future<Shop?> get shop {
     _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)),);
+        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)));
     return _getshop!.instance;
   }
 
@@ -586,9 +670,9 @@ class ShopPrefrences {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'shopprefrences',
+        table: "shopprefrences",
         columns: _updatedFields,
-        operation: Operation('shopprefrencesId'.safeTk, Operator.eq, id),
+        operation: Operation("shopprefrencesId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -632,14 +716,14 @@ class ShopAcitiviy {
   late int _userId;
   int get userId => _userId;
   set userId(int id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
     return _getuser!.instance;
   }
 
@@ -648,9 +732,9 @@ class ShopAcitiviy {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'shopacitiviy',
+        table: "shopacitiviy",
         columns: _updatedFields,
-        operation: Operation('shopacitiviyId'.safeTk, Operator.eq, id),
+        operation: Operation("shopacitiviyId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -680,28 +764,28 @@ class ShopReview {
   late int _userId;
   int get userId => _userId;
   set userId(int id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
     return _getuser!.instance;
   }
 
   late int _shopId;
   int get shopId => _shopId;
   set shopId(int id) {
-    _updatedFields['shop'] = id;
+    _updatedFields["shop"] = id;
     _shopId = id;
   }
 
   ModelHolder<Shop>? _getshop;
   Future<Shop?> get shop {
     _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)),);
+        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)));
     return _getshop!.instance;
   }
 
@@ -710,9 +794,9 @@ class ShopReview {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'shopreview',
+        table: "shopreview",
         columns: _updatedFields,
-        operation: Operation('shopreviewId'.safeTk, Operator.eq, id),
+        operation: Operation("shopreviewId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -744,9 +828,9 @@ class Product {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'product',
+        table: "product",
         columns: _updatedFields,
-        operation: Operation('productId'.safeTk, Operator.eq, id),
+        operation: Operation("productId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -802,7 +886,7 @@ class Like {
   late int _productId;
   int get productId => _productId;
   set productId(int id) {
-    _updatedFields['product'] = id;
+    _updatedFields["product"] = id;
     _productId = id;
   }
 
@@ -810,7 +894,7 @@ class Like {
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
         getModelInstance: () =>
-            ProductDb.get(where: (t) => t.id.equals(productId)),);
+            ProductDb.get(where: (t) => t.id.equals(productId)));
     return _getproduct!.instance;
   }
 
@@ -819,9 +903,9 @@ class Like {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'like',
+        table: "like",
         columns: _updatedFields,
-        operation: Operation('likeId'.safeTk, Operator.eq, id),
+        operation: Operation("likeId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -844,28 +928,28 @@ class Follow {
   late int _shopId;
   int get shopId => _shopId;
   set shopId(int id) {
-    _updatedFields['shop'] = id;
+    _updatedFields["shop"] = id;
     _shopId = id;
   }
 
   ModelHolder<Shop>? _getshop;
   Future<Shop?> get shop {
     _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)),);
+        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)));
     return _getshop!.instance;
   }
 
   late int _userId;
   int get userId => _userId;
   set userId(int id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
     return _getuser!.instance;
   }
 
@@ -874,9 +958,9 @@ class Follow {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'follow',
+        table: "follow",
         columns: _updatedFields,
-        operation: Operation('followId'.safeTk, Operator.eq, id),
+        operation: Operation("followId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -905,28 +989,28 @@ class Order {
   late int _shopId;
   int get shopId => _shopId;
   set shopId(int id) {
-    _updatedFields['shop'] = id;
+    _updatedFields["shop"] = id;
     _shopId = id;
   }
 
   ModelHolder<Shop>? _getshop;
   Future<Shop?> get shop {
     _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)),);
+        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)));
     return _getshop!.instance;
   }
 
   late int _userId;
   int get userId => _userId;
   set userId(int id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
     return _getuser!.instance;
   }
 
@@ -935,9 +1019,9 @@ class Order {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'order',
+        table: "order",
         columns: _updatedFields,
-        operation: Operation('orderId'.safeTk, Operator.eq, id),
+        operation: Operation("orderId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -985,7 +1069,7 @@ class Items {
   late int _productId;
   int get productId => _productId;
   set productId(int id) {
-    _updatedFields['product'] = id;
+    _updatedFields["product"] = id;
     _productId = id;
   }
 
@@ -993,14 +1077,14 @@ class Items {
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
         getModelInstance: () =>
-            ProductDb.get(where: (t) => t.id.equals(productId)),);
+            ProductDb.get(where: (t) => t.id.equals(productId)));
     return _getproduct!.instance;
   }
 
   int? _orderId;
   int? get orderId => _orderId;
   set orderId(int? id) {
-    _updatedFields['order'] = id;
+    _updatedFields["order"] = id;
     _orderId = id;
   }
 
@@ -1008,7 +1092,7 @@ class Items {
   Future<Order?> get order {
     _getorder ??= ModelHolder<Order>(
         getModelInstance: () =>
-            OrderDb.get(where: (t) => t.id.equals(orderId!)),);
+            OrderDb.get(where: (t) => t.id.equals(orderId!)));
     return _getorder!.instance;
   }
 
@@ -1017,9 +1101,9 @@ class Items {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'items',
+        table: "items",
         columns: _updatedFields,
-        operation: Operation('itemsId'.safeTk, Operator.eq, id),
+        operation: Operation("itemsId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -1062,14 +1146,14 @@ class Notification {
   late int _userId;
   int get userId => _userId;
   set userId(int id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
     return _getuser!.instance;
   }
 
@@ -1078,9 +1162,9 @@ class Notification {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'notification',
+        table: "notification",
         columns: _updatedFields,
-        operation: Operation('notificationId'.safeTk, Operator.eq, id),
+        operation: Operation("notificationId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -1141,21 +1225,21 @@ class GiftCard {
   late int _ownerId;
   int get ownerId => _ownerId;
   set ownerId(int id) {
-    _updatedFields['owner'] = id;
+    _updatedFields["owner"] = id;
     _ownerId = id;
   }
 
   ModelHolder<User>? _getowner;
   Future<User?> get owner {
     _getowner ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(ownerId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(ownerId)));
     return _getowner!.instance;
   }
 
   int? _createdById;
   int? get createdById => _createdById;
   set createdById(int? id) {
-    _updatedFields['createdBy'] = id;
+    _updatedFields["createdBy"] = id;
     _createdById = id;
   }
 
@@ -1163,14 +1247,14 @@ class GiftCard {
   Future<User?> get createdBy {
     _getcreatedBy ??= ModelHolder<User>(
         getModelInstance: () =>
-            UserDb.get(where: (t) => t.id.equals(createdById!)),);
+            UserDb.get(where: (t) => t.id.equals(createdById!)));
     return _getcreatedBy!.instance;
   }
 
   int? _productId;
   int? get productId => _productId;
   set productId(int? id) {
-    _updatedFields['product'] = id;
+    _updatedFields["product"] = id;
     _productId = id;
   }
 
@@ -1178,21 +1262,21 @@ class GiftCard {
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
         getModelInstance: () =>
-            ProductDb.get(where: (t) => t.id.equals(productId!)),);
+            ProductDb.get(where: (t) => t.id.equals(productId!)));
     return _getproduct!.instance;
   }
 
   int? _shopId;
   int? get shopId => _shopId;
   set shopId(int? id) {
-    _updatedFields['shop'] = id;
+    _updatedFields["shop"] = id;
     _shopId = id;
   }
 
   ModelHolder<Shop>? _getshop;
   Future<Shop?> get shop {
     _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)),);
+        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)));
     return _getshop!.instance;
   }
 
@@ -1201,9 +1285,9 @@ class GiftCard {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'giftcard',
+        table: "giftcard",
         columns: _updatedFields,
-        operation: Operation('giftcardId'.safeTk, Operator.eq, id),
+        operation: Operation("giftcardId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -1251,35 +1335,35 @@ class Blocked {
   int? _userId;
   int? get userId => _userId;
   set userId(int? id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId!)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId!)));
     return _getuser!.instance;
   }
 
   int? _shopId;
   int? get shopId => _shopId;
   set shopId(int? id) {
-    _updatedFields['shop'] = id;
+    _updatedFields["shop"] = id;
     _shopId = id;
   }
 
   ModelHolder<Shop>? _getshop;
   Future<Shop?> get shop {
     _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)),);
+        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)));
     return _getshop!.instance;
   }
 
   int? _productId;
   int? get productId => _productId;
   set productId(int? id) {
-    _updatedFields['product'] = id;
+    _updatedFields["product"] = id;
     _productId = id;
   }
 
@@ -1287,7 +1371,7 @@ class Blocked {
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
         getModelInstance: () =>
-            ProductDb.get(where: (t) => t.id.equals(productId!)),);
+            ProductDb.get(where: (t) => t.id.equals(productId!)));
     return _getproduct!.instance;
   }
 
@@ -1296,9 +1380,9 @@ class Blocked {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'blocked',
+        table: "blocked",
         columns: _updatedFields,
-        operation: Operation('blockedId'.safeTk, Operator.eq, id),
+        operation: Operation("blockedId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -1333,9 +1417,9 @@ class Policy {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'policy',
+        table: "policy",
         columns: _updatedFields,
-        operation: Operation('policyId'.safeTk, Operator.eq, id),
+        operation: Operation("policyId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }
@@ -1369,7 +1453,9 @@ class Policy {
 
 class Report {
   Report({
-    required int shopId, required int userId, int? policyId,
+    int? policyId,
+    required int shopId,
+    required int userId,
     int? violatorId,
     int? productId,
     this.id,
@@ -1385,7 +1471,7 @@ class Report {
   int? _policyId;
   int? get policyId => _policyId;
   set policyId(int? id) {
-    _updatedFields['policy'] = id;
+    _updatedFields["policy"] = id;
     _policyId = id;
   }
 
@@ -1393,42 +1479,42 @@ class Report {
   Future<Policy?> get policy {
     _getpolicy ??= ModelHolder<Policy>(
         getModelInstance: () =>
-            PolicyDb.get(where: (t) => t.id.equals(policyId!)),);
+            PolicyDb.get(where: (t) => t.id.equals(policyId!)));
     return _getpolicy!.instance;
   }
 
   late int _shopId;
   int get shopId => _shopId;
   set shopId(int id) {
-    _updatedFields['shop'] = id;
+    _updatedFields["shop"] = id;
     _shopId = id;
   }
 
   ModelHolder<Shop>? _getshop;
   Future<Shop?> get shop {
     _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)),);
+        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)));
     return _getshop!.instance;
   }
 
   late int _userId;
   int get userId => _userId;
   set userId(int id) {
-    _updatedFields['user'] = id;
+    _updatedFields["user"] = id;
     _userId = id;
   }
 
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)));
     return _getuser!.instance;
   }
 
   int? _violatorId;
   int? get violatorId => _violatorId;
   set violatorId(int? id) {
-    _updatedFields['violator'] = id;
+    _updatedFields["violator"] = id;
     _violatorId = id;
   }
 
@@ -1436,14 +1522,14 @@ class Report {
   Future<User?> get violator {
     _getviolator ??= ModelHolder<User>(
         getModelInstance: () =>
-            UserDb.get(where: (t) => t.id.equals(violatorId!)),);
+            UserDb.get(where: (t) => t.id.equals(violatorId!)));
     return _getviolator!.instance;
   }
 
   int? _productId;
   int? get productId => _productId;
   set productId(int? id) {
-    _updatedFields['product'] = id;
+    _updatedFields["product"] = id;
     _productId = id;
   }
 
@@ -1451,7 +1537,7 @@ class Report {
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
         getModelInstance: () =>
-            ProductDb.get(where: (t) => t.id.equals(productId!)),);
+            ProductDb.get(where: (t) => t.id.equals(productId!)));
     return _getproduct!.instance;
   }
 
@@ -1460,9 +1546,9 @@ class Report {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'report',
+        table: "report",
         columns: _updatedFields,
-        operation: Operation('reportId'.safeTk, Operator.eq, id),
+        operation: Operation("reportId".safeTk, Operator.eq, id),
       );
       final res = await (await Database().pool).execute(query.toString());
     }

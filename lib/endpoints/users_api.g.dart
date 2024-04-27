@@ -29,6 +29,11 @@ Router _$UsersApiRouter(UsersApi service) {
     service.getStartedPhone,
   );
   router.add(
+    'GET',
+    r'/me',
+    service.userMe,
+  );
+  router.add(
     'POST',
     r'/verifyOtp',
     service.verifyOtp,

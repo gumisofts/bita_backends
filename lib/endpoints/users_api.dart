@@ -123,6 +123,19 @@ class UsersApi {
           );
         },
       );
+  @Route.get('/me')
+  Future<Response> userMe(Request request) => handleRequestWithPermission(
+        request,
+        permission: () {
+          if (!request.isAuthenticated) {
+            throw unAuthorizedException;
+          }
+        },
+        endpoint: () async {
+          return jsonResponse(body: request.contextUser!.toJson());
+        },
+      );
+
   @Route.post('/verifyOtp')
   Future<Response> verifyOtp(Request request) => handleRequestWithPermission(
         request,
@@ -134,6 +147,7 @@ class UsersApi {
               FieldValidator<int>(
                 name: 'otp',
                 isRequired: true,
+                parse: int.parse,
                 validator: (value) => value > 99999 && value <= 999999
                     ? null
                     : 'otp should be six digit',
@@ -147,6 +161,7 @@ class UsersApi {
               ),
               FieldValidator<int>(
                 name: 'userId',
+                parse: int.parse,
                 isRequired: true,
               ),
             ],
@@ -158,9 +173,28 @@ SELECT "user".*,"password".* from "user" join "password" on "user"."userId"="pas
           data.remove('otpType');
           final res = await Database().execute(sql, parameters: data);
 
-          final users = UserDb.fromResult(res);
+          if (res.isEmpty) {
+            return jsonResponse(
+              statusCode: HttpStatus.notFound,
+              body: {'detail': 'User not found'},
+            );
+          }
 
-          return jsonResponse(body: users.map((e) => e.toJson()));
+          final user = UserDb.fromResult(res).first;
+          final pass = PasswordDb.fromResult(res).first;
+
+          data['otpType'] == 'email'
+              ? pass.isEmailVerified = true
+              : pass.isPhoneVerified = true;
+
+          await pass.save();
+
+          final access = JWTAuth.authenticate(user);
+
+          return jsonResponse(body: {'user': user.toJson(), 'access': access});
         },
       );
 }
+
+// user.join()=> 
+// 

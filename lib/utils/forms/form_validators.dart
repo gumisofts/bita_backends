@@ -17,10 +17,17 @@ class FieldValidator<T> {
     required this.name,
     this.isRequired = false,
     this.validator,
+    this.parse,
   });
   String name;
   bool isRequired;
   String? Function(T value)? validator;
+  T Function(String value)? parse;
+
+  // T parsed(dynamic value){
+
+  //   return va
+  // }
 
   String? validate(T value) {
     // final data = <String>[];
@@ -75,7 +82,7 @@ Future<Map<String, dynamic>> form(
   final contentType =
       request.headers[HttpHeaders.contentTypeHeader]?.split(';').first;
 
-  print(contentType);
+  // print(contentType);
 
   if (contentType == ContentType.json.value) {
     {
@@ -95,7 +102,10 @@ Future<Map<String, dynamic>> form(
           continue;
         }
         try {
-          final validated = field.validate(data[field.name]);
+          final fieldData = field.parse != null
+              ? field.parse!(data[field.name] as String)
+              : data[field.name];
+          final validated = field.validate(fieldData);
 
           if (validated != null) {
             err[field.name] = validated;
@@ -138,7 +148,10 @@ Future<Map<String, dynamic>> form(
         continue;
       }
       try {
-        final validated = field.validate(data[field.name]);
+        final fieldData = field.parse != null
+            ? field.parse!(data[field.name]! as String)
+            : data[field.name];
+        final validated = field.validate(fieldData);
         if (validated != null) {
           err[field.name] = validated;
         }

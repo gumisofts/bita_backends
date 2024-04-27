@@ -41,12 +41,10 @@ Future<Response> handleRequestWithPermission(
   }
 }
 
-Future<Response> jsonResponse({int statusCode = 200, Object? body}) {
-  return Future.value(
-    Response(
-      statusCode,
-      body: jsonEncode(body),
-      headers: {HttpHeaders.contentTypeHeader: ContentType.json.value},
-    ),
+Response jsonResponse({int statusCode = 200, Object? body}) {
+  return Response(
+    statusCode,
+    body: jsonEncode(body),
+    headers: {HttpHeaders.contentTypeHeader: ContentType.json.value},
   );
 }
