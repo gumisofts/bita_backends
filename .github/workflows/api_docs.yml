@@ -37,7 +37,7 @@ jobs:
           node-version: "20.11.0"
 
       - name: Build
-        run: npx --yes @redocly/cli@latest bundle schema/index.yaml --output schema/build/index
+        run: npx --yes @redocly/cli@latest build-docs schema/index.yaml --output schema/build/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
