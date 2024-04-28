@@ -61,6 +61,9 @@ Create Table
     );
 
 Create Table
+    If Not Exists "unit" ("unitId" SERIAL Primary Key, "name" Text not null);
+
+Create Table
     If Not Exists "address" (
         "addressId" SERIAL Primary Key,
         "lat" Real,
@@ -74,8 +77,8 @@ Create Table
     );
 
 Create Table
-    If Not Exists "shop" (
-        "shopId" SERIAL Primary Key,
+    If Not Exists "business" (
+        "businessId" SERIAL Primary Key,
         "name" Text not null,
         "ownerId" integer not null,
         "addressId" integer not null,
@@ -86,35 +89,41 @@ Create Table
     );
 
 Create Table
-    If Not Exists "shopprefrences" (
-        "shopprefrencesId" SERIAL Primary Key,
-        "shopId" integer,
+    If Not Exists "businessprefrences" (
+        "businessprefrencesId" SERIAL Primary Key,
+        "businessId" integer,
         "isAvailableOnline" boolean default true,
         "notifyNewProduct" boolean default false,
         "receiveOrder" boolean default false
     );
 
 Create Table
-    If Not Exists "shopacitiviy" (
-        "shopacitiviyId" SERIAL Primary Key,
+    If Not Exists "businessacitiviy" (
+        "businessacitiviyId" SERIAL Primary Key,
         "userId" integer not null,
         "action" Text
     );
 
 Create Table
-    If Not Exists "shopreview" (
-        "shopreviewId" SERIAL Primary Key,
+    If Not Exists "businessreview" (
+        "businessreviewId" SERIAL Primary Key,
         "userId" integer not null,
-        "shopId" integer not null
+        "businessId" integer not null
     );
 
 Create Table
     If Not Exists "product" (
         "productId" SERIAL Primary Key,
         "name" Text not null,
-        "buyingPrice" Real not null,
+        "costPrice" Real not null,
         "sellingPrice" Real not null,
-        "quantity" integer not null default '0',
+        "quantity" Real not null default '0',
+        "businessId" integer not null,
+        "brandId" integer,
+        "catagoryId" integer,
+        "unitId" integer,
+        "expireDate" timestamp,
+        "manDate" timestamp,
         "desc" Text
     );
 
@@ -127,7 +136,7 @@ Create Table
 Create Table
     If Not Exists "follow" (
         "followId" SERIAL Primary Key,
-        "shopId" integer not null,
+        "businessId" integer not null,
         "userId" integer not null
     );
 
@@ -137,7 +146,7 @@ Create Table
         "status" Text,
         "type" Text,
         "msg" Text,
-        "shopId" integer not null,
+        "businessId" integer not null,
         "userId" integer not null
     );
 
@@ -167,7 +176,7 @@ Create Table
         "ownerId" integer not null,
         "createdById" integer,
         "productId" integer,
-        "shopId" integer,
+        "businessId" integer,
         "redeemed" boolean default false,
         "expireDate" timestamp
     );
@@ -176,7 +185,7 @@ Create Table
     If Not Exists "blocked" (
         "blockedId" SERIAL Primary Key,
         "userId" integer,
-        "shopId" integer,
+        "businessId" integer,
         "productId" integer,
         "endDate" timestamp
     );
@@ -193,7 +202,7 @@ Create Table
     If Not Exists "report" (
         "reportId" SERIAL Primary Key,
         "policyId" integer,
-        "shopId" integer not null,
+        "businessId" integer not null,
         "userId" integer not null,
         "violatorId" integer,
         "productId" integer,
@@ -210,27 +219,35 @@ ALTER TABLE "userinterestandinteraction" ADD CONSTRAINT userinterestandinteracti
 
 ALTER TABLE "brand" ADD CONSTRAINT brand_catagory_catagory_fk FOREIGN KEY ("catagoryId") REFERENCES "catagory" ("catagoryId");
 
-ALTER TABLE "shop" ADD CONSTRAINT shop_owner_user_fk FOREIGN KEY ("ownerId") REFERENCES "user" ("userId");
+ALTER TABLE "business" ADD CONSTRAINT business_owner_user_fk FOREIGN KEY ("ownerId") REFERENCES "user" ("userId");
 
-ALTER TABLE "shop" ADD CONSTRAINT shop_address_address_fk FOREIGN KEY ("addressId") REFERENCES "address" ("addressId");
+ALTER TABLE "business" ADD CONSTRAINT business_address_address_fk FOREIGN KEY ("addressId") REFERENCES "address" ("addressId");
 
-ALTER TABLE "shop" ADD CONSTRAINT shop_catagory_catagory_fk FOREIGN KEY ("catagoryId") REFERENCES "catagory" ("catagoryId");
+ALTER TABLE "business" ADD CONSTRAINT business_catagory_catagory_fk FOREIGN KEY ("catagoryId") REFERENCES "catagory" ("catagoryId");
 
-ALTER TABLE "shopprefrences" ADD CONSTRAINT shopprefrences_shop_shop_fk FOREIGN KEY ("shopId") REFERENCES "shop" ("shopId");
+ALTER TABLE "businessprefrences" ADD CONSTRAINT businessprefrences_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId");
 
-ALTER TABLE "shopacitiviy" ADD CONSTRAINT shopacitiviy_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId");
+ALTER TABLE "businessacitiviy" ADD CONSTRAINT businessacitiviy_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId");
 
-ALTER TABLE "shopreview" ADD CONSTRAINT shopreview_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId");
+ALTER TABLE "businessreview" ADD CONSTRAINT businessreview_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId");
 
-ALTER TABLE "shopreview" ADD CONSTRAINT shopreview_shop_shop_fk FOREIGN KEY ("shopId") REFERENCES "shop" ("shopId");
+ALTER TABLE "businessreview" ADD CONSTRAINT businessreview_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId");
+
+ALTER TABLE "product" ADD CONSTRAINT product_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId");
+
+ALTER TABLE "product" ADD CONSTRAINT product_brand_brand_fk FOREIGN KEY ("brandId") REFERENCES "brand" ("brandId");
+
+ALTER TABLE "product" ADD CONSTRAINT product_catagory_catagory_fk FOREIGN KEY ("catagoryId") REFERENCES "catagory" ("catagoryId");
+
+ALTER TABLE "product" ADD CONSTRAINT product_unit_unit_fk FOREIGN KEY ("unitId") REFERENCES "unit" ("unitId");
 
 ALTER TABLE "like" ADD CONSTRAINT like_product_product_fk FOREIGN KEY ("productId") REFERENCES "product" ("productId");
 
-ALTER TABLE "follow" ADD CONSTRAINT follow_shop_shop_fk FOREIGN KEY ("shopId") REFERENCES "shop" ("shopId");
+ALTER TABLE "follow" ADD CONSTRAINT follow_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId");
 
 ALTER TABLE "follow" ADD CONSTRAINT follow_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId");
 
-ALTER TABLE "order" ADD CONSTRAINT order_shop_shop_fk FOREIGN KEY ("shopId") REFERENCES "shop" ("shopId");
+ALTER TABLE "order" ADD CONSTRAINT order_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId");
 
 ALTER TABLE "order" ADD CONSTRAINT order_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId");
 
@@ -246,17 +263,17 @@ ALTER TABLE "giftcard" ADD CONSTRAINT giftcard_createdBy_user_fk FOREIGN KEY ("c
 
 ALTER TABLE "giftcard" ADD CONSTRAINT giftcard_product_product_fk FOREIGN KEY ("productId") REFERENCES "product" ("productId");
 
-ALTER TABLE "giftcard" ADD CONSTRAINT giftcard_shop_shop_fk FOREIGN KEY ("shopId") REFERENCES "shop" ("shopId");
+ALTER TABLE "giftcard" ADD CONSTRAINT giftcard_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId");
 
 ALTER TABLE "blocked" ADD CONSTRAINT blocked_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId");
 
-ALTER TABLE "blocked" ADD CONSTRAINT blocked_shop_shop_fk FOREIGN KEY ("shopId") REFERENCES "shop" ("shopId");
+ALTER TABLE "blocked" ADD CONSTRAINT blocked_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId");
 
 ALTER TABLE "blocked" ADD CONSTRAINT blocked_product_product_fk FOREIGN KEY ("productId") REFERENCES "product" ("productId");
 
 ALTER TABLE "report" ADD CONSTRAINT report_policy_policy_fk FOREIGN KEY ("policyId") REFERENCES "policy" ("policyId");
 
-ALTER TABLE "report" ADD CONSTRAINT report_shop_shop_fk FOREIGN KEY ("shopId") REFERENCES "shop" ("shopId");
+ALTER TABLE "report" ADD CONSTRAINT report_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId");
 
 ALTER TABLE "report" ADD CONSTRAINT report_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId");
 
@@ -272,8 +289,10 @@ ALTER TABLE "catagory" ADD CONSTRAINT catagory_name_unique UNIQUE ("name");
 
 ALTER TABLE "brand" ADD CONSTRAINT brand_name_unique UNIQUE ("name");
 
-ALTER TABLE "shop" ADD CONSTRAINT shop_addressId_unique UNIQUE ("addressId");
+ALTER TABLE "unit" ADD CONSTRAINT unit_name_unique UNIQUE ("name");
 
-ALTER TABLE "shopprefrences" ADD CONSTRAINT shopprefrences_shopId_unique UNIQUE ("shopId");
+ALTER TABLE "business" ADD CONSTRAINT business_addressId_unique UNIQUE ("addressId");
+
+ALTER TABLE "businessprefrences" ADD CONSTRAINT businessprefrences_businessId_unique UNIQUE ("businessId");
 
 COMMIT;

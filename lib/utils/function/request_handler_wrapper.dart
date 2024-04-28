@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:bita_markets/utils/forms/field_exceptions.dart';
+import 'package:postgres/postgres.dart';
 import 'package:shelf/shelf.dart';
 
 class EndPointException implements Exception {
@@ -23,8 +24,8 @@ final forbidenException = EndPointException(
 
 Future<Response> handleRequestWithPermission(
   Request request, {
-  required Future<Response> Function() endpoint,
   required void Function() permission,
+  required Future<Response> Function() endpoint,
 }) async {
   try {
     permission();
@@ -33,6 +34,32 @@ Future<Response> handleRequestWithPermission(
     return jsonResponse(statusCode: e.code, body: e.error);
   } on FieldValidationException catch (e) {
     return jsonResponse(statusCode: HttpStatus.badRequest, body: e.error);
+  } on ServerException catch (e) {
+    // Constraint errors
+    //23505 Unique error
+    //23514 Chech Violation
+    //23502 not_null_violation
+    //23001 restrict_violation
+    //23503 foreign_key_violation
+    //23P01 exclusion_violation
+    //23503
+    if (e.code == '23503') {
+      // print(e);
+      // print(e.columnName);
+      // print(e.constraintName);
+      // print(e.tableName);
+      // print(e.detail);
+      // print(e.message);
+      // print(e.);
+      return jsonResponse(
+        statusCode: HttpStatus.badRequest,
+        body: {'detail': e.detail},
+      );
+    }
+    return jsonResponse(
+      statusCode: HttpStatus.badRequest,
+      body: {'detail': e.toString()},
+    );
   } catch (e) {
     return jsonResponse(
       statusCode: HttpStatus.internalServerError,
@@ -44,7 +71,7 @@ Future<Response> handleRequestWithPermission(
 Response jsonResponse({int statusCode = 200, Object? body}) {
   return Response(
     statusCode,
-    body: jsonEncode(body),
+    body: jsonEncode(body ?? {}),
     headers: {HttpHeaders.contentTypeHeader: ContentType.json.value},
   );
 }

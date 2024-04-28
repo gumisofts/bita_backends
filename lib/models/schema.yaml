@@ -78,6 +78,12 @@ Brand:
       type: ForeignKey
       references: Catagory
     desc: Text
+Unit:
+  columns:
+    name:
+      type: Text
+      isnull: false
+      unique: true
 Address:
   columns:
     lat: Real
@@ -88,8 +94,8 @@ Address:
     admin1: Text
     admin2: Text
     country: Text
-# Specific To shops
-Shop:
+# Specific To businesss
+Business:
   columns:
     name:
       type: Text
@@ -100,7 +106,6 @@ Shop:
       isnull: false
       # Choices are SETNULL,CASCADE,SETDEFAULT,PROTECT
       onDelete: CASCADE
-      reverseName: shops
     address:
       type: ForeignKey
       references: Address
@@ -117,11 +122,11 @@ Shop:
 
   unique_together:
     -
-ShopPrefrences:
+BusinessPrefrences:
   columns:
-    shop:
+    business:
       type: ForeignKey
-      references: Shop
+      references: Business
       unique: true
     isAvailableOnline: 
       type: boolean
@@ -132,22 +137,22 @@ ShopPrefrences:
     receiveOrder:
       type: boolean
       default: false
-ShopAcitiviy:
+BusinessAcitiviy:
   columns:
     user:
       type: ForeignKey
       references: User
       isnull: false
     action: Text
-ShopReview:
+BusinessReview:
   columns:
     user:
       type: ForeignKey
       references: User
       isnull: false
-    shop:
+    business:
       type: ForeignKey
-      references: Shop
+      references: Business
       isnull: false
 
 Product:
@@ -155,16 +160,31 @@ Product:
     name:
       type: Text
       isnull: false
-    buyingPrice:
+    costPrice:
       type: Real
       isnull: false
     sellingPrice:
       type: Real
       isnull: false
     quantity:
-      type: integer
+      type: Real
       isnull: false
       default: 0
+    business:
+      type: ForeignKey
+      references: Business
+      isnull: false
+    brand:
+      type: ForeignKey
+      references: Brand
+    catagory:
+      type: ForeignKey
+      references: Catagory
+    unit:
+      type: ForeignKey
+      references: Unit
+    expireDate:  timestamp
+    manDate:  timestamp
     desc: Text
 
 Like:
@@ -175,10 +195,10 @@ Like:
       references: Product
 Follow:
   columns:
-    shop:
+    business:
       type: ForeignKey
       isnull: false
-      references: Shop
+      references: Business
     user:
       type: ForeignKey
       isnull: false
@@ -189,9 +209,9 @@ Order:
     status: Text
     type: Text
     msg: Text
-    shop:
+    business:
       type: ForeignKey
-      references: Shop
+      references: Business
       isnull: false
     user:
       type: ForeignKey
@@ -247,9 +267,9 @@ GiftCard:
     product:
       type: ForeignKey
       references: Product
-    shop:
+    business:
       type: ForeignKey
-      references: Shop
+      references: Business
     redeemed:
       type: boolean
       default: false
@@ -261,9 +281,9 @@ Blocked:
     user:
       type: ForeignKey
       references: User
-    shop:
+    business:
       type: ForeignKey
-      references: Shop
+      references: Business
     product:
       type: ForeignKey
       references: Product
@@ -282,10 +302,10 @@ Report:
     policy:
       type: ForeignKey
       references: Policy
-    shop:
+    business:
       type: ForeignKey
       isnull: false
-      references: Shop
+      references: Business
     user:
       type: ForeignKey
       isnull: false

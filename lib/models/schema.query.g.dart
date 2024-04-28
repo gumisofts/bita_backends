@@ -180,6 +180,19 @@ class BrandQuery {
       <String>['brandId', 'name', 'catagoryId', 'desc'];
 }
 
+class UnitQuery {
+  UnitQuery();
+  factory UnitQuery.referenced({required List<Join> joins}) =>
+      UnitQuery().._joins.addAll(joins);
+  static const table = 'unit';
+  NumberColumn get id =>
+      NumberColumn(column: 'unitId', offtable: 'unit', depends: _joins);
+  TextColumn get name =>
+      TextColumn(column: 'name', offtable: 'unit', depends: _joins);
+  final _joins = <Join>[];
+  static List<String> get columns => <String>['unitId', 'name'];
+}
+
 class AddressQuery {
   AddressQuery();
   factory AddressQuery.referenced({required List<Join> joins}) =>
@@ -217,42 +230,42 @@ class AddressQuery {
       ];
 }
 
-class ShopQuery {
-  ShopQuery();
-  factory ShopQuery.referenced({required List<Join> joins}) =>
-      ShopQuery().._joins.addAll(joins);
-  static const table = 'shop';
+class BusinessQuery {
+  BusinessQuery();
+  factory BusinessQuery.referenced({required List<Join> joins}) =>
+      BusinessQuery().._joins.addAll(joins);
+  static const table = 'business';
   NumberColumn get id =>
-      NumberColumn(column: 'shopId', offtable: 'shop', depends: _joins);
+      NumberColumn(column: 'businessId', offtable: 'business', depends: _joins);
   TextColumn get name =>
-      TextColumn(column: 'name', offtable: 'shop', depends: _joins);
+      TextColumn(column: 'name', offtable: 'business', depends: _joins);
   UserQuery get owner => UserQuery.referenced(joins: [
         ..._joins,
         Join(table: 'user', onn: 'ownerId', from: table),
       ],);
   NumberColumn get ownerId =>
-      NumberColumn(column: 'ownerId', offtable: 'shop', depends: _joins);
+      NumberColumn(column: 'ownerId', offtable: 'business', depends: _joins);
   AddressQuery get address => AddressQuery.referenced(joins: [
         ..._joins,
         Join(table: 'address', onn: 'addressId', from: table),
       ],);
   NumberColumn get addressId =>
-      NumberColumn(column: 'addressId', offtable: 'shop', depends: _joins);
+      NumberColumn(column: 'addressId', offtable: 'business', depends: _joins);
   CatagoryQuery get catagory => CatagoryQuery.referenced(joins: [
         ..._joins,
         Join(table: 'catagory', onn: 'catagoryId', from: table),
       ],);
   NumberColumn get catagoryId =>
-      NumberColumn(column: 'catagoryId', offtable: 'shop', depends: _joins);
+      NumberColumn(column: 'catagoryId', offtable: 'business', depends: _joins);
   TextColumn get logo =>
-      TextColumn(column: 'logo', offtable: 'shop', depends: _joins);
+      TextColumn(column: 'logo', offtable: 'business', depends: _joins);
   TextColumn get bgImage =>
-      TextColumn(column: 'bgImage', offtable: 'shop', depends: _joins);
+      TextColumn(column: 'bgImage', offtable: 'business', depends: _joins);
   TextColumn get createdAt =>
-      TextColumn(column: 'createdAt', offtable: 'shop', depends: _joins);
+      TextColumn(column: 'createdAt', offtable: 'business', depends: _joins);
   final _joins = <Join>[];
   static List<String> get columns => <String>[
-        'shopId',
+        'businessId',
         'name',
         'ownerId',
         'addressId',
@@ -263,77 +276,85 @@ class ShopQuery {
       ];
 }
 
-class ShopPrefrencesQuery {
-  ShopPrefrencesQuery();
-  factory ShopPrefrencesQuery.referenced({required List<Join> joins}) =>
-      ShopPrefrencesQuery().._joins.addAll(joins);
-  static const table = 'shopprefrences';
+class BusinessPrefrencesQuery {
+  BusinessPrefrencesQuery();
+  factory BusinessPrefrencesQuery.referenced({required List<Join> joins}) =>
+      BusinessPrefrencesQuery().._joins.addAll(joins);
+  static const table = 'businessprefrences';
   NumberColumn get id => NumberColumn(
-      column: 'shopprefrencesId', offtable: 'shopprefrences', depends: _joins,);
-  ShopQuery get shop => ShopQuery.referenced(joins: [
+      column: 'businessprefrencesId',
+      offtable: 'businessprefrences',
+      depends: _joins,);
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
         ..._joins,
-        Join(table: 'shop', onn: 'shopId', from: table),
+        Join(table: 'business', onn: 'businessId', from: table),
       ],);
-  NumberColumn get shopId => NumberColumn(
-      column: 'shopId', offtable: 'shopprefrences', depends: _joins,);
+  NumberColumn get businessId => NumberColumn(
+      column: 'businessId', offtable: 'businessprefrences', depends: _joins,);
   TextColumn get isAvailableOnline => TextColumn(
-      column: 'isAvailableOnline', offtable: 'shopprefrences', depends: _joins,);
+      column: 'isAvailableOnline',
+      offtable: 'businessprefrences',
+      depends: _joins,);
   TextColumn get notifyNewProduct => TextColumn(
-      column: 'notifyNewProduct', offtable: 'shopprefrences', depends: _joins,);
+      column: 'notifyNewProduct',
+      offtable: 'businessprefrences',
+      depends: _joins,);
   TextColumn get receiveOrder => TextColumn(
-      column: 'receiveOrder', offtable: 'shopprefrences', depends: _joins,);
+      column: 'receiveOrder', offtable: 'businessprefrences', depends: _joins,);
   final _joins = <Join>[];
   static List<String> get columns => <String>[
-        'shopprefrencesId',
-        'shopId',
+        'businessprefrencesId',
+        'businessId',
         'isAvailableOnline',
         'notifyNewProduct',
         'receiveOrder',
       ];
 }
 
-class ShopAcitiviyQuery {
-  ShopAcitiviyQuery();
-  factory ShopAcitiviyQuery.referenced({required List<Join> joins}) =>
-      ShopAcitiviyQuery().._joins.addAll(joins);
-  static const table = 'shopacitiviy';
+class BusinessAcitiviyQuery {
+  BusinessAcitiviyQuery();
+  factory BusinessAcitiviyQuery.referenced({required List<Join> joins}) =>
+      BusinessAcitiviyQuery().._joins.addAll(joins);
+  static const table = 'businessacitiviy';
   NumberColumn get id => NumberColumn(
-      column: 'shopacitiviyId', offtable: 'shopacitiviy', depends: _joins,);
+      column: 'businessacitiviyId',
+      offtable: 'businessacitiviy',
+      depends: _joins,);
   UserQuery get user => UserQuery.referenced(joins: [
         ..._joins,
         Join(table: 'user', onn: 'userId', from: table),
       ],);
-  NumberColumn get userId =>
-      NumberColumn(column: 'userId', offtable: 'shopacitiviy', depends: _joins);
-  TextColumn get action =>
-      TextColumn(column: 'action', offtable: 'shopacitiviy', depends: _joins);
+  NumberColumn get userId => NumberColumn(
+      column: 'userId', offtable: 'businessacitiviy', depends: _joins,);
+  TextColumn get action => TextColumn(
+      column: 'action', offtable: 'businessacitiviy', depends: _joins,);
   final _joins = <Join>[];
   static List<String> get columns =>
-      <String>['shopacitiviyId', 'userId', 'action'];
+      <String>['businessacitiviyId', 'userId', 'action'];
 }
 
-class ShopReviewQuery {
-  ShopReviewQuery();
-  factory ShopReviewQuery.referenced({required List<Join> joins}) =>
-      ShopReviewQuery().._joins.addAll(joins);
-  static const table = 'shopreview';
+class BusinessReviewQuery {
+  BusinessReviewQuery();
+  factory BusinessReviewQuery.referenced({required List<Join> joins}) =>
+      BusinessReviewQuery().._joins.addAll(joins);
+  static const table = 'businessreview';
   NumberColumn get id => NumberColumn(
-      column: 'shopreviewId', offtable: 'shopreview', depends: _joins,);
+      column: 'businessreviewId', offtable: 'businessreview', depends: _joins,);
   UserQuery get user => UserQuery.referenced(joins: [
         ..._joins,
         Join(table: 'user', onn: 'userId', from: table),
       ],);
-  NumberColumn get userId =>
-      NumberColumn(column: 'userId', offtable: 'shopreview', depends: _joins);
-  ShopQuery get shop => ShopQuery.referenced(joins: [
+  NumberColumn get userId => NumberColumn(
+      column: 'userId', offtable: 'businessreview', depends: _joins,);
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
         ..._joins,
-        Join(table: 'shop', onn: 'shopId', from: table),
+        Join(table: 'business', onn: 'businessId', from: table),
       ],);
-  NumberColumn get shopId =>
-      NumberColumn(column: 'shopId', offtable: 'shopreview', depends: _joins);
+  NumberColumn get businessId => NumberColumn(
+      column: 'businessId', offtable: 'businessreview', depends: _joins,);
   final _joins = <Join>[];
   static List<String> get columns =>
-      <String>['shopreviewId', 'userId', 'shopId'];
+      <String>['businessreviewId', 'userId', 'businessId'];
 }
 
 class ProductQuery {
@@ -345,21 +366,55 @@ class ProductQuery {
       NumberColumn(column: 'productId', offtable: 'product', depends: _joins);
   TextColumn get name =>
       TextColumn(column: 'name', offtable: 'product', depends: _joins);
-  NumberColumn get buyingPrice =>
-      NumberColumn(column: 'buyingPrice', offtable: 'product', depends: _joins);
+  NumberColumn get costPrice =>
+      NumberColumn(column: 'costPrice', offtable: 'product', depends: _joins);
   NumberColumn get sellingPrice => NumberColumn(
       column: 'sellingPrice', offtable: 'product', depends: _joins,);
   NumberColumn get quantity =>
       NumberColumn(column: 'quantity', offtable: 'product', depends: _joins);
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'business', onn: 'businessId', from: table),
+      ],);
+  NumberColumn get businessId =>
+      NumberColumn(column: 'businessId', offtable: 'product', depends: _joins);
+  BrandQuery get brand => BrandQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'brand', onn: 'brandId', from: table),
+      ],);
+  NumberColumn get brandId =>
+      NumberColumn(column: 'brandId', offtable: 'product', depends: _joins);
+  CatagoryQuery get catagory => CatagoryQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'catagory', onn: 'catagoryId', from: table),
+      ],);
+  NumberColumn get catagoryId =>
+      NumberColumn(column: 'catagoryId', offtable: 'product', depends: _joins);
+  UnitQuery get unit => UnitQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'unit', onn: 'unitId', from: table),
+      ],);
+  NumberColumn get unitId =>
+      NumberColumn(column: 'unitId', offtable: 'product', depends: _joins);
+  TextColumn get expireDate =>
+      TextColumn(column: 'expireDate', offtable: 'product', depends: _joins);
+  TextColumn get manDate =>
+      TextColumn(column: 'manDate', offtable: 'product', depends: _joins);
   TextColumn get desc =>
       TextColumn(column: 'desc', offtable: 'product', depends: _joins);
   final _joins = <Join>[];
   static List<String> get columns => <String>[
         'productId',
         'name',
-        'buyingPrice',
+        'costPrice',
         'sellingPrice',
         'quantity',
+        'businessId',
+        'brandId',
+        'catagoryId',
+        'unitId',
+        'expireDate',
+        'manDate',
         'desc',
       ];
 }
@@ -388,12 +443,12 @@ class FollowQuery {
   static const table = 'follow';
   NumberColumn get id =>
       NumberColumn(column: 'followId', offtable: 'follow', depends: _joins);
-  ShopQuery get shop => ShopQuery.referenced(joins: [
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
         ..._joins,
-        Join(table: 'shop', onn: 'shopId', from: table),
+        Join(table: 'business', onn: 'businessId', from: table),
       ],);
-  NumberColumn get shopId =>
-      NumberColumn(column: 'shopId', offtable: 'follow', depends: _joins);
+  NumberColumn get businessId =>
+      NumberColumn(column: 'businessId', offtable: 'follow', depends: _joins);
   UserQuery get user => UserQuery.referenced(joins: [
         ..._joins,
         Join(table: 'user', onn: 'userId', from: table),
@@ -401,7 +456,8 @@ class FollowQuery {
   NumberColumn get userId =>
       NumberColumn(column: 'userId', offtable: 'follow', depends: _joins);
   final _joins = <Join>[];
-  static List<String> get columns => <String>['followId', 'shopId', 'userId'];
+  static List<String> get columns =>
+      <String>['followId', 'businessId', 'userId'];
 }
 
 class OrderQuery {
@@ -417,12 +473,12 @@ class OrderQuery {
       TextColumn(column: 'type', offtable: 'order', depends: _joins);
   TextColumn get msg =>
       TextColumn(column: 'msg', offtable: 'order', depends: _joins);
-  ShopQuery get shop => ShopQuery.referenced(joins: [
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
         ..._joins,
-        Join(table: 'shop', onn: 'shopId', from: table),
+        Join(table: 'business', onn: 'businessId', from: table),
       ],);
-  NumberColumn get shopId =>
-      NumberColumn(column: 'shopId', offtable: 'order', depends: _joins);
+  NumberColumn get businessId =>
+      NumberColumn(column: 'businessId', offtable: 'order', depends: _joins);
   UserQuery get user => UserQuery.referenced(joins: [
         ..._joins,
         Join(table: 'user', onn: 'userId', from: table),
@@ -431,7 +487,7 @@ class OrderQuery {
       NumberColumn(column: 'userId', offtable: 'order', depends: _joins);
   final _joins = <Join>[];
   static List<String> get columns =>
-      <String>['orderId', 'status', 'type', 'msg', 'shopId', 'userId'];
+      <String>['orderId', 'status', 'type', 'msg', 'businessId', 'userId'];
 }
 
 class ItemsQuery {
@@ -521,12 +577,12 @@ class GiftCardQuery {
       ],);
   NumberColumn get productId =>
       NumberColumn(column: 'productId', offtable: 'giftcard', depends: _joins);
-  ShopQuery get shop => ShopQuery.referenced(joins: [
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
         ..._joins,
-        Join(table: 'shop', onn: 'shopId', from: table),
+        Join(table: 'business', onn: 'businessId', from: table),
       ],);
-  NumberColumn get shopId =>
-      NumberColumn(column: 'shopId', offtable: 'giftcard', depends: _joins);
+  NumberColumn get businessId =>
+      NumberColumn(column: 'businessId', offtable: 'giftcard', depends: _joins);
   TextColumn get redeemed =>
       TextColumn(column: 'redeemed', offtable: 'giftcard', depends: _joins);
   TextColumn get expireDate =>
@@ -538,7 +594,7 @@ class GiftCardQuery {
         'ownerId',
         'createdbyId',
         'productId',
-        'shopId',
+        'businessId',
         'redeemed',
         'expireDate',
       ];
@@ -557,12 +613,12 @@ class BlockedQuery {
       ],);
   NumberColumn get userId =>
       NumberColumn(column: 'userId', offtable: 'blocked', depends: _joins);
-  ShopQuery get shop => ShopQuery.referenced(joins: [
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
         ..._joins,
-        Join(table: 'shop', onn: 'shopId', from: table),
+        Join(table: 'business', onn: 'businessId', from: table),
       ],);
-  NumberColumn get shopId =>
-      NumberColumn(column: 'shopId', offtable: 'blocked', depends: _joins);
+  NumberColumn get businessId =>
+      NumberColumn(column: 'businessId', offtable: 'blocked', depends: _joins);
   ProductQuery get product => ProductQuery.referenced(joins: [
         ..._joins,
         Join(table: 'product', onn: 'productId', from: table),
@@ -573,7 +629,7 @@ class BlockedQuery {
       TextColumn(column: 'endDate', offtable: 'blocked', depends: _joins);
   final _joins = <Join>[];
   static List<String> get columns =>
-      <String>['blockedId', 'userId', 'shopId', 'productId', 'endDate'];
+      <String>['blockedId', 'userId', 'businessId', 'productId', 'endDate'];
 }
 
 class PolicyQuery {
@@ -607,12 +663,12 @@ class ReportQuery {
       ],);
   NumberColumn get policyId =>
       NumberColumn(column: 'policyId', offtable: 'report', depends: _joins);
-  ShopQuery get shop => ShopQuery.referenced(joins: [
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
         ..._joins,
-        Join(table: 'shop', onn: 'shopId', from: table),
+        Join(table: 'business', onn: 'businessId', from: table),
       ],);
-  NumberColumn get shopId =>
-      NumberColumn(column: 'shopId', offtable: 'report', depends: _joins);
+  NumberColumn get businessId =>
+      NumberColumn(column: 'businessId', offtable: 'report', depends: _joins);
   UserQuery get user => UserQuery.referenced(joins: [
         ..._joins,
         Join(table: 'user', onn: 'userId', from: table),
@@ -637,7 +693,7 @@ class ReportQuery {
   static List<String> get columns => <String>[
         'reportId',
         'policyId',
-        'shopId',
+        'businessId',
         'userId',
         'violatorId',
         'productId',

@@ -433,6 +433,39 @@ class Brand {
   }
 }
 
+class Unit {
+  Unit({
+    required String name,
+    this.id,
+  }) {
+    _name = name;
+  }
+
+  final _updatedFields = <String, dynamic>{};
+  int? id;
+  Future<void> save() async {
+    if (_updatedFields.isNotEmpty) {
+      final query = Query.update(
+        table: 'unit',
+        columns: _updatedFields,
+        operation: Operation('unitId'.safeTk, Operator.eq, id),
+      );
+      await (await Database().pool).execute(query.toString());
+    }
+  }
+
+  Future<bool> delete() async {
+    return UnitDb.delete(this);
+  }
+
+  late String _name;
+  String get name => _name;
+  set name(String m) {
+    _updatedFields['name'] = m;
+    _name = m;
+  }
+}
+
 class Address {
   Address({
     this.id,
@@ -529,8 +562,8 @@ class Address {
   }
 }
 
-class Shop {
-  Shop({
+class Business {
+  Business({
     required String name,
     required int ownerId,
     required int addressId,
@@ -597,16 +630,16 @@ class Shop {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'shop',
+        table: 'business',
         columns: _updatedFields,
-        operation: Operation('shopId'.safeTk, Operator.eq, id),
+        operation: Operation('businessId'.safeTk, Operator.eq, id),
       );
       await (await Database().pool).execute(query.toString());
     }
   }
 
   Future<bool> delete() async {
-    return ShopDb.delete(this);
+    return BusinessDb.delete(this);
   }
 
   late String _name;
@@ -638,9 +671,9 @@ class Shop {
   }
 }
 
-class ShopPrefrences {
-  ShopPrefrences({
-    int? shopId,
+class BusinessPrefrences {
+  BusinessPrefrences({
+    int? businessId,
     this.id,
     bool? isAvailableOnline,
     bool? notifyNewProduct,
@@ -649,20 +682,21 @@ class ShopPrefrences {
     _isAvailableOnline = isAvailableOnline;
     _notifyNewProduct = notifyNewProduct;
     _receiveOrder = receiveOrder;
-    _shopId = shopId;
+    _businessId = businessId;
   }
-  int? _shopId;
-  int? get shopId => _shopId;
-  set shopId(int? id) {
-    _updatedFields['shop'] = id;
-    _shopId = id;
+  int? _businessId;
+  int? get businessId => _businessId;
+  set businessId(int? id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
   }
 
-  ModelHolder<Shop>? _getshop;
-  Future<Shop?> get shop {
-    _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)),);
-    return _getshop!.instance;
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId!)),);
+    return _getbusiness!.instance;
   }
 
   final _updatedFields = <String, dynamic>{};
@@ -670,16 +704,16 @@ class ShopPrefrences {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'shopprefrences',
+        table: 'businessprefrences',
         columns: _updatedFields,
-        operation: Operation('shopprefrencesId'.safeTk, Operator.eq, id),
+        operation: Operation('businessprefrencesId'.safeTk, Operator.eq, id),
       );
       await (await Database().pool).execute(query.toString());
     }
   }
 
   Future<bool> delete() async {
-    return ShopPrefrencesDb.delete(this);
+    return BusinessPrefrencesDb.delete(this);
   }
 
   bool? _isAvailableOnline;
@@ -704,8 +738,8 @@ class ShopPrefrences {
   }
 }
 
-class ShopAcitiviy {
-  ShopAcitiviy({
+class BusinessAcitiviy {
+  BusinessAcitiviy({
     required int userId,
     this.id,
     String? action,
@@ -732,16 +766,16 @@ class ShopAcitiviy {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'shopacitiviy',
+        table: 'businessacitiviy',
         columns: _updatedFields,
-        operation: Operation('shopacitiviyId'.safeTk, Operator.eq, id),
+        operation: Operation('businessacitiviyId'.safeTk, Operator.eq, id),
       );
       await (await Database().pool).execute(query.toString());
     }
   }
 
   Future<bool> delete() async {
-    return ShopAcitiviyDb.delete(this);
+    return BusinessAcitiviyDb.delete(this);
   }
 
   String? _action;
@@ -752,14 +786,14 @@ class ShopAcitiviy {
   }
 }
 
-class ShopReview {
-  ShopReview({
+class BusinessReview {
+  BusinessReview({
     required int userId,
-    required int shopId,
+    required int businessId,
     this.id,
   }) {
     _userId = userId;
-    _shopId = shopId;
+    _businessId = businessId;
   }
   late int _userId;
   int get userId => _userId;
@@ -775,18 +809,19 @@ class ShopReview {
     return _getuser!.instance;
   }
 
-  late int _shopId;
-  int get shopId => _shopId;
-  set shopId(int id) {
-    _updatedFields['shop'] = id;
-    _shopId = id;
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
   }
 
-  ModelHolder<Shop>? _getshop;
-  Future<Shop?> get shop {
-    _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)),);
-    return _getshop!.instance;
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
+    return _getbusiness!.instance;
   }
 
   final _updatedFields = <String, dynamic>{};
@@ -794,33 +829,103 @@ class ShopReview {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'shopreview',
+        table: 'businessreview',
         columns: _updatedFields,
-        operation: Operation('shopreviewId'.safeTk, Operator.eq, id),
+        operation: Operation('businessreviewId'.safeTk, Operator.eq, id),
       );
       await (await Database().pool).execute(query.toString());
     }
   }
 
   Future<bool> delete() async {
-    return ShopReviewDb.delete(this);
+    return BusinessReviewDb.delete(this);
   }
 }
 
 class Product {
   Product({
     required String name,
-    required double buyingPrice,
+    required double costPrice,
     required double sellingPrice,
-    required int quantity,
+    required double quantity,
+    required int businessId,
+    int? brandId,
+    int? catagoryId,
+    int? unitId,
     this.id,
+    DateTime? expireDate,
+    DateTime? manDate,
     String? desc,
   }) {
     _name = name;
-    _buyingPrice = buyingPrice;
+    _costPrice = costPrice;
     _sellingPrice = sellingPrice;
     _quantity = quantity;
+    _expireDate = expireDate;
+    _manDate = manDate;
     _desc = desc;
+    _businessId = businessId;
+    _brandId = brandId;
+    _catagoryId = catagoryId;
+    _unitId = unitId;
+  }
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
+  }
+
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
+    return _getbusiness!.instance;
+  }
+
+  int? _brandId;
+  int? get brandId => _brandId;
+  set brandId(int? id) {
+    _updatedFields['brand'] = id;
+    _brandId = id;
+  }
+
+  ModelHolder<Brand>? _getbrand;
+  Future<Brand?> get brand {
+    _getbrand ??= ModelHolder<Brand>(
+        getModelInstance: () =>
+            BrandDb.get(where: (t) => t.id.equals(brandId!)),);
+    return _getbrand!.instance;
+  }
+
+  int? _catagoryId;
+  int? get catagoryId => _catagoryId;
+  set catagoryId(int? id) {
+    _updatedFields['catagory'] = id;
+    _catagoryId = id;
+  }
+
+  ModelHolder<Catagory>? _getcatagory;
+  Future<Catagory?> get catagory {
+    _getcatagory ??= ModelHolder<Catagory>(
+        getModelInstance: () =>
+            CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),);
+    return _getcatagory!.instance;
+  }
+
+  int? _unitId;
+  int? get unitId => _unitId;
+  set unitId(int? id) {
+    _updatedFields['unit'] = id;
+    _unitId = id;
+  }
+
+  ModelHolder<Unit>? _getunit;
+  Future<Unit?> get unit {
+    _getunit ??= ModelHolder<Unit>(
+        getModelInstance: () => UnitDb.get(where: (t) => t.id.equals(unitId!)),);
+    return _getunit!.instance;
   }
 
   final _updatedFields = <String, dynamic>{};
@@ -847,11 +952,11 @@ class Product {
     _name = m;
   }
 
-  late double _buyingPrice;
-  double get buyingPrice => _buyingPrice;
-  set buyingPrice(double m) {
-    _updatedFields['buyingPrice'] = m;
-    _buyingPrice = m;
+  late double _costPrice;
+  double get costPrice => _costPrice;
+  set costPrice(double m) {
+    _updatedFields['costPrice'] = m;
+    _costPrice = m;
   }
 
   late double _sellingPrice;
@@ -861,11 +966,25 @@ class Product {
     _sellingPrice = m;
   }
 
-  late int _quantity;
-  int get quantity => _quantity;
-  set quantity(int m) {
+  late double _quantity;
+  double get quantity => _quantity;
+  set quantity(double m) {
     _updatedFields['quantity'] = m;
     _quantity = m;
+  }
+
+  DateTime? _expireDate;
+  DateTime? get expireDate => _expireDate;
+  set expireDate(DateTime? m) {
+    _updatedFields['expireDate'] = m;
+    _expireDate = m;
+  }
+
+  DateTime? _manDate;
+  DateTime? get manDate => _manDate;
+  set manDate(DateTime? m) {
+    _updatedFields['manDate'] = m;
+    _manDate = m;
   }
 
   String? _desc;
@@ -918,25 +1037,26 @@ class Like {
 
 class Follow {
   Follow({
-    required int shopId,
+    required int businessId,
     required int userId,
     this.id,
   }) {
-    _shopId = shopId;
+    _businessId = businessId;
     _userId = userId;
   }
-  late int _shopId;
-  int get shopId => _shopId;
-  set shopId(int id) {
-    _updatedFields['shop'] = id;
-    _shopId = id;
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
   }
 
-  ModelHolder<Shop>? _getshop;
-  Future<Shop?> get shop {
-    _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)),);
-    return _getshop!.instance;
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
+    return _getbusiness!.instance;
   }
 
   late int _userId;
@@ -973,7 +1093,7 @@ class Follow {
 
 class Order {
   Order({
-    required int shopId,
+    required int businessId,
     required int userId,
     this.id,
     String? status,
@@ -983,21 +1103,22 @@ class Order {
     _status = status;
     _type = type;
     _msg = msg;
-    _shopId = shopId;
+    _businessId = businessId;
     _userId = userId;
   }
-  late int _shopId;
-  int get shopId => _shopId;
-  set shopId(int id) {
-    _updatedFields['shop'] = id;
-    _shopId = id;
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
   }
 
-  ModelHolder<Shop>? _getshop;
-  Future<Shop?> get shop {
-    _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)),);
-    return _getshop!.instance;
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
+    return _getbusiness!.instance;
   }
 
   late int _userId;
@@ -1209,7 +1330,7 @@ class GiftCard {
     required int ownerId,
     int? createdById,
     int? productId,
-    int? shopId,
+    int? businessId,
     this.id,
     bool? redeemed,
     DateTime? expireDate,
@@ -1220,7 +1341,7 @@ class GiftCard {
     _ownerId = ownerId;
     _createdById = createdById;
     _productId = productId;
-    _shopId = shopId;
+    _businessId = businessId;
   }
   late int _ownerId;
   int get ownerId => _ownerId;
@@ -1266,18 +1387,19 @@ class GiftCard {
     return _getproduct!.instance;
   }
 
-  int? _shopId;
-  int? get shopId => _shopId;
-  set shopId(int? id) {
-    _updatedFields['shop'] = id;
-    _shopId = id;
+  int? _businessId;
+  int? get businessId => _businessId;
+  set businessId(int? id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
   }
 
-  ModelHolder<Shop>? _getshop;
-  Future<Shop?> get shop {
-    _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)),);
-    return _getshop!.instance;
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId!)),);
+    return _getbusiness!.instance;
   }
 
   final _updatedFields = <String, dynamic>{};
@@ -1322,14 +1444,14 @@ class GiftCard {
 class Blocked {
   Blocked({
     int? userId,
-    int? shopId,
+    int? businessId,
     int? productId,
     this.id,
     DateTime? endDate,
   }) {
     _endDate = endDate;
     _userId = userId;
-    _shopId = shopId;
+    _businessId = businessId;
     _productId = productId;
   }
   int? _userId;
@@ -1346,18 +1468,19 @@ class Blocked {
     return _getuser!.instance;
   }
 
-  int? _shopId;
-  int? get shopId => _shopId;
-  set shopId(int? id) {
-    _updatedFields['shop'] = id;
-    _shopId = id;
+  int? _businessId;
+  int? get businessId => _businessId;
+  set businessId(int? id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
   }
 
-  ModelHolder<Shop>? _getshop;
-  Future<Shop?> get shop {
-    _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId!)),);
-    return _getshop!.instance;
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId!)),);
+    return _getbusiness!.instance;
   }
 
   int? _productId;
@@ -1453,7 +1576,7 @@ class Policy {
 
 class Report {
   Report({
-    required int shopId, required int userId, int? policyId,
+    required int businessId, required int userId, int? policyId,
     int? violatorId,
     int? productId,
     this.id,
@@ -1461,7 +1584,7 @@ class Report {
   }) {
     _desc = desc;
     _policyId = policyId;
-    _shopId = shopId;
+    _businessId = businessId;
     _userId = userId;
     _violatorId = violatorId;
     _productId = productId;
@@ -1481,18 +1604,19 @@ class Report {
     return _getpolicy!.instance;
   }
 
-  late int _shopId;
-  int get shopId => _shopId;
-  set shopId(int id) {
-    _updatedFields['shop'] = id;
-    _shopId = id;
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
   }
 
-  ModelHolder<Shop>? _getshop;
-  Future<Shop?> get shop {
-    _getshop ??= ModelHolder<Shop>(
-        getModelInstance: () => ShopDb.get(where: (t) => t.id.equals(shopId)),);
-    return _getshop!.instance;
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
+    return _getbusiness!.instance;
   }
 
   late int _userId;

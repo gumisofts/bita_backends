@@ -4,7 +4,11 @@ analyzer:
     - build/**
 linter:
   rules:
-    file_names: false
+    # file_names: false
     public_member_api_docs: false
     lines_longer_than_80_chars: false
     avoid_dynamic_calls: false
+    flutter_style_todos: true
+    # Generated items have issues
+    cascade_invocations: false
+    unnecessary_raw_strings: false

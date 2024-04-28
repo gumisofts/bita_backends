@@ -2,106 +2,294 @@ paths:
   /brands:
     get:
       operationId: InventoryGetBrands
-      description: Get available Brands
-      summary: Get available Brands
+      description: Get available brands
+      summary: Get available brands
+      tags: 
+        - Stock
       responses:
         200:
           description: responses is completed Successfully
           content:
             application/json:
               schema:
-                type: object
+                type: array
+                items:
+                  $ref: "../components.yaml#/components/schemas/Brand"
+                
         403:
           $ref: "../error_responses.yaml#/responses/403"
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
   /catagories:
     get:
       operationId: InventoryGetCatagory
-      description: Get available Catagories
-      summary: Get available Brands
+      description: Get available catagories
+      summary: Get available catagories
+      tags: 
+        - Stock
       responses:
         200:
           description: responses is completed Successfully
           content:
             application/json:
               schema:
-                type: object
+                $ref: "../components.yaml#/components/schemas/Catagory"
         403:
           $ref: "../error_responses.yaml#/responses/403"
-  /shops:
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  /business/me:
     get:
+      security: [{ApiKey: [], BearerToken: []}]
+      operationId: GetMyShops
+      description: Get businesses for current user
+      summary:  Get businesses for current user
+      tags: 
+        - Stock
+      responses:
+        200:
+          description: Some description
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "../components.yaml#/components/schemas/Bussiness"
+        401:
+          $ref: "../error_responses.yaml#/responses/401" 
+        403:
+          $ref: "../error_responses.yaml#/responses/403" 
+        500:
+          $ref: "../error_responses.yaml#/responses/500" 
+  /business:
+    post:
       # parameters:
       #   - name: id
       #     required: false
       #     schema:
       #       $ref: "../components.yaml#/components/schemas/Id"
-      operationId: GetShopsInventory
-      description: Get shops for inventory
-      summary: Get shops for inventory
+      security: [{ApiKey: [], BearerToken: []}]
+      operationId: CreateShopsInventory
+      description: Create shop
+      summary: Create business instance
+      tags: 
+        - Stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../components.yaml#/components/schemas/Bussiness"
       responses:
         200:
-          description: Some description
+          description:  Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components.yaml#/components/schemas/Bussiness"
+        400:
+          description: Bad request
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  name:
+                    type: string
+                    example: this field is required
+                  catagoryId:
+                    type: string
+                    example: this field is required
         403:
-          $ref: "../error_responses.yaml#/responses/403" 
-          
-  /shops/{id}:
-    get:
+          $ref: "../error_responses.yaml#/responses/403"
+        
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  
+  /business/{id}:
+    patch:
       parameters:
         - name: id
+          required: false
+          in: path
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+      security: [{ApiKey: [], BearerToken: []}]
+      operationId: kk
+      description: Update business information
+      summary: Update business instance
+      tags: 
+        - Stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                $ref: "../components.yaml#/components/schemas/Bussiness/properties"
+      responses:
+        200:
+          description:  Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components.yaml#/components/schemas/Bussiness"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: this field is required
+                  catagoryId:
+                    type: string
+                    example: this field is required
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  
+  /products:
+    post:
+      security: [{ApiKey: [], BearerToken: []}]
+      summary: Create product
+      description: Create product 
+      operationId: CreateProduct
+      tags:
+        - Stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "../components.yaml#/components/schemas/Product"
+      responses:
+        200:
+          description: Request is completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components.yaml#/components/schemas/Product"
+        400:
+          description: Error in request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  buyingPrice:
+                    type: number
+                  sellingPrice:
+                    type: number
+                  desc:
+                    type: string
+
+        401:
+          $ref: "../error_responses.yaml#/responses/401"
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+      
+  
+  
+  /products/{bizId}:
+    get:
+      security: [{ApiKey: [], BearerToken: []}]
+      parameters:
+        - name: bizId
           required: true
           in: path
           schema:
             $ref: "../components.yaml#/components/schemas/Id"
-      operationId: GetShopsByIdInventory
-      description: Get shops for inventory
-      summary: Get shops for inventory
-      responses:
-        200:
-          description: Request completed Successfully
-          content:
-            application/json:
-              schema:
-                type: object
-        403:
-          $ref: "../error_responses.yaml#/responses/403" 
-          
-  /shops/me:
-    get:
-      operationId: GetMyShops
-      description: Get shops for current user
-      summary:  Get shops for current user
-      responses:
-        200:
-          description: Some description
-          content:
-            application/json:
-              schema:
-                type: object
-        403:
-          $ref: "../error_responses.yaml#/responses/403" 
-  /products/{id}:
-    get:
-      parameters:
-        - name: id
-          required: true
-          in: path
+        - name: offset
+          in: query
           schema:
-            $ref: "../components.yaml#/components/schemas/Id"
+            type: integer
+            format: index
+            example: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            example: 10
       operationId: GetShopProducts
-      description: Get products by for provided shop Id
-      summary: Get Shops Product
+      description: Get products by for provided business Id
+      summary: Get business products
+      tags: 
+        - Stock
       responses:
         200:
-          description: Some description
+          description: Request is completed Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "../components.yaml#/components/schemas/Product"
+        401:
+          $ref: "../error_responses.yaml#/responses/401" 
+        403:
+          $ref: "../error_responses.yaml#/responses/403" 
+        500:
+          $ref: "../error_responses.yaml#/responses/500" 
+  /products/{bizId}/{productId}:
+    patch:
+      security: [{ApiKey: [], BearerToken: []}]
+      parameters:
+        - name: bizId
+          required: true
+          in: path
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+        - name: productId
+          required: true
+          in: path
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+      operationId: UpdateBusinessProduct
+      description: Update product by for provided business Id and product id
+      summary: Update business product
+      tags: 
+        - Stock
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                $ref: "../components.yaml#/components/schemas/Product/properties"
+              
+      responses:
+        200:
+          description: Request is completed Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components.yaml#/components/schemas/Product"
+        401:
+          $ref: "../error_responses.yaml#/responses/401"
+        400:
+          description: Bad request
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  name:
+                    type: string
+                    example: name cannot be null
+                  catagoryId:
+                    type: string
+                    example: this field is required
         403:
           $ref: "../error_responses.yaml#/responses/403" 
+        500:
+          $ref: "../error_responses.yaml#/responses/500" 
   /settings/{id}:
     get:
       parameters:
@@ -111,8 +299,10 @@ paths:
           schema:
             $ref: "../components.yaml#/components/schemas/Id"
       operationId: GetShopPreference
-      description: Get shops Preference(Settings)
-      summary: Get shops Preference(Settings)
+      description: Get businesses preferences
+      summary: Get businesses preferences
+      tags: 
+        - Stock
       responses:
         200:
           description: Request completed Successfully

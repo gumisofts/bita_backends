@@ -1,8 +1,9 @@
 components:
   schemas:
     Id:
-      description: Unique resource identifier
+      description: unique resource identifier
       type: integer
+      example: 13
       readOnly: true
     User:
       type: object
@@ -44,11 +45,55 @@ components:
         - id
         - name
         - shopId
+        - costPrice
+        - sellingPrice
+        - quantity
       properties:
         id:
           $ref: "#/components/schemas/Id"
         name:
           type: string
+          example: Nike Air Max
+        costPrice: 
+          type: number
+          example: 1999
+        sellingPrice: 
+          type: number
+          example: 2999
+        # status:
+        #   type: string
+        quantity:
+          type: number
+          example: 23
+        shopId:
+          type: integer
+          example: 3
+        brandId:
+          type: integer
+          example: 4
+        catagoryId:
+          type: integer
+          example: 2
+        unitId:
+          type: integer
+          example: 2
+        
+        image:
+          type: string
+          format: url
+          example: https://medias.gumiapps.com/license.png
+          readOnly: true
+        expireDate:
+          type: string
+          format: Iso8601String
+          example: 2024-04-02
+        manDate:
+          type: string
+          format: Iso8601String
+          example: 2024-04-02
+        desc:
+          type: string
+
     ProductView:
       type: object
       required:
@@ -71,41 +116,88 @@ components:
         name: Samsung S10 Plus
         price: 20000
         shopId: 223
-
+    Bussiness:
+      type: object
+      required:
+        - id
+        - name
+        - ownerId
+        - catagoryId
+        - address
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+        name:
+          type: string
+          example: Dagi Computers
+        ownerId:
+          $ref: "#/components/schemas/Id"
+        catagoryId:
+          type: integer
+          format: int64
+        address:
+          $ref: "#/components/schemas/Address"
+        logo: 
+          type: string
+          format: url
+          example: https://bita.gumiapps.com/license.png
+          readOnly: true
+          
+        bgImage: 
+          type: string
+          format: url
+          example: https://bita.gumiapps.com/license.png
+          readOnly: true
+    Address:
+      type: object
+      properties:
+        lat:
+          type: number
+          example: 9.005401
+        lng:
+          type: number
+          example: 38.763611
+        plusCode: 
+          type: string
+          example: 2PMR+7C
+        sublocality:
+          type: string
+          example: Arada 01
+        locality: 
+          type: string
+          example: Lideta
+        admin1: 
+          type: string
+          example: Addis Ababa
+        admin2:
+          type: string
+          example: Addis Ababa
+        country: 
+          type: string
+          example: Ethiopia
+    Catagory:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+        name:
+          type: string
+          example: Clothing and Life Style
         
-
-    # Http Errors
-    NotFound:
+    Brand:
       type: object
       required:
-        - detail
+        - name
+        - catagoryId
       properties:
-        detail:
-          description: Resource Not Found
+        name:
           type: string
-    BadRequest:
-      type: object
-      required:
-        - detail
-      properties:
-        detail: 
-          description: Request is not well formatted 
-          type: string
-    UnAuthorized:
-      type: object
-      required:
-        - detail
-      properties:
-        detail:
-          description: UnAuthorized Request
-    Error:
-      type: object
-      required:
-        - detail
-      properties:
-        detail:
-          description: A human readable error message
-          type: string
+          example: Nike
+        catagoryId:
+          $ref: "#/components/schemas/Id"
   securitySchemes:
     basicHttpAuthentication:
       description: Basic HTTP Authentication

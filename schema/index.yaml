@@ -12,47 +12,50 @@ servers:
   - url: https://bita.gumiapps.com
 paths:
   # Paths related to users
-  /users/account/getStartedWithPhone:
+  /users/getStartedWithPhone:
     $ref: "user/user.yaml#/paths/~1users~1getStartedWithPhone"
-  /users/account/getStartedWithEmail:
+  /users/getStartedWithEmail:
     $ref: "user/user.yaml#/paths/~1users~1getStartedWithEmail"
-  /users/account/verifyOtp:
+  /users/verifyOtp:
     $ref: "user/user.yaml#/paths/~1users~1verifyOtp"
 
   /users/{id}:
     $ref: "user/user.yaml#/paths/~1{id}"
+  /users/me:
+    $ref: "user/user.yaml#/paths/~1me"
   # Shopping
   /shopping/items:
     $ref: "shopping/product.yaml#/paths/~1items"
-  /shopping/shops/{id}:
-    $ref: "shopping/product.yaml#/paths/~1shops~1{id}"
-  /shopping/shops/popular:
+  /shopping/bussiness/{id}:
+    $ref: "shopping/product.yaml#/paths/~1business~1{id}"
+  /shopping/bussiness/popular:
     $ref: "shopping/product.yaml#/paths/~1shops~1popular"
   /shopping/catagories:  
     $ref: "shopping/product.yaml#/paths/~1shops~1catagories"
   /shopping/brands:
     $ref: "shopping/product.yaml#/paths/~1shops~1brands"
     # inventory 
-  /inventory/brands:
-    $ref: "stock/stock.yaml#/paths/~1brands"
   /inventory/catagories:
     $ref: "stock/stock.yaml#/paths/~1catagories"
-  /inventory/shops:
-    $ref: "stock/stock.yaml#/paths/~1shops"
-  /inventory/shops/me:
-    $ref: "stock/stock.yaml#/paths/~1shops~1me"
-  /inventory/shops/{id}:
-    $ref: "stock/stock.yaml#/paths/~1shops~1{id}"
-  /inventory/shops/settings/{id}:
+  /business/brands:
+    $ref: "stock/stock.yaml#/paths/~1brands"
+  # Businness
+  /business:
+    $ref: "stock/stock.yaml#/paths/~1business"
+  /business/{id}:
+    $ref: "stock/stock.yaml#/paths/~1business~1{id}"
+  /business/mine:
+    $ref: "stock/stock.yaml#/paths/~1business~1me"
+  # Business Preference
+  /business/bussiness/settings/{id}:
     $ref: "stock/stock.yaml#/paths/~1settings~1{id}"
-  # /inventory/products:
-  #   $ref: "stock/stock.yaml#/paths/~1products"
-  /inventory/products/{id}:
-    $ref: "stock/stock.yaml#/paths/~1products~1{id}"
-
-  
-
-
+  # Product
+  /business/products:
+    $ref: "stock/stock.yaml#/paths/~1products"
+  /business/products/{bizId}:
+    $ref: "stock/stock.yaml#/paths/~1products~1{bizId}"
+  /business/products/{bizId}/{productId}:
+    $ref: "stock/stock.yaml#/paths/~1products~1{bizId}~1{productId}"
 
   
 components:
@@ -62,5 +65,3 @@ components:
 
 security:
   - ApiKey: []
-  - BearerToken: []
-  - basicHttpAuthentication: []

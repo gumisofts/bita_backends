@@ -11,11 +11,11 @@ Router _$UsersApiRouter(UsersApi service) {
   router.add(
     'PUT',
     r'/<id>',
-    service.getAUser,
+    service.updateThroughPutAUser,
   );
   router.add(
     'DELETE',
-    r'/<id>',
+    r'/me',
     service.delAUser,
   );
   router.add(

@@ -6,6 +6,8 @@ paths:
       operationId: GetStartedWithPhone
       summary: Get started With Phone Number
       description: Initiates Login or Signup with phone
+      tags: 
+        - Auth🔑
       requestBody:
         content:
             application/json:
@@ -55,6 +57,8 @@ paths:
         $ref: '#/paths/~1users~1getStartedWithPhone/post/security'
       operationId: GetStartedWithEmail
       summary: Get started With Email
+      tags: 
+        - Auth🔑
       description: Initiates Login or Signup with Email
       requestBody:
         content:
@@ -82,11 +86,12 @@ paths:
           $ref: ../error_responses.yaml#/responses/500
   /users/verifyOtp:
     post:
-
       security:
         $ref: '#/paths/~1users~1getStartedWithPhone/post/security'
       operationId: VerifyOtp
-      summary: Verify Email or Phone
+      summary: Verify OTP and Login
+      tags: 
+        - Auth🔑
       description: Verifies OTP and returns access 
 
       requestBody:
@@ -138,33 +143,77 @@ paths:
         500:
           $ref: ../error_responses.yaml#/responses/500
 
-  
-
   /{id}:
     parameters:
-        - name: id
-          in: path
-          required: true
-          schema: 
-            $ref: ../components.yaml#/components/schemas/Id
+      - name: id
+        in: path
+        schema:
+          $ref: "../components.yaml#/components/schemas/Id"
     get:
-        security:
-          - ApiKey: []
-
-        summary: Get Users by id
+        security: [{ApiKey: [], BearerToken: []}]
+        summary: Get User By Id
+        tags: 
+          - Users
         operationId: GetUserById
         responses:
           200:
-            description: Cool
+            description: returns user with specified id
             content:
               application/json:
-                schema:
-                  $ref: ../components.yaml#/components/schemas/User
+                  schema:
+                    $ref: ../components.yaml#/components/schemas/User
+          401:
+            $ref: ../error_responses.yaml#/responses/401
+          403:
+            $ref: ../error_responses.yaml#/responses/403
           404:
-            description: User Not Found
+            $ref: ../error_responses.yaml#/responses/404
+          500:
+           $ref: ../error_responses.yaml#/responses/500
+  /me:
+    get:
+        security: [{ApiKey: [], BearerToken: []}]
+        summary: Get Current User
+        operationId: GetCurrentUser
+        tags: 
+          - Users
+        responses:
+          200:
+            description: Get Current User
             content:
               application/json:
-                schema:
-                    $ref: ../components.yaml#/components/schemas/NotFound
+                  schema:
+                    $ref: ../components.yaml#/components/schemas/User
+          401:
+            $ref: ../error_responses.yaml#/responses/401
+          403:
+            $ref: ../error_responses.yaml#/responses/403
+          500:
+           $ref: ../error_responses.yaml#/responses/500
+    delete:
+      security: [{ApiKey: [],BearerToken: []}]
+      summary: Delete User
+      tags: 
+        - Users
+      description: Schedules user to be deleted after 14 days
+      operationId: deleteUser
+      responses:
+        200:
+          description: User is deleted succesfully
+          content:
+            application/json: 
+              schema:
+                type: object
+        401:
+          $ref: ../error_responses.yaml#/responses/401
+
+        403:
+         $ref: ../error_responses.yaml#/responses/403
+
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+              
+
+      
 
 

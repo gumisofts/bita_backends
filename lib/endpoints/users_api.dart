@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bita_markets/models/schema.dart';
@@ -13,28 +12,36 @@ part 'users_api.g.dart';
 class UsersApi {
   Router get router => _$UsersApiRouter(this);
   @Route.put('/<id>')
-  Future<Response> getAUser(Request request, String id) async {
-    // final data = await form(
-    //   request,
-    //   fields: [
-    //     FieldValidator(name: 'data'),
-    //     FieldValidator(name: 'extra_data'),
-    //   ],
-    // );
+  Future<Response> updateThroughPutAUser(Request request, String id) =>
+      updateUser(request, id);
 
-    return Response.forbidden(
-      jsonEncode({'detail': 'you don have permission'}),
-      headers: {HttpHeaders.contentTypeHeader: ContentType.json.value},
-    );
-  }
+  @Route.delete('/me')
+  Future<Response> delAUser(Request request) => handleRequestWithPermission(
+        request,
+        permission: () {
+          if (!request.isAuthenticated) {
+            throw unAuthorizedException;
+          }
+          // if (request.contextUser?.id != int.parse(id)) {
+          //   throw forbidenException;
+          // }
+        },
+        endpoint: () async {
+          // final user =
+          //     await UserDb.get(where: (t) => t.id.equals(int.parse(id)));
 
-  @Route.delete('/<id>')
-  Future<Response> delAUser(Request request, String id) async {
-    return Response.forbidden(
-      jsonEncode({'detail': 'you don have permission'}),
-      headers: {HttpHeaders.contentTypeHeader: ContentType.json.value},
-    );
-  }
+          // if (user == null) {
+          //   return jsonResponse(
+          //     body: {'detail': 'user not found'},
+          //     statusCode: HttpStatus.notFound,
+          //   );
+          // }
+          // request.contextUser;
+          // TODO(nuradic): schedule the deletion process on +14 days
+          // await request.contextUser?.delete();
+          return jsonResponse();
+        },
+      );
 
   @Route('PATCH', '/<id>')
   Future<Response> updateUser(Request request, String id) async {
@@ -108,14 +115,14 @@ class UsersApi {
           var pass =
               await PasswordDb.get(where: (t) => t.userId.equals(user!.id!));
 
-          pass ??= await PasswordDb.create(userId: user!.id!);
+          pass ??= await PasswordDb.create(userId: user.id!);
 
           final otp = generateSecureRandom();
-          pass!.emailOtp = otp.toString();
+          pass.emailOtp = otp.toString();
 
           await pass.save();
 
-          await SendMail.sendOtp(otp.toString(), user!);
+          await SendMail.sendOtp(otp.toString(), user);
           return jsonResponse(
             body: {
               'user': user.toJson(),
@@ -152,14 +159,14 @@ class UsersApi {
           var pass =
               await PasswordDb.get(where: (t) => t.userId.equals(user!.id!));
 
-          pass ??= await PasswordDb.create(userId: user!.id!);
+          pass ??= await PasswordDb.create(userId: user.id!);
 
           final otp = generateSecureRandom();
-          pass!.phoneOtp = otp.toString();
+          pass.phoneOtp = otp.toString();
 
           await pass.save();
 
-          await SendSms.sendOtp(otp.toString(), user!);
+          await SendSms.sendOtp(otp.toString(), user);
           return jsonResponse(
             body: {
               'user': user.toJson(),
@@ -192,7 +199,7 @@ class UsersApi {
               FieldValidator<int>(
                 name: 'otp',
                 isRequired: true,
-                parse: int.parse,
+                // parse: int.parse,
                 validator: (value) => value > 99999 && value <= 999999
                     ? null
                     : 'otp should be six digit',
@@ -206,7 +213,7 @@ class UsersApi {
               ),
               FieldValidator<int>(
                 name: 'userId',
-                parse: int.parse,
+                // parse: int.parse,
                 isRequired: true,
               ),
             ],

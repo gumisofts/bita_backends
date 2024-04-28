@@ -32,7 +32,7 @@ extension FileTbDb on FileTb {
     return result.map(fromRow);
   }
 
-  static Future<FileTb?> create({
+  static Future<FileTb> create({
     required String url,
     bool? isAbsolute,
   }) async {
@@ -45,12 +45,8 @@ extension FileTbDb on FileTb {
       table: 'filetb',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(FileTb filetb) async {
@@ -78,9 +74,10 @@ extension FileTbDb on FileTb {
       table: FileTbQuery.table,
       columns: FileTbQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -133,7 +130,7 @@ extension UserDb on User {
     return result.map(fromRow);
   }
 
-  static Future<User?> create({
+  static Future<User> create({
     String? firstName,
     String? lastName,
     String? phoneNumber,
@@ -154,12 +151,8 @@ extension UserDb on User {
       table: 'user',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(User user) async {
@@ -187,9 +180,10 @@ extension UserDb on User {
       table: UserQuery.table,
       columns: UserQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -242,7 +236,7 @@ extension PasswordDb on Password {
     return result.map(fromRow);
   }
 
-  static Future<Password?> create({
+  static Future<Password> create({
     required int userId,
     String? password,
     String? emailOtp,
@@ -263,12 +257,8 @@ extension PasswordDb on Password {
       table: 'password',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Password password) async {
@@ -296,9 +286,10 @@ extension PasswordDb on Password {
       table: PasswordQuery.table,
       columns: PasswordQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -347,7 +338,7 @@ extension InfoChangeRequestDb on InfoChangeRequest {
     return result.map(fromRow);
   }
 
-  static Future<InfoChangeRequest?> create({
+  static Future<InfoChangeRequest> create({
     required int userId,
     String? newEmail,
     String? newPhone,
@@ -364,12 +355,8 @@ extension InfoChangeRequestDb on InfoChangeRequest {
       table: 'infochangerequest',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(InfoChangeRequest infochangerequest) async {
@@ -398,9 +385,10 @@ extension InfoChangeRequestDb on InfoChangeRequest {
       table: InfoChangeRequestQuery.table,
       columns: InfoChangeRequestQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -445,7 +433,7 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
     return result.map(fromRow);
   }
 
-  static Future<UserInterestAndInteraction?> create({
+  static Future<UserInterestAndInteraction> create({
     required int catagoryId,
     required int userId,
   }) async {
@@ -458,12 +446,8 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
       table: 'userinterestandinteraction',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(
@@ -493,9 +477,10 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
       table: UserInterestAndInteractionQuery.table,
       columns: UserInterestAndInteractionQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -541,7 +526,7 @@ extension CatagoryDb on Catagory {
     return result.map(fromRow);
   }
 
-  static Future<Catagory?> create({
+  static Future<Catagory> create({
     required String name,
     String? desc,
   }) async {
@@ -554,12 +539,8 @@ extension CatagoryDb on Catagory {
       table: 'catagory',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Catagory catagory) async {
@@ -587,9 +568,10 @@ extension CatagoryDb on Catagory {
       table: CatagoryQuery.table,
       columns: CatagoryQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -636,7 +618,7 @@ extension BrandDb on Brand {
     return result.map(fromRow);
   }
 
-  static Future<Brand?> create({
+  static Future<Brand> create({
     required String name,
     int? catagoryId,
     String? desc,
@@ -651,12 +633,8 @@ extension BrandDb on Brand {
       table: 'brand',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Brand brand) async {
@@ -684,15 +662,102 @@ extension BrandDb on Brand {
       table: BrandQuery.table,
       columns: BrandQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
 
   static Future<Brand?> get(
       {required Operation Function(BrandQuery) where,}) async {
+    final res = await filter(where: where);
+    if (res.isEmpty) return null;
+    return res.first;
+  }
+}
+
+extension UnitDb on Unit {
+  Map<String, dynamic> toJson(
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+    final json = {
+      'id': id,
+      'name': name,
+    };
+    if (excludeNull) {
+      json.removeWhere((key, value) => value == null);
+    }
+    if (only != null) {
+      json.removeWhere((key, value) => !only.contains(key));
+    } else if (exclude != null) {
+      json.removeWhere((key, value) => exclude.contains(key));
+    }
+    return json;
+  }
+
+  static Unit fromRow(ResultRow row) {
+    final map = row.toColumnMap();
+    return Unit(
+      id: map['unitId'] as int,
+      name: map['name'] as String,
+    );
+  }
+
+  static Iterable<Unit> fromResult(Result result) {
+    return result.map(fromRow);
+  }
+
+  static Future<Unit> create({
+    required String name,
+  }) async {
+    final model = Unit(
+      name: name,
+    );
+    final data = model.toJson(excludeNull: true);
+    final q = Query.insert(
+      table: 'unit',
+      columns: data,
+    );
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
+  }
+
+  static Future<bool> delete(Unit unit) async {
+    final q = Query.delete(
+      table: 'unit',
+      operation: Operation('unitId'.safeTk, Operator.eq, unit.id),
+    );
+    try {
+      await (await Database().pool).execute(q.toString());
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<Iterable<Unit>> filter({
+    required Operation? Function(UnitQuery) where,
+    List<String> orderBy = const [],
+    int offset = 0,
+    int? limit,
+    List<Join> joins = const [],
+  }) async {
+    final tt = where(UnitQuery());
+    final query = Query.select(
+      table: UnitQuery.table,
+      columns: UnitQuery.columns,
+      operation: tt,
+      offset: offset,
+      limit: limit,
+      joins: tt == null ? [] : tt.joins,
+    );
+    final result = await Database().execute(query.toString());
+    return fromResult(result);
+  }
+
+  static Future<Unit?> get(
+      {required Operation Function(UnitQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -743,7 +808,7 @@ extension AddressDb on Address {
     return result.map(fromRow);
   }
 
-  static Future<Address?> create({
+  static Future<Address> create({
     double? lat,
     double? lng,
     String? plusCode,
@@ -768,12 +833,8 @@ extension AddressDb on Address {
       table: 'address',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Address address) async {
@@ -801,9 +862,10 @@ extension AddressDb on Address {
       table: AddressQuery.table,
       columns: AddressQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -816,7 +878,7 @@ extension AddressDb on Address {
   }
 }
 
-extension ShopDb on Shop {
+extension BusinessDb on Business {
   Map<String, dynamic> toJson(
       {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
@@ -840,10 +902,10 @@ extension ShopDb on Shop {
     return json;
   }
 
-  static Shop fromRow(ResultRow row) {
+  static Business fromRow(ResultRow row) {
     final map = row.toColumnMap();
-    return Shop(
-      id: map['shopId'] as int,
+    return Business(
+      id: map['businessId'] as int,
       name: map['name'] as String,
       logo: map['logo'] as String?,
       bgImage: map['bgImage'] as String?,
@@ -854,11 +916,11 @@ extension ShopDb on Shop {
     );
   }
 
-  static Iterable<Shop> fromResult(Result result) {
+  static Iterable<Business> fromResult(Result result) {
     return result.map(fromRow);
   }
 
-  static Future<Shop?> create({
+  static Future<Business> create({
     required String name,
     required int ownerId,
     required int addressId,
@@ -867,7 +929,7 @@ extension ShopDb on Shop {
     String? bgImage,
     DateTime? createdAt,
   }) async {
-    final model = Shop(
+    final model = Business(
       name: name,
       logo: logo,
       bgImage: bgImage,
@@ -878,21 +940,17 @@ extension ShopDb on Shop {
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(
-      table: 'shop',
+      table: 'business',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
-  static Future<bool> delete(Shop shop) async {
+  static Future<bool> delete(Business business) async {
     final q = Query.delete(
-      table: 'shop',
-      operation: Operation('shopId'.safeTk, Operator.eq, shop.id),
+      table: 'business',
+      operation: Operation('businessId'.safeTk, Operator.eq, business.id),
     );
     try {
       await (await Database().pool).execute(q.toString());
@@ -902,34 +960,35 @@ extension ShopDb on Shop {
     }
   }
 
-  static Future<Iterable<Shop>> filter({
-    required Operation? Function(ShopQuery) where,
+  static Future<Iterable<Business>> filter({
+    required Operation? Function(BusinessQuery) where,
     List<String> orderBy = const [],
     int offset = 0,
     int? limit,
     List<Join> joins = const [],
   }) async {
-    final tt = where(ShopQuery());
+    final tt = where(BusinessQuery());
     final query = Query.select(
-      table: ShopQuery.table,
-      columns: ShopQuery.columns,
+      table: BusinessQuery.table,
+      columns: BusinessQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
 
-  static Future<Shop?> get(
-      {required Operation Function(ShopQuery) where,}) async {
+  static Future<Business?> get(
+      {required Operation Function(BusinessQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
   }
 }
 
-extension ShopPrefrencesDb on ShopPrefrences {
+extension BusinessPrefrencesDb on BusinessPrefrences {
   Map<String, dynamic> toJson(
       {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
@@ -937,7 +996,7 @@ extension ShopPrefrencesDb on ShopPrefrences {
       'isAvailableOnline': isAvailableOnline,
       'notifyNewProduct': notifyNewProduct,
       'receiveOrder': receiveOrder,
-      'shopId': shopId,
+      'businessId': businessId,
     };
     if (excludeNull) {
       json.removeWhere((key, value) => value == null);
@@ -950,51 +1009,47 @@ extension ShopPrefrencesDb on ShopPrefrences {
     return json;
   }
 
-  static ShopPrefrences fromRow(ResultRow row) {
+  static BusinessPrefrences fromRow(ResultRow row) {
     final map = row.toColumnMap();
-    return ShopPrefrences(
-      id: map['shopprefrencesId'] as int,
+    return BusinessPrefrences(
+      id: map['businessprefrencesId'] as int,
       isAvailableOnline: map['isAvailableOnline'] as bool?,
       notifyNewProduct: map['notifyNewProduct'] as bool?,
       receiveOrder: map['receiveOrder'] as bool?,
-      shopId: map['shopId'] as int?,
+      businessId: map['businessId'] as int?,
     );
   }
 
-  static Iterable<ShopPrefrences> fromResult(Result result) {
+  static Iterable<BusinessPrefrences> fromResult(Result result) {
     return result.map(fromRow);
   }
 
-  static Future<ShopPrefrences?> create({
-    int? shopId,
+  static Future<BusinessPrefrences> create({
+    int? businessId,
     bool? isAvailableOnline,
     bool? notifyNewProduct,
     bool? receiveOrder,
   }) async {
-    final model = ShopPrefrences(
+    final model = BusinessPrefrences(
       isAvailableOnline: isAvailableOnline,
       notifyNewProduct: notifyNewProduct,
       receiveOrder: receiveOrder,
-      shopId: shopId,
+      businessId: businessId,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(
-      table: 'shopprefrences',
+      table: 'businessprefrences',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
-  static Future<bool> delete(ShopPrefrences shopprefrences) async {
+  static Future<bool> delete(BusinessPrefrences businessprefrences) async {
     final q = Query.delete(
-      table: 'shopprefrences',
-      operation:
-          Operation('shopprefrencesId'.safeTk, Operator.eq, shopprefrences.id),
+      table: 'businessprefrences',
+      operation: Operation(
+          'businessprefrencesId'.safeTk, Operator.eq, businessprefrences.id,),
     );
     try {
       await (await Database().pool).execute(q.toString());
@@ -1004,34 +1059,35 @@ extension ShopPrefrencesDb on ShopPrefrences {
     }
   }
 
-  static Future<Iterable<ShopPrefrences>> filter({
-    required Operation? Function(ShopPrefrencesQuery) where,
+  static Future<Iterable<BusinessPrefrences>> filter({
+    required Operation? Function(BusinessPrefrencesQuery) where,
     List<String> orderBy = const [],
     int offset = 0,
     int? limit,
     List<Join> joins = const [],
   }) async {
-    final tt = where(ShopPrefrencesQuery());
+    final tt = where(BusinessPrefrencesQuery());
     final query = Query.select(
-      table: ShopPrefrencesQuery.table,
-      columns: ShopPrefrencesQuery.columns,
+      table: BusinessPrefrencesQuery.table,
+      columns: BusinessPrefrencesQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
 
-  static Future<ShopPrefrences?> get(
-      {required Operation Function(ShopPrefrencesQuery) where,}) async {
+  static Future<BusinessPrefrences?> get(
+      {required Operation Function(BusinessPrefrencesQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
   }
 }
 
-extension ShopAcitiviyDb on ShopAcitiviy {
+extension BusinessAcitiviyDb on BusinessAcitiviy {
   Map<String, dynamic> toJson(
       {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
@@ -1050,45 +1106,41 @@ extension ShopAcitiviyDb on ShopAcitiviy {
     return json;
   }
 
-  static ShopAcitiviy fromRow(ResultRow row) {
+  static BusinessAcitiviy fromRow(ResultRow row) {
     final map = row.toColumnMap();
-    return ShopAcitiviy(
-      id: map['shopacitiviyId'] as int,
+    return BusinessAcitiviy(
+      id: map['businessacitiviyId'] as int,
       action: map['action'] as String?,
       userId: map['userId'] as int,
     );
   }
 
-  static Iterable<ShopAcitiviy> fromResult(Result result) {
+  static Iterable<BusinessAcitiviy> fromResult(Result result) {
     return result.map(fromRow);
   }
 
-  static Future<ShopAcitiviy?> create({
+  static Future<BusinessAcitiviy> create({
     required int userId,
     String? action,
   }) async {
-    final model = ShopAcitiviy(
+    final model = BusinessAcitiviy(
       action: action,
       userId: userId,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(
-      table: 'shopacitiviy',
+      table: 'businessacitiviy',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
-  static Future<bool> delete(ShopAcitiviy shopacitiviy) async {
+  static Future<bool> delete(BusinessAcitiviy businessacitiviy) async {
     final q = Query.delete(
-      table: 'shopacitiviy',
-      operation:
-          Operation('shopacitiviyId'.safeTk, Operator.eq, shopacitiviy.id),
+      table: 'businessacitiviy',
+      operation: Operation(
+          'businessacitiviyId'.safeTk, Operator.eq, businessacitiviy.id,),
     );
     try {
       await (await Database().pool).execute(q.toString());
@@ -1098,40 +1150,41 @@ extension ShopAcitiviyDb on ShopAcitiviy {
     }
   }
 
-  static Future<Iterable<ShopAcitiviy>> filter({
-    required Operation? Function(ShopAcitiviyQuery) where,
+  static Future<Iterable<BusinessAcitiviy>> filter({
+    required Operation? Function(BusinessAcitiviyQuery) where,
     List<String> orderBy = const [],
     int offset = 0,
     int? limit,
     List<Join> joins = const [],
   }) async {
-    final tt = where(ShopAcitiviyQuery());
+    final tt = where(BusinessAcitiviyQuery());
     final query = Query.select(
-      table: ShopAcitiviyQuery.table,
-      columns: ShopAcitiviyQuery.columns,
+      table: BusinessAcitiviyQuery.table,
+      columns: BusinessAcitiviyQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
 
-  static Future<ShopAcitiviy?> get(
-      {required Operation Function(ShopAcitiviyQuery) where,}) async {
+  static Future<BusinessAcitiviy?> get(
+      {required Operation Function(BusinessAcitiviyQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
   }
 }
 
-extension ShopReviewDb on ShopReview {
+extension BusinessReviewDb on BusinessReview {
   Map<String, dynamic> toJson(
       {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'userId': userId,
-      'shopId': shopId,
+      'businessId': businessId,
     };
     if (excludeNull) {
       json.removeWhere((key, value) => value == null);
@@ -1144,44 +1197,41 @@ extension ShopReviewDb on ShopReview {
     return json;
   }
 
-  static ShopReview fromRow(ResultRow row) {
+  static BusinessReview fromRow(ResultRow row) {
     final map = row.toColumnMap();
-    return ShopReview(
-      id: map['shopreviewId'] as int,
+    return BusinessReview(
+      id: map['businessreviewId'] as int,
       userId: map['userId'] as int,
-      shopId: map['shopId'] as int,
+      businessId: map['businessId'] as int,
     );
   }
 
-  static Iterable<ShopReview> fromResult(Result result) {
+  static Iterable<BusinessReview> fromResult(Result result) {
     return result.map(fromRow);
   }
 
-  static Future<ShopReview?> create({
+  static Future<BusinessReview> create({
     required int userId,
-    required int shopId,
+    required int businessId,
   }) async {
-    final model = ShopReview(
+    final model = BusinessReview(
       userId: userId,
-      shopId: shopId,
+      businessId: businessId,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(
-      table: 'shopreview',
+      table: 'businessreview',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
-  static Future<bool> delete(ShopReview shopreview) async {
+  static Future<bool> delete(BusinessReview businessreview) async {
     final q = Query.delete(
-      table: 'shopreview',
-      operation: Operation('shopreviewId'.safeTk, Operator.eq, shopreview.id),
+      table: 'businessreview',
+      operation:
+          Operation('businessreviewId'.safeTk, Operator.eq, businessreview.id),
     );
     try {
       await (await Database().pool).execute(q.toString());
@@ -1191,27 +1241,28 @@ extension ShopReviewDb on ShopReview {
     }
   }
 
-  static Future<Iterable<ShopReview>> filter({
-    required Operation? Function(ShopReviewQuery) where,
+  static Future<Iterable<BusinessReview>> filter({
+    required Operation? Function(BusinessReviewQuery) where,
     List<String> orderBy = const [],
     int offset = 0,
     int? limit,
     List<Join> joins = const [],
   }) async {
-    final tt = where(ShopReviewQuery());
+    final tt = where(BusinessReviewQuery());
     final query = Query.select(
-      table: ShopReviewQuery.table,
-      columns: ShopReviewQuery.columns,
+      table: BusinessReviewQuery.table,
+      columns: BusinessReviewQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
 
-  static Future<ShopReview?> get(
-      {required Operation Function(ShopReviewQuery) where,}) async {
+  static Future<BusinessReview?> get(
+      {required Operation Function(BusinessReviewQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1224,10 +1275,16 @@ extension ProductDb on Product {
     final json = {
       'id': id,
       'name': name,
-      'buyingPrice': buyingPrice,
+      'costPrice': costPrice,
       'sellingPrice': sellingPrice,
       'quantity': quantity,
+      'expireDate': expireDate?.toIso8601String(),
+      'manDate': manDate?.toIso8601String(),
       'desc': desc,
+      'businessId': businessId,
+      'brandId': brandId,
+      'catagoryId': catagoryId,
+      'unitId': unitId,
     };
     if (excludeNull) {
       json.removeWhere((key, value) => value == null);
@@ -1245,10 +1302,16 @@ extension ProductDb on Product {
     return Product(
       id: map['productId'] as int,
       name: map['name'] as String,
-      buyingPrice: map['buyingPrice'] as double,
+      costPrice: map['costPrice'] as double,
       sellingPrice: map['sellingPrice'] as double,
-      quantity: map['quantity'] as int,
+      quantity: map['quantity'] as double,
+      expireDate: map['expireDate'] as DateTime?,
+      manDate: map['manDate'] as DateTime?,
       desc: map['desc'] as String?,
+      businessId: map['businessId'] as int,
+      brandId: map['brandId'] as int?,
+      catagoryId: map['catagoryId'] as int?,
+      unitId: map['unitId'] as int?,
     );
   }
 
@@ -1256,31 +1319,39 @@ extension ProductDb on Product {
     return result.map(fromRow);
   }
 
-  static Future<Product?> create({
+  static Future<Product> create({
     required String name,
-    required double buyingPrice,
+    required double costPrice,
     required double sellingPrice,
-    required int quantity,
+    required double quantity,
+    required int businessId,
+    int? brandId,
+    int? catagoryId,
+    int? unitId,
+    DateTime? expireDate,
+    DateTime? manDate,
     String? desc,
   }) async {
     final model = Product(
       name: name,
-      buyingPrice: buyingPrice,
+      costPrice: costPrice,
       sellingPrice: sellingPrice,
       quantity: quantity,
+      expireDate: expireDate,
+      manDate: manDate,
       desc: desc,
+      businessId: businessId,
+      brandId: brandId,
+      catagoryId: catagoryId,
+      unitId: unitId,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(
       table: 'product',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Product product) async {
@@ -1308,9 +1379,10 @@ extension ProductDb on Product {
       table: ProductQuery.table,
       columns: ProductQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -1353,7 +1425,7 @@ extension LikeDb on Like {
     return result.map(fromRow);
   }
 
-  static Future<Like?> create({
+  static Future<Like> create({
     required int productId,
   }) async {
     final model = Like(
@@ -1364,12 +1436,8 @@ extension LikeDb on Like {
       table: 'like',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Like like) async {
@@ -1397,9 +1465,10 @@ extension LikeDb on Like {
       table: LikeQuery.table,
       columns: LikeQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -1417,7 +1486,7 @@ extension FollowDb on Follow {
       {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
-      'shopId': shopId,
+      'businessId': businessId,
       'userId': userId,
     };
     if (excludeNull) {
@@ -1435,7 +1504,7 @@ extension FollowDb on Follow {
     final map = row.toColumnMap();
     return Follow(
       id: map['followId'] as int,
-      shopId: map['shopId'] as int,
+      businessId: map['businessId'] as int,
       userId: map['userId'] as int,
     );
   }
@@ -1444,12 +1513,12 @@ extension FollowDb on Follow {
     return result.map(fromRow);
   }
 
-  static Future<Follow?> create({
-    required int shopId,
+  static Future<Follow> create({
+    required int businessId,
     required int userId,
   }) async {
     final model = Follow(
-      shopId: shopId,
+      businessId: businessId,
       userId: userId,
     );
     final data = model.toJson(excludeNull: true);
@@ -1457,12 +1526,8 @@ extension FollowDb on Follow {
       table: 'follow',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Follow follow) async {
@@ -1490,9 +1555,10 @@ extension FollowDb on Follow {
       table: FollowQuery.table,
       columns: FollowQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -1513,7 +1579,7 @@ extension OrderDb on Order {
       'status': status,
       'type': type,
       'msg': msg,
-      'shopId': shopId,
+      'businessId': businessId,
       'userId': userId,
     };
     if (excludeNull) {
@@ -1534,7 +1600,7 @@ extension OrderDb on Order {
       status: map['status'] as String?,
       type: map['type'] as String?,
       msg: map['msg'] as String?,
-      shopId: map['shopId'] as int,
+      businessId: map['businessId'] as int,
       userId: map['userId'] as int,
     );
   }
@@ -1543,8 +1609,8 @@ extension OrderDb on Order {
     return result.map(fromRow);
   }
 
-  static Future<Order?> create({
-    required int shopId,
+  static Future<Order> create({
+    required int businessId,
     required int userId,
     String? status,
     String? type,
@@ -1554,7 +1620,7 @@ extension OrderDb on Order {
       status: status,
       type: type,
       msg: msg,
-      shopId: shopId,
+      businessId: businessId,
       userId: userId,
     );
     final data = model.toJson(excludeNull: true);
@@ -1562,12 +1628,8 @@ extension OrderDb on Order {
       table: 'order',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Order order) async {
@@ -1595,9 +1657,10 @@ extension OrderDb on Order {
       table: OrderQuery.table,
       columns: OrderQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -1646,7 +1709,7 @@ extension ItemsDb on Items {
     return result.map(fromRow);
   }
 
-  static Future<Items?> create({
+  static Future<Items> create({
     required int quantity,
     required int productId,
     int? orderId,
@@ -1663,12 +1726,8 @@ extension ItemsDb on Items {
       table: 'items',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Items items) async {
@@ -1696,9 +1755,10 @@ extension ItemsDb on Items {
       table: ItemsQuery.table,
       columns: ItemsQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -1749,7 +1809,7 @@ extension NotificationDb on Notification {
     return result.map(fromRow);
   }
 
-  static Future<Notification?> create({
+  static Future<Notification> create({
     required DateTime timestamp,
     required String title,
     required String content,
@@ -1768,12 +1828,8 @@ extension NotificationDb on Notification {
       table: 'notification',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Notification notification) async {
@@ -1802,9 +1858,10 @@ extension NotificationDb on Notification {
       table: NotificationQuery.table,
       columns: NotificationQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -1828,7 +1885,7 @@ extension GiftCardDb on GiftCard {
       'ownerId': ownerId,
       'createdById': createdById,
       'productId': productId,
-      'shopId': shopId,
+      'businessId': businessId,
     };
     if (excludeNull) {
       json.removeWhere((key, value) => value == null);
@@ -1851,7 +1908,7 @@ extension GiftCardDb on GiftCard {
       ownerId: map['ownerId'] as int,
       createdById: map['createdById'] as int?,
       productId: map['productId'] as int?,
-      shopId: map['shopId'] as int?,
+      businessId: map['businessId'] as int?,
     );
   }
 
@@ -1859,12 +1916,12 @@ extension GiftCardDb on GiftCard {
     return result.map(fromRow);
   }
 
-  static Future<GiftCard?> create({
+  static Future<GiftCard> create({
     required String couponId,
     required int ownerId,
     int? createdById,
     int? productId,
-    int? shopId,
+    int? businessId,
     bool? redeemed,
     DateTime? expireDate,
   }) async {
@@ -1875,19 +1932,15 @@ extension GiftCardDb on GiftCard {
       ownerId: ownerId,
       createdById: createdById,
       productId: productId,
-      shopId: shopId,
+      businessId: businessId,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(
       table: 'giftcard',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(GiftCard giftcard) async {
@@ -1915,9 +1968,10 @@ extension GiftCardDb on GiftCard {
       table: GiftCardQuery.table,
       columns: GiftCardQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -1937,7 +1991,7 @@ extension BlockedDb on Blocked {
       'id': id,
       'endDate': endDate?.toIso8601String(),
       'userId': userId,
-      'shopId': shopId,
+      'businessId': businessId,
       'productId': productId,
     };
     if (excludeNull) {
@@ -1957,7 +2011,7 @@ extension BlockedDb on Blocked {
       id: map['blockedId'] as int,
       endDate: map['endDate'] as DateTime?,
       userId: map['userId'] as int?,
-      shopId: map['shopId'] as int?,
+      businessId: map['businessId'] as int?,
       productId: map['productId'] as int?,
     );
   }
@@ -1966,16 +2020,16 @@ extension BlockedDb on Blocked {
     return result.map(fromRow);
   }
 
-  static Future<Blocked?> create({
+  static Future<Blocked> create({
     int? userId,
-    int? shopId,
+    int? businessId,
     int? productId,
     DateTime? endDate,
   }) async {
     final model = Blocked(
       endDate: endDate,
       userId: userId,
-      shopId: shopId,
+      businessId: businessId,
       productId: productId,
     );
     final data = model.toJson(excludeNull: true);
@@ -1983,12 +2037,8 @@ extension BlockedDb on Blocked {
       table: 'blocked',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Blocked blocked) async {
@@ -2016,9 +2066,10 @@ extension BlockedDb on Blocked {
       table: BlockedQuery.table,
       columns: BlockedQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -2065,7 +2116,7 @@ extension PolicyDb on Policy {
     return result.map(fromRow);
   }
 
-  static Future<Policy?> create({
+  static Future<Policy> create({
     required DateTime createdAt,
     int? number,
     String? detail,
@@ -2080,12 +2131,8 @@ extension PolicyDb on Policy {
       table: 'policy',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Policy policy) async {
@@ -2113,9 +2160,10 @@ extension PolicyDb on Policy {
       table: PolicyQuery.table,
       columns: PolicyQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
@@ -2135,7 +2183,7 @@ extension ReportDb on Report {
       'id': id,
       'desc': desc,
       'policyId': policyId,
-      'shopId': shopId,
+      'businessId': businessId,
       'userId': userId,
       'violatorId': violatorId,
       'productId': productId,
@@ -2156,7 +2204,7 @@ extension ReportDb on Report {
     return Report(
       id: map['reportId'] as int,
       desc: map['desc'] as String?,
-      shopId: map['shopId'] as int,
+      businessId: map['businessId'] as int,
       userId: map['userId'] as int,
       policyId: map['policyId'] as int?,
       violatorId: map['violatorId'] as int?,
@@ -2168,8 +2216,8 @@ extension ReportDb on Report {
     return result.map(fromRow);
   }
 
-  static Future<Report?> create({
-    required int shopId, required int userId, int? policyId,
+  static Future<Report> create({
+    required int businessId, required int userId, int? policyId,
     int? violatorId,
     int? productId,
     String? desc,
@@ -2177,7 +2225,7 @@ extension ReportDb on Report {
     final model = Report(
       desc: desc,
       policyId: policyId,
-      shopId: shopId,
+      businessId: businessId,
       userId: userId,
       violatorId: violatorId,
       productId: productId,
@@ -2187,12 +2235,8 @@ extension ReportDb on Report {
       table: 'report',
       columns: data,
     );
-    try {
-      final res = await (await Database().pool).execute(q.toString());
-      return fromRow(res.first);
-    } catch (_) {
-      return null;
-    }
+    final res = await (await Database().pool).execute(q.toString());
+    return fromRow(res.first);
   }
 
   static Future<bool> delete(Report report) async {
@@ -2220,9 +2264,10 @@ extension ReportDb on Report {
       table: ReportQuery.table,
       columns: ReportQuery.columns,
       operation: tt,
+      offset: offset,
+      limit: limit,
       joins: tt == null ? [] : tt.joins,
-    )..offset(offset);
-    if (limit != null) query.limit(limit);
+    );
     final result = await Database().execute(query.toString());
     return fromResult(result);
   }
