@@ -109,7 +109,7 @@ paths:
     patch:
       parameters:
         - name: id
-          required: false
+          required: true
           in: path
           schema:
             $ref: "../components.yaml#/components/schemas/Id"
