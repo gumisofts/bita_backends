@@ -32,9 +32,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "20.11.0"
-
       - name: Build
-        run: npx redocly bundle schema/index.yaml --output schema/build/index
+        run: npx --yes @redocly/cli@latest bundle schema/index.yaml --output schema/build/index
   deploy:
     environment:
       name: github-pages
