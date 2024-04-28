@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:bita_markets/utils/forms/field_exceptions.dart';
+import 'package:bita_markets/utils/utils.dart';
 import 'package:postgres/postgres.dart';
 import 'package:shelf/shelf.dart';
 
@@ -9,6 +9,10 @@ class EndPointException implements Exception {
   EndPointException({required this.error, required this.code});
   Map<String, dynamic> error;
   int code;
+  @override
+  String toString() {
+    return '$code: $error';
+  }
 }
 
 final unAuthorizedException = EndPointException(
@@ -31,10 +35,13 @@ Future<Response> handleRequestWithPermission(
     permission();
     return await endpoint();
   } on EndPointException catch (e) {
+    logger.e(e.error);
     return jsonResponse(statusCode: e.code, body: e.error);
   } on FieldValidationException catch (e) {
+    logger.e(e.error);
     return jsonResponse(statusCode: HttpStatus.badRequest, body: e.error);
   } on ServerException catch (e) {
+    logger.e(e, time: DateTime.now());
     // Constraint errors
     //23505 Unique error
     //23514 Chech Violation
@@ -61,6 +68,7 @@ Future<Response> handleRequestWithPermission(
       body: {'detail': e.toString()},
     );
   } catch (e) {
+    logger.f(e);
     return jsonResponse(
       statusCode: HttpStatus.internalServerError,
       body: {'detail': e.toString()},

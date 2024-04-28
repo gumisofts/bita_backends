@@ -1,4 +1,5 @@
 import 'package:bita_markets/models/schema.dart';
+import 'package:bita_markets/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
 class SMSHahu {
@@ -25,7 +26,7 @@ class SendSms {
     final template = '''
 your verification code for Bita Markets is $otp
 ''';
-    print(template);
+    logger.i(template);
     return SMSHahu.send(phone: user.phoneNumber!, msg: template);
   }
 }
