@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Deploy OpenApi3 Schema to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -35,11 +35,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "20.11.0"
+
       - name: Build
         run: npx --yes @redocly/cli@latest bundle schema/index.yaml --output schema/build/index
 
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
