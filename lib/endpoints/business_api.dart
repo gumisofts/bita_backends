@@ -106,7 +106,18 @@ class BusinessApi {
           return jsonResponse(body: biz.toJson());
         },
       );
+// TODO(nuradic): Add Employee
+// TODO(nuradic): Remove Employee
+// TODO(nuradic): Business Preferences
+
+// TODO(nuradic): Employee Role and Permissions
+// TODO(nuradic): Business Activities(Imuttable log)
+
 // TODO(nuradic): update address.
+// TODO(nuradic): Transefer Business ownership
+// TODO(nuradic): Delete Businnes
+// TODO(nuradic): Business Rate and Feedback
+// TODO(nuradic): Rate Products
   @Route.post('/products')
   Future<Response> createProducts(Request request) =>
       handleRequestWithPermission(

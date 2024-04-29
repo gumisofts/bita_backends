@@ -22,23 +22,9 @@ class UsersApi {
           if (!request.isAuthenticated) {
             throw unAuthorizedException;
           }
-          // if (request.contextUser?.id != int.parse(id)) {
-          //   throw forbidenException;
-          // }
         },
         endpoint: () async {
-          // final user =
-          //     await UserDb.get(where: (t) => t.id.equals(int.parse(id)));
-
-          // if (user == null) {
-          //   return jsonResponse(
-          //     body: {'detail': 'user not found'},
-          //     statusCode: HttpStatus.notFound,
-          //   );
-          // }
-          // request.contextUser;
           // TODO(nuradic): schedule the deletion process on +14 days
-          // await request.contextUser?.delete();
           return jsonResponse();
         },
       );
@@ -223,7 +209,7 @@ class UsersApi {
 SELECT "user".*,"password".* from "user" join "password" on "user"."userId"="password"."userId" where "user"."userId"= @userId and "password"."${data['otpType']}Otp"=@otp
     ''');
           data.remove('otpType');
-          final res = await Database().execute(sql, parameters: data);
+          final res = await Database.execute(sql, parameters: data);
 
           if (res.isEmpty) {
             return jsonResponse(
@@ -244,6 +230,24 @@ SELECT "user".*,"password".* from "user" join "password" on "user"."userId"="pas
           final access = JWTAuth.authenticate(user);
 
           return jsonResponse(body: {'user': user.toJson(), 'access': access});
+        },
+      );
+  @Route.post('/changeEmail')
+  Future<Response> changeEmail(Request request) => handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          // TODO(nuradic): Complete this endpoint
+          return jsonResponse();
+        },
+      );
+  @Route.post('/changePhone')
+  Future<Response> changePhone(Request request) => handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          // TODO(nuradic): Complete this endpoint
+          return jsonResponse();
         },
       );
 }

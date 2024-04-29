@@ -1,7 +1,4 @@
-import 'package:d_orm/database/database.dart';
-import 'package:d_orm/database/extensions.dart';
-import 'package:d_orm/database/models.dart';
-import 'package:postgres/postgres.dart';
+import 'package:d_orm/d_orm.dart';
 
 part 'schema.db.g.dart';
 part 'schema.query.g.dart';
@@ -25,7 +22,7 @@ class FileTb {
         columns: _updatedFields,
         operation: Operation('filetbId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -75,7 +72,7 @@ class User {
         columns: _updatedFields,
         operation: Operation('userId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -166,7 +163,7 @@ class Password {
         columns: _updatedFields,
         operation: Operation('passwordId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -246,7 +243,7 @@ class InfoChangeRequest {
         columns: _updatedFields,
         operation: Operation('infochangerequestId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -324,7 +321,7 @@ class UserInterestAndInteraction {
         operation:
             Operation('userinterestandinteractionId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -352,7 +349,7 @@ class Catagory {
         columns: _updatedFields,
         operation: Operation('catagoryId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -410,7 +407,7 @@ class Brand {
         columns: _updatedFields,
         operation: Operation('brandId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -450,7 +447,7 @@ class Unit {
         columns: _updatedFields,
         operation: Operation('unitId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -497,7 +494,7 @@ class Address {
         columns: _updatedFields,
         operation: Operation('addressId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -634,7 +631,7 @@ class Business {
         columns: _updatedFields,
         operation: Operation('businessId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -708,7 +705,7 @@ class BusinessPrefrences {
         columns: _updatedFields,
         operation: Operation('businessprefrencesId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -770,7 +767,7 @@ class BusinessAcitiviy {
         columns: _updatedFields,
         operation: Operation('businessacitiviyId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -833,7 +830,7 @@ class BusinessReview {
         columns: _updatedFields,
         operation: Operation('businessreviewId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -937,7 +934,7 @@ class Product {
         columns: _updatedFields,
         operation: Operation('productId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1026,7 +1023,7 @@ class Like {
         columns: _updatedFields,
         operation: Operation('likeId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1082,7 +1079,7 @@ class Follow {
         columns: _updatedFields,
         operation: Operation('followId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1144,7 +1141,7 @@ class Order {
         columns: _updatedFields,
         operation: Operation('orderId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1226,7 +1223,7 @@ class Items {
         columns: _updatedFields,
         operation: Operation('itemsId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1287,7 +1284,7 @@ class Notification {
         columns: _updatedFields,
         operation: Operation('notificationId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1411,7 +1408,7 @@ class GiftCard {
         columns: _updatedFields,
         operation: Operation('giftcardId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1507,7 +1504,7 @@ class Blocked {
         columns: _updatedFields,
         operation: Operation('blockedId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1544,7 +1541,7 @@ class Policy {
         columns: _updatedFields,
         operation: Operation('policyId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 
@@ -1672,7 +1669,7 @@ class Report {
         columns: _updatedFields,
         operation: Operation('reportId'.safeTk, Operator.eq, id),
       );
-      await (await Database().pool).execute(query.toString());
+      await Database.execute(query.toString());
     }
   }
 

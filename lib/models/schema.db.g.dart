@@ -45,7 +45,7 @@ extension FileTbDb on FileTb {
       table: 'filetb',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -55,7 +55,7 @@ extension FileTbDb on FileTb {
       operation: Operation('filetbId'.safeTk, Operator.eq, filetb.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -78,7 +78,7 @@ extension FileTbDb on FileTb {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -151,7 +151,7 @@ extension UserDb on User {
       table: 'user',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -161,7 +161,7 @@ extension UserDb on User {
       operation: Operation('userId'.safeTk, Operator.eq, user.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -184,7 +184,7 @@ extension UserDb on User {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -257,7 +257,7 @@ extension PasswordDb on Password {
       table: 'password',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -267,7 +267,7 @@ extension PasswordDb on Password {
       operation: Operation('passwordId'.safeTk, Operator.eq, password.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -290,7 +290,7 @@ extension PasswordDb on Password {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -355,7 +355,7 @@ extension InfoChangeRequestDb on InfoChangeRequest {
       table: 'infochangerequest',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -366,7 +366,7 @@ extension InfoChangeRequestDb on InfoChangeRequest {
           'infochangerequestId'.safeTk, Operator.eq, infochangerequest.id,),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -389,7 +389,7 @@ extension InfoChangeRequestDb on InfoChangeRequest {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -446,7 +446,7 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
       table: 'userinterestandinteraction',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -458,7 +458,7 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
           userinterestandinteraction.id,),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -481,7 +481,7 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -539,7 +539,7 @@ extension CatagoryDb on Catagory {
       table: 'catagory',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -549,7 +549,7 @@ extension CatagoryDb on Catagory {
       operation: Operation('catagoryId'.safeTk, Operator.eq, catagory.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -572,7 +572,7 @@ extension CatagoryDb on Catagory {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -633,7 +633,7 @@ extension BrandDb on Brand {
       table: 'brand',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -643,7 +643,7 @@ extension BrandDb on Brand {
       operation: Operation('brandId'.safeTk, Operator.eq, brand.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -666,7 +666,7 @@ extension BrandDb on Brand {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -719,7 +719,7 @@ extension UnitDb on Unit {
       table: 'unit',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -729,7 +729,7 @@ extension UnitDb on Unit {
       operation: Operation('unitId'.safeTk, Operator.eq, unit.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -752,7 +752,7 @@ extension UnitDb on Unit {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -833,7 +833,7 @@ extension AddressDb on Address {
       table: 'address',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -843,7 +843,7 @@ extension AddressDb on Address {
       operation: Operation('addressId'.safeTk, Operator.eq, address.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -866,7 +866,7 @@ extension AddressDb on Address {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -943,7 +943,7 @@ extension BusinessDb on Business {
       table: 'business',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -953,7 +953,7 @@ extension BusinessDb on Business {
       operation: Operation('businessId'.safeTk, Operator.eq, business.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -976,7 +976,7 @@ extension BusinessDb on Business {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1041,7 +1041,7 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
       table: 'businessprefrences',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1052,7 +1052,7 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
           'businessprefrencesId'.safeTk, Operator.eq, businessprefrences.id,),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1075,7 +1075,7 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1132,7 +1132,7 @@ extension BusinessAcitiviyDb on BusinessAcitiviy {
       table: 'businessacitiviy',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1143,7 +1143,7 @@ extension BusinessAcitiviyDb on BusinessAcitiviy {
           'businessacitiviyId'.safeTk, Operator.eq, businessacitiviy.id,),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1166,7 +1166,7 @@ extension BusinessAcitiviyDb on BusinessAcitiviy {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1223,7 +1223,7 @@ extension BusinessReviewDb on BusinessReview {
       table: 'businessreview',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1234,7 +1234,7 @@ extension BusinessReviewDb on BusinessReview {
           Operation('businessreviewId'.safeTk, Operator.eq, businessreview.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1257,7 +1257,7 @@ extension BusinessReviewDb on BusinessReview {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1350,7 +1350,7 @@ extension ProductDb on Product {
       table: 'product',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1360,7 +1360,7 @@ extension ProductDb on Product {
       operation: Operation('productId'.safeTk, Operator.eq, product.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1383,7 +1383,7 @@ extension ProductDb on Product {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1436,7 +1436,7 @@ extension LikeDb on Like {
       table: 'like',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1446,7 +1446,7 @@ extension LikeDb on Like {
       operation: Operation('likeId'.safeTk, Operator.eq, like.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1469,7 +1469,7 @@ extension LikeDb on Like {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1526,7 +1526,7 @@ extension FollowDb on Follow {
       table: 'follow',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1536,7 +1536,7 @@ extension FollowDb on Follow {
       operation: Operation('followId'.safeTk, Operator.eq, follow.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1559,7 +1559,7 @@ extension FollowDb on Follow {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1628,7 +1628,7 @@ extension OrderDb on Order {
       table: 'order',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1638,7 +1638,7 @@ extension OrderDb on Order {
       operation: Operation('orderId'.safeTk, Operator.eq, order.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1661,7 +1661,7 @@ extension OrderDb on Order {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1726,7 +1726,7 @@ extension ItemsDb on Items {
       table: 'items',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1736,7 +1736,7 @@ extension ItemsDb on Items {
       operation: Operation('itemsId'.safeTk, Operator.eq, items.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1759,7 +1759,7 @@ extension ItemsDb on Items {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1828,7 +1828,7 @@ extension NotificationDb on Notification {
       table: 'notification',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1839,7 +1839,7 @@ extension NotificationDb on Notification {
           Operation('notificationId'.safeTk, Operator.eq, notification.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1862,7 +1862,7 @@ extension NotificationDb on Notification {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -1939,7 +1939,7 @@ extension GiftCardDb on GiftCard {
       table: 'giftcard',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -1949,7 +1949,7 @@ extension GiftCardDb on GiftCard {
       operation: Operation('giftcardId'.safeTk, Operator.eq, giftcard.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -1972,7 +1972,7 @@ extension GiftCardDb on GiftCard {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -2037,7 +2037,7 @@ extension BlockedDb on Blocked {
       table: 'blocked',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -2047,7 +2047,7 @@ extension BlockedDb on Blocked {
       operation: Operation('blockedId'.safeTk, Operator.eq, blocked.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -2070,7 +2070,7 @@ extension BlockedDb on Blocked {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -2131,7 +2131,7 @@ extension PolicyDb on Policy {
       table: 'policy',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -2141,7 +2141,7 @@ extension PolicyDb on Policy {
       operation: Operation('policyId'.safeTk, Operator.eq, policy.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -2164,7 +2164,7 @@ extension PolicyDb on Policy {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 
@@ -2235,7 +2235,7 @@ extension ReportDb on Report {
       table: 'report',
       columns: data,
     );
-    final res = await (await Database().pool).execute(q.toString());
+    final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
@@ -2245,7 +2245,7 @@ extension ReportDb on Report {
       operation: Operation('reportId'.safeTk, Operator.eq, report.id),
     );
     try {
-      await (await Database().pool).execute(q.toString());
+      await Database.execute(q.toString());
       return true;
     } catch (_) {
       return false;
@@ -2268,7 +2268,7 @@ extension ReportDb on Report {
       limit: limit,
       joins: tt == null ? [] : tt.joins,
     );
-    final result = await Database().execute(query.toString());
+    final result = await Database.execute(query.toString());
     return fromResult(result);
   }
 

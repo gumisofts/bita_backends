@@ -12,6 +12,7 @@ dependencies:
   d_orm:
     path: /home/nurad/d-orm
   dart_jsonwebtoken: 
+  dotenv: ^4.2.0
   http: 
   http_methods: ^1.1.0
   http_parser: ^4.0.2

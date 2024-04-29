@@ -43,5 +43,15 @@ Router _$UsersApiRouter(UsersApi service) {
     r'/verifyOtp',
     service.verifyOtp,
   );
+  router.add(
+    'POST',
+    r'/changeEmail',
+    service.changeEmail,
+  );
+  router.add(
+    'POST',
+    r'/changePhone',
+    service.changePhone,
+  );
   return router;
 }
