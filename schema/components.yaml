@@ -5,6 +5,28 @@ components:
       type: integer
       example: 13
       readOnly: true
+    phoneNumber:
+      description: a phone number of a user starting either with 9 or 7
+      type: string
+      format: "^(9|7)\\d{8}"
+      example: "928808587"
+    email:
+      description: an email of a user 
+      type: string
+      format: ".+@.+\\..+"
+      example: nuradhussen082@gmail.com
+
+    Contact:
+      type: object
+      required:
+        - phoneNumber
+        - email
+      properties:
+        phoneNumber:
+          $ref: "#/components/schemas/phoneNumber"
+        email:
+          $ref: "#/components/schemas/email"
+
     User:
       type: object
       required:
@@ -19,11 +41,9 @@ components:
           type: string
           example: Hussen
         phoneNumber:
-          type: string
-          example: "928808587"
+          $ref: "#/components/schemas/phoneNumber"
         email:
-          type: string
-          example: nuradhussen082@gmail.com
+          $ref: "#/components/schemas/email"
         
     UserInfo:
       required:
@@ -60,8 +80,6 @@ components:
         sellingPrice: 
           type: number
           example: 2999
-        # status:
-        #   type: string
         quantity:
           type: number
           example: 23
@@ -135,6 +153,10 @@ components:
         catagoryId:
           type: integer
           format: int64
+        contacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Contact"
         address:
           $ref: "#/components/schemas/Address"
         logo: 

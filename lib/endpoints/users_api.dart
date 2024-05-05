@@ -63,11 +63,29 @@ class UsersApi {
             return null;
           },
         ),
+        FieldValidator<String>(
+          name: 'password',
+          validator: (value) {
+            if (value.length < 6) {
+              return 'Password is to short';
+            }
+            return null;
+          },
+        ),
       ],
     );
     user
       ..firstName = (data['firstName'] as String?) ?? user.firstName
       ..lastName = (data['lastName'] as String?) ?? user.lastName;
+    Password? pass;
+    pass =
+        await PasswordDb.get(where: (where) => where.userId.equals(user.id!));
+
+    pass ?? await PasswordDb.create(userId: user.id!);
+
+    pass!.password = data['password'] as String;
+
+    await pass.save();
 
     await user.save();
 

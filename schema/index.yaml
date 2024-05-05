@@ -18,6 +18,8 @@ paths:
     $ref: "user/user.yaml#/paths/~1users~1getStartedWithEmail"
   /users/verifyOtp:
     $ref: "user/user.yaml#/paths/~1users~1verifyOtp"
+  /users/login:
+    $ref: "user/user.yaml#/paths/~1users~1login"
 
   /users/{id}:
     $ref: "user/user.yaml#/paths/~1{id}"
@@ -25,37 +27,45 @@ paths:
     $ref: "user/user.yaml#/paths/~1me"
   # Shopping
   /shopping/items:
-    $ref: "shopping/product.yaml#/paths/~1items"
-  /shopping/bussiness/{id}:
-    $ref: "shopping/product.yaml#/paths/~1business~1{id}"
+    $ref: "shopping/shopping.yaml#/paths/~1items"
+  # /shopping/bussiness/{id}:
+    # $ref: "shopping/shopping.yaml#/paths/~1business~1{id}"
   /shopping/bussiness/popular:
-    $ref: "shopping/product.yaml#/paths/~1shops~1popular"
-  /shopping/catagories:  
-    $ref: "shopping/product.yaml#/paths/~1shops~1catagories"
-  /shopping/brands:
-    $ref: "shopping/product.yaml#/paths/~1shops~1brands"
+    $ref: "shopping/shopping.yaml#/paths/~1businesses~1popular"
+  /shopping/bussiness/suggested:
+    $ref: "shopping/shopping.yaml#/paths/~1businesses~1suggested"
+  /shopping/products/popular:
+    $ref: "shopping/shopping.yaml#/paths/~1products~1popular"
+  /shopping/products/suggested:
+    $ref: "shopping/shopping.yaml#/paths/~1products~1suggested"
+  /shopping/products/{bizId}:
+    $ref: "shopping/shopping.yaml#/paths/~1products~1{bizId}"
+  # /shopping/catagories:  
+  #   $ref: "shopping/shopping.yaml#/paths/~1businesses~1catagories"
+  # /shopping/brands:
+  #   $ref: "shopping/shopping.yaml#/paths/~1businesses~1brands"
     # inventory 
   /inventory/catagories:
-    $ref: "stock/stock.yaml#/paths/~1catagories"
+    $ref: "business/business.yaml#/paths/~1catagories"
   /business/brands:
-    $ref: "stock/stock.yaml#/paths/~1brands"
+    $ref: "business/business.yaml#/paths/~1brands"
   # Businness
   /business:
-    $ref: "stock/stock.yaml#/paths/~1business"
+    $ref: "business/business.yaml#/paths/~1business"
   /business/{id}:
-    $ref: "stock/stock.yaml#/paths/~1business~1{id}"
+    $ref: "business/business.yaml#/paths/~1business~1{id}"
   /business/mine:
-    $ref: "stock/stock.yaml#/paths/~1business~1me"
+    $ref: "business/business.yaml#/paths/~1business~1me"
   # Business Preference
   /business/bussiness/settings/{id}:
-    $ref: "stock/stock.yaml#/paths/~1settings~1{id}"
+    $ref: "business/business.yaml#/paths/~1settings~1{id}"
   # Product
   /business/products:
-    $ref: "stock/stock.yaml#/paths/~1products"
+    $ref: "business/business.yaml#/paths/~1products"
   /business/products/{bizId}:
-    $ref: "stock/stock.yaml#/paths/~1products~1{bizId}"
+    $ref: "business/business.yaml#/paths/~1products~1{bizId}"
   /business/products/{bizId}/{productId}:
-    $ref: "stock/stock.yaml#/paths/~1products~1{bizId}~1{productId}"
+    $ref: "business/business.yaml#/paths/~1products~1{bizId}~1{productId}"
 
   
 components:

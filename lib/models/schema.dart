@@ -670,7 +670,7 @@ class Business {
 
 class BusinessPrefrences {
   BusinessPrefrences({
-    int? businessId,
+    required int businessId,
     this.id,
     bool? isAvailableOnline,
     bool? notifyNewProduct,
@@ -681,9 +681,9 @@ class BusinessPrefrences {
     _receiveOrder = receiveOrder;
     _businessId = businessId;
   }
-  int? _businessId;
-  int? get businessId => _businessId;
-  set businessId(int? id) {
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
     _updatedFields['business'] = id;
     _businessId = id;
   }
@@ -692,7 +692,7 @@ class BusinessPrefrences {
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
         getModelInstance: () =>
-            BusinessDb.get(where: (t) => t.id.equals(businessId!)),);
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -735,18 +735,35 @@ class BusinessPrefrences {
   }
 }
 
-class BusinessAcitiviy {
-  BusinessAcitiviy({
-    required int userId,
+class BusinessAcitivity {
+  BusinessAcitivity({
+    required int businessId,
+    int? userId,
     this.id,
     String? action,
   }) {
     _action = action;
+    _businessId = businessId;
     _userId = userId;
   }
-  late int _userId;
-  int get userId => _userId;
-  set userId(int id) {
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
+  }
+
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
+    return _getbusiness!.instance;
+  }
+
+  int? _userId;
+  int? get userId => _userId;
+  set userId(int? id) {
     _updatedFields['user'] = id;
     _userId = id;
   }
@@ -754,7 +771,7 @@ class BusinessAcitiviy {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId!)),);
     return _getuser!.instance;
   }
 
@@ -763,16 +780,16 @@ class BusinessAcitiviy {
   Future<void> save() async {
     if (_updatedFields.isNotEmpty) {
       final query = Query.update(
-        table: 'businessacitiviy',
+        table: 'businessacitivity',
         columns: _updatedFields,
-        operation: Operation('businessacitiviyId'.safeTk, Operator.eq, id),
+        operation: Operation('businessacitivityId'.safeTk, Operator.eq, id),
       );
       await Database.execute(query.toString());
     }
   }
 
   Future<bool> delete() async {
-    return BusinessAcitiviyDb.delete(this);
+    return BusinessAcitivityDb.delete(this);
   }
 
   String? _action;
@@ -836,6 +853,187 @@ class BusinessReview {
 
   Future<bool> delete() async {
     return BusinessReviewDb.delete(this);
+  }
+}
+
+class BusinessEmploye {
+  BusinessEmploye({
+    required int userId,
+    required int businessId,
+    this.id,
+    DateTime? createdAt,
+  }) {
+    _createdAt = createdAt;
+    _userId = userId;
+    _businessId = businessId;
+  }
+  late int _userId;
+  int get userId => _userId;
+  set userId(int id) {
+    _updatedFields['user'] = id;
+    _userId = id;
+  }
+
+  ModelHolder<User>? _getuser;
+  Future<User?> get user {
+    _getuser ??= ModelHolder<User>(
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
+    return _getuser!.instance;
+  }
+
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
+  }
+
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
+    return _getbusiness!.instance;
+  }
+
+  final _updatedFields = <String, dynamic>{};
+  int? id;
+  Future<void> save() async {
+    if (_updatedFields.isNotEmpty) {
+      final query = Query.update(
+        table: 'businessemploye',
+        columns: _updatedFields,
+        operation: Operation('businessemployeId'.safeTk, Operator.eq, id),
+      );
+      await Database.execute(query.toString());
+    }
+  }
+
+  Future<bool> delete() async {
+    return BusinessEmployeDb.delete(this);
+  }
+
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  set createdAt(DateTime? m) {
+    _updatedFields['createdAt'] = m;
+    _createdAt = m;
+  }
+}
+
+class BusinessPermission {
+  BusinessPermission({
+    required String name,
+    this.id,
+  }) {
+    _name = name;
+  }
+
+  final _updatedFields = <String, dynamic>{};
+  int? id;
+  Future<void> save() async {
+    if (_updatedFields.isNotEmpty) {
+      final query = Query.update(
+        table: 'businesspermission',
+        columns: _updatedFields,
+        operation: Operation('businesspermissionId'.safeTk, Operator.eq, id),
+      );
+      await Database.execute(query.toString());
+    }
+  }
+
+  Future<bool> delete() async {
+    return BusinessPermissionDb.delete(this);
+  }
+
+  late String _name;
+  String get name => _name;
+  set name(String m) {
+    _updatedFields['name'] = m;
+    _name = m;
+  }
+}
+
+class HasBusinessPermission {
+  HasBusinessPermission({
+    required int employeeId,
+    required int businessId,
+    required int permissionId,
+    this.id,
+    DateTime? createdAt,
+  }) {
+    _createdAt = createdAt;
+    _employeeId = employeeId;
+    _businessId = businessId;
+    _permissionId = permissionId;
+  }
+  late int _employeeId;
+  int get employeeId => _employeeId;
+  set employeeId(int id) {
+    _updatedFields['employee'] = id;
+    _employeeId = id;
+  }
+
+  ModelHolder<BusinessEmploye>? _getemployee;
+  Future<BusinessEmploye?> get employee {
+    _getemployee ??= ModelHolder<BusinessEmploye>(
+        getModelInstance: () =>
+            BusinessEmployeDb.get(where: (t) => t.id.equals(employeeId)),);
+    return _getemployee!.instance;
+  }
+
+  late int _businessId;
+  int get businessId => _businessId;
+  set businessId(int id) {
+    _updatedFields['business'] = id;
+    _businessId = id;
+  }
+
+  ModelHolder<Business>? _getbusiness;
+  Future<Business?> get business {
+    _getbusiness ??= ModelHolder<Business>(
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
+    return _getbusiness!.instance;
+  }
+
+  late int _permissionId;
+  int get permissionId => _permissionId;
+  set permissionId(int id) {
+    _updatedFields['permission'] = id;
+    _permissionId = id;
+  }
+
+  ModelHolder<BusinessPermission>? _getpermission;
+  Future<BusinessPermission?> get permission {
+    _getpermission ??= ModelHolder<BusinessPermission>(
+        getModelInstance: () =>
+            BusinessPermissionDb.get(where: (t) => t.id.equals(permissionId)),);
+    return _getpermission!.instance;
+  }
+
+  final _updatedFields = <String, dynamic>{};
+  int? id;
+  Future<void> save() async {
+    if (_updatedFields.isNotEmpty) {
+      final query = Query.update(
+        table: 'hasbusinesspermission',
+        columns: _updatedFields,
+        operation: Operation('hasbusinesspermissionId'.safeTk, Operator.eq, id),
+      );
+      await Database.execute(query.toString());
+    }
+  }
+
+  Future<bool> delete() async {
+    return HasBusinessPermissionDb.delete(this);
+  }
+
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  set createdAt(DateTime? m) {
+    _updatedFields['createdAt'] = m;
+    _createdAt = m;
   }
 }
 

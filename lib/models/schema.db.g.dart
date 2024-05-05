@@ -1016,7 +1016,7 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
       isAvailableOnline: map['isAvailableOnline'] as bool?,
       notifyNewProduct: map['notifyNewProduct'] as bool?,
       receiveOrder: map['receiveOrder'] as bool?,
-      businessId: map['businessId'] as int?,
+      businessId: map['businessId'] as int,
     );
   }
 
@@ -1025,7 +1025,7 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
   }
 
   static Future<BusinessPrefrences> create({
-    int? businessId,
+    required int businessId,
     bool? isAvailableOnline,
     bool? notifyNewProduct,
     bool? receiveOrder,
@@ -1087,12 +1087,13 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
   }
 }
 
-extension BusinessAcitiviyDb on BusinessAcitiviy {
+extension BusinessAcitivityDb on BusinessAcitivity {
   Map<String, dynamic> toJson(
       {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
     final json = {
       'id': id,
       'action': action,
+      'businessId': businessId,
       'userId': userId,
     };
     if (excludeNull) {
@@ -1106,41 +1107,44 @@ extension BusinessAcitiviyDb on BusinessAcitiviy {
     return json;
   }
 
-  static BusinessAcitiviy fromRow(ResultRow row) {
+  static BusinessAcitivity fromRow(ResultRow row) {
     final map = row.toColumnMap();
-    return BusinessAcitiviy(
-      id: map['businessacitiviyId'] as int,
+    return BusinessAcitivity(
+      id: map['businessacitivityId'] as int,
       action: map['action'] as String?,
-      userId: map['userId'] as int,
+      businessId: map['businessId'] as int,
+      userId: map['userId'] as int?,
     );
   }
 
-  static Iterable<BusinessAcitiviy> fromResult(Result result) {
+  static Iterable<BusinessAcitivity> fromResult(Result result) {
     return result.map(fromRow);
   }
 
-  static Future<BusinessAcitiviy> create({
-    required int userId,
+  static Future<BusinessAcitivity> create({
+    required int businessId,
+    int? userId,
     String? action,
   }) async {
-    final model = BusinessAcitiviy(
+    final model = BusinessAcitivity(
       action: action,
+      businessId: businessId,
       userId: userId,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(
-      table: 'businessacitiviy',
+      table: 'businessacitivity',
       columns: data,
     );
     final res = await Database.execute(q.toString());
     return fromRow(res.first);
   }
 
-  static Future<bool> delete(BusinessAcitiviy businessacitiviy) async {
+  static Future<bool> delete(BusinessAcitivity businessacitivity) async {
     final q = Query.delete(
-      table: 'businessacitiviy',
+      table: 'businessacitivity',
       operation: Operation(
-          'businessacitiviyId'.safeTk, Operator.eq, businessacitiviy.id,),
+          'businessacitivityId'.safeTk, Operator.eq, businessacitivity.id,),
     );
     try {
       await Database.execute(q.toString());
@@ -1150,17 +1154,17 @@ extension BusinessAcitiviyDb on BusinessAcitiviy {
     }
   }
 
-  static Future<Iterable<BusinessAcitiviy>> filter({
-    required Operation? Function(BusinessAcitiviyQuery) where,
+  static Future<Iterable<BusinessAcitivity>> filter({
+    required Operation? Function(BusinessAcitivityQuery) where,
     List<String> orderBy = const [],
     int offset = 0,
     int? limit,
     List<Join> joins = const [],
   }) async {
-    final tt = where(BusinessAcitiviyQuery());
+    final tt = where(BusinessAcitivityQuery());
     final query = Query.select(
-      table: BusinessAcitiviyQuery.table,
-      columns: BusinessAcitiviyQuery.columns,
+      table: BusinessAcitivityQuery.table,
+      columns: BusinessAcitivityQuery.columns,
       operation: tt,
       offset: offset,
       limit: limit,
@@ -1170,8 +1174,8 @@ extension BusinessAcitiviyDb on BusinessAcitiviy {
     return fromResult(result);
   }
 
-  static Future<BusinessAcitiviy?> get(
-      {required Operation Function(BusinessAcitiviyQuery) where,}) async {
+  static Future<BusinessAcitivity?> get(
+      {required Operation Function(BusinessAcitivityQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1263,6 +1267,288 @@ extension BusinessReviewDb on BusinessReview {
 
   static Future<BusinessReview?> get(
       {required Operation Function(BusinessReviewQuery) where,}) async {
+    final res = await filter(where: where);
+    if (res.isEmpty) return null;
+    return res.first;
+  }
+}
+
+extension BusinessEmployeDb on BusinessEmploye {
+  Map<String, dynamic> toJson(
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+    final json = {
+      'id': id,
+      'createdAt': createdAt?.toIso8601String(),
+      'userId': userId,
+      'businessId': businessId,
+    };
+    if (excludeNull) {
+      json.removeWhere((key, value) => value == null);
+    }
+    if (only != null) {
+      json.removeWhere((key, value) => !only.contains(key));
+    } else if (exclude != null) {
+      json.removeWhere((key, value) => exclude.contains(key));
+    }
+    return json;
+  }
+
+  static BusinessEmploye fromRow(ResultRow row) {
+    final map = row.toColumnMap();
+    return BusinessEmploye(
+      id: map['businessemployeId'] as int,
+      createdAt: map['createdAt'] as DateTime?,
+      userId: map['userId'] as int,
+      businessId: map['businessId'] as int,
+    );
+  }
+
+  static Iterable<BusinessEmploye> fromResult(Result result) {
+    return result.map(fromRow);
+  }
+
+  static Future<BusinessEmploye> create({
+    required int userId,
+    required int businessId,
+    DateTime? createdAt,
+  }) async {
+    final model = BusinessEmploye(
+      createdAt: createdAt,
+      userId: userId,
+      businessId: businessId,
+    );
+    final data = model.toJson(excludeNull: true);
+    final q = Query.insert(
+      table: 'businessemploye',
+      columns: data,
+    );
+    final res = await Database.execute(q.toString());
+    return fromRow(res.first);
+  }
+
+  static Future<bool> delete(BusinessEmploye businessemploye) async {
+    final q = Query.delete(
+      table: 'businessemploye',
+      operation: Operation(
+          'businessemployeId'.safeTk, Operator.eq, businessemploye.id,),
+    );
+    try {
+      await Database.execute(q.toString());
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<Iterable<BusinessEmploye>> filter({
+    required Operation? Function(BusinessEmployeQuery) where,
+    List<String> orderBy = const [],
+    int offset = 0,
+    int? limit,
+    List<Join> joins = const [],
+  }) async {
+    final tt = where(BusinessEmployeQuery());
+    final query = Query.select(
+      table: BusinessEmployeQuery.table,
+      columns: BusinessEmployeQuery.columns,
+      operation: tt,
+      offset: offset,
+      limit: limit,
+      joins: tt == null ? [] : tt.joins,
+    );
+    final result = await Database.execute(query.toString());
+    return fromResult(result);
+  }
+
+  static Future<BusinessEmploye?> get(
+      {required Operation Function(BusinessEmployeQuery) where,}) async {
+    final res = await filter(where: where);
+    if (res.isEmpty) return null;
+    return res.first;
+  }
+}
+
+extension BusinessPermissionDb on BusinessPermission {
+  Map<String, dynamic> toJson(
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+    final json = {
+      'id': id,
+      'name': name,
+    };
+    if (excludeNull) {
+      json.removeWhere((key, value) => value == null);
+    }
+    if (only != null) {
+      json.removeWhere((key, value) => !only.contains(key));
+    } else if (exclude != null) {
+      json.removeWhere((key, value) => exclude.contains(key));
+    }
+    return json;
+  }
+
+  static BusinessPermission fromRow(ResultRow row) {
+    final map = row.toColumnMap();
+    return BusinessPermission(
+      id: map['businesspermissionId'] as int,
+      name: map['name'] as String,
+    );
+  }
+
+  static Iterable<BusinessPermission> fromResult(Result result) {
+    return result.map(fromRow);
+  }
+
+  static Future<BusinessPermission> create({
+    required String name,
+  }) async {
+    final model = BusinessPermission(
+      name: name,
+    );
+    final data = model.toJson(excludeNull: true);
+    final q = Query.insert(
+      table: 'businesspermission',
+      columns: data,
+    );
+    final res = await Database.execute(q.toString());
+    return fromRow(res.first);
+  }
+
+  static Future<bool> delete(BusinessPermission businesspermission) async {
+    final q = Query.delete(
+      table: 'businesspermission',
+      operation: Operation(
+          'businesspermissionId'.safeTk, Operator.eq, businesspermission.id,),
+    );
+    try {
+      await Database.execute(q.toString());
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<Iterable<BusinessPermission>> filter({
+    required Operation? Function(BusinessPermissionQuery) where,
+    List<String> orderBy = const [],
+    int offset = 0,
+    int? limit,
+    List<Join> joins = const [],
+  }) async {
+    final tt = where(BusinessPermissionQuery());
+    final query = Query.select(
+      table: BusinessPermissionQuery.table,
+      columns: BusinessPermissionQuery.columns,
+      operation: tt,
+      offset: offset,
+      limit: limit,
+      joins: tt == null ? [] : tt.joins,
+    );
+    final result = await Database.execute(query.toString());
+    return fromResult(result);
+  }
+
+  static Future<BusinessPermission?> get(
+      {required Operation Function(BusinessPermissionQuery) where,}) async {
+    final res = await filter(where: where);
+    if (res.isEmpty) return null;
+    return res.first;
+  }
+}
+
+extension HasBusinessPermissionDb on HasBusinessPermission {
+  Map<String, dynamic> toJson(
+      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+    final json = {
+      'id': id,
+      'createdAt': createdAt?.toIso8601String(),
+      'employeeId': employeeId,
+      'businessId': businessId,
+      'permissionId': permissionId,
+    };
+    if (excludeNull) {
+      json.removeWhere((key, value) => value == null);
+    }
+    if (only != null) {
+      json.removeWhere((key, value) => !only.contains(key));
+    } else if (exclude != null) {
+      json.removeWhere((key, value) => exclude.contains(key));
+    }
+    return json;
+  }
+
+  static HasBusinessPermission fromRow(ResultRow row) {
+    final map = row.toColumnMap();
+    return HasBusinessPermission(
+      id: map['hasbusinesspermissionId'] as int,
+      createdAt: map['createdAt'] as DateTime?,
+      employeeId: map['employeeId'] as int,
+      businessId: map['businessId'] as int,
+      permissionId: map['permissionId'] as int,
+    );
+  }
+
+  static Iterable<HasBusinessPermission> fromResult(Result result) {
+    return result.map(fromRow);
+  }
+
+  static Future<HasBusinessPermission> create({
+    required int employeeId,
+    required int businessId,
+    required int permissionId,
+    DateTime? createdAt,
+  }) async {
+    final model = HasBusinessPermission(
+      createdAt: createdAt,
+      employeeId: employeeId,
+      businessId: businessId,
+      permissionId: permissionId,
+    );
+    final data = model.toJson(excludeNull: true);
+    final q = Query.insert(
+      table: 'hasbusinesspermission',
+      columns: data,
+    );
+    final res = await Database.execute(q.toString());
+    return fromRow(res.first);
+  }
+
+  static Future<bool> delete(
+      HasBusinessPermission hasbusinesspermission,) async {
+    final q = Query.delete(
+      table: 'hasbusinesspermission',
+      operation: Operation('hasbusinesspermissionId'.safeTk, Operator.eq,
+          hasbusinesspermission.id,),
+    );
+    try {
+      await Database.execute(q.toString());
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  static Future<Iterable<HasBusinessPermission>> filter({
+    required Operation? Function(HasBusinessPermissionQuery) where,
+    List<String> orderBy = const [],
+    int offset = 0,
+    int? limit,
+    List<Join> joins = const [],
+  }) async {
+    final tt = where(HasBusinessPermissionQuery());
+    final query = Query.select(
+      table: HasBusinessPermissionQuery.table,
+      columns: HasBusinessPermissionQuery.columns,
+      operation: tt,
+      offset: offset,
+      limit: limit,
+      joins: tt == null ? [] : tt.joins,
+    );
+    final result = await Database.execute(query.toString());
+    return fromResult(result);
+  }
+
+  static Future<HasBusinessPermission?> get(
+      {required Operation Function(HasBusinessPermissionQuery) where,}) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;

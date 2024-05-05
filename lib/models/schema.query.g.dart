@@ -311,26 +311,32 @@ class BusinessPrefrencesQuery {
       ];
 }
 
-class BusinessAcitiviyQuery {
-  BusinessAcitiviyQuery();
-  factory BusinessAcitiviyQuery.referenced({required List<Join> joins}) =>
-      BusinessAcitiviyQuery().._joins.addAll(joins);
-  static const table = 'businessacitiviy';
+class BusinessAcitivityQuery {
+  BusinessAcitivityQuery();
+  factory BusinessAcitivityQuery.referenced({required List<Join> joins}) =>
+      BusinessAcitivityQuery().._joins.addAll(joins);
+  static const table = 'businessacitivity';
   NumberColumn get id => NumberColumn(
-      column: 'businessacitiviyId',
-      offtable: 'businessacitiviy',
+      column: 'businessacitivityId',
+      offtable: 'businessacitivity',
       depends: _joins,);
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'business', onn: 'businessId', from: table),
+      ],);
+  NumberColumn get businessId => NumberColumn(
+      column: 'businessId', offtable: 'businessacitivity', depends: _joins,);
   UserQuery get user => UserQuery.referenced(joins: [
         ..._joins,
         Join(table: 'user', onn: 'userId', from: table),
       ],);
   NumberColumn get userId => NumberColumn(
-      column: 'userId', offtable: 'businessacitiviy', depends: _joins,);
+      column: 'userId', offtable: 'businessacitivity', depends: _joins,);
   TextColumn get action => TextColumn(
-      column: 'action', offtable: 'businessacitiviy', depends: _joins,);
+      column: 'action', offtable: 'businessacitivity', depends: _joins,);
   final _joins = <Join>[];
   static List<String> get columns =>
-      <String>['businessacitiviyId', 'userId', 'action'];
+      <String>['businessacitivityId', 'businessId', 'userId', 'action'];
 }
 
 class BusinessReviewQuery {
@@ -355,6 +361,91 @@ class BusinessReviewQuery {
   final _joins = <Join>[];
   static List<String> get columns =>
       <String>['businessreviewId', 'userId', 'businessId'];
+}
+
+class BusinessEmployeQuery {
+  BusinessEmployeQuery();
+  factory BusinessEmployeQuery.referenced({required List<Join> joins}) =>
+      BusinessEmployeQuery().._joins.addAll(joins);
+  static const table = 'businessemploye';
+  NumberColumn get id => NumberColumn(
+      column: 'businessemployeId',
+      offtable: 'businessemploye',
+      depends: _joins,);
+  UserQuery get user => UserQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'user', onn: 'userId', from: table),
+      ],);
+  NumberColumn get userId => NumberColumn(
+      column: 'userId', offtable: 'businessemploye', depends: _joins,);
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'business', onn: 'businessId', from: table),
+      ],);
+  NumberColumn get businessId => NumberColumn(
+      column: 'businessId', offtable: 'businessemploye', depends: _joins,);
+  TextColumn get createdAt => TextColumn(
+      column: 'createdAt', offtable: 'businessemploye', depends: _joins,);
+  final _joins = <Join>[];
+  static List<String> get columns =>
+      <String>['businessemployeId', 'userId', 'businessId', 'createdAt'];
+}
+
+class BusinessPermissionQuery {
+  BusinessPermissionQuery();
+  factory BusinessPermissionQuery.referenced({required List<Join> joins}) =>
+      BusinessPermissionQuery().._joins.addAll(joins);
+  static const table = 'businesspermission';
+  NumberColumn get id => NumberColumn(
+      column: 'businesspermissionId',
+      offtable: 'businesspermission',
+      depends: _joins,);
+  TextColumn get name => TextColumn(
+      column: 'name', offtable: 'businesspermission', depends: _joins,);
+  final _joins = <Join>[];
+  static List<String> get columns => <String>['businesspermissionId', 'name'];
+}
+
+class HasBusinessPermissionQuery {
+  HasBusinessPermissionQuery();
+  factory HasBusinessPermissionQuery.referenced({required List<Join> joins}) =>
+      HasBusinessPermissionQuery().._joins.addAll(joins);
+  static const table = 'hasbusinesspermission';
+  NumberColumn get id => NumberColumn(
+      column: 'hasbusinesspermissionId',
+      offtable: 'hasbusinesspermission',
+      depends: _joins,);
+  BusinessEmployeQuery get employee => BusinessEmployeQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'businessemploye', onn: 'employeeId', from: table),
+      ],);
+  NumberColumn get employeeId => NumberColumn(
+      column: 'employeeId', offtable: 'hasbusinesspermission', depends: _joins,);
+  BusinessQuery get business => BusinessQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'business', onn: 'businessId', from: table),
+      ],);
+  NumberColumn get businessId => NumberColumn(
+      column: 'businessId', offtable: 'hasbusinesspermission', depends: _joins,);
+  BusinessPermissionQuery get permission =>
+      BusinessPermissionQuery.referenced(joins: [
+        ..._joins,
+        Join(table: 'businesspermission', onn: 'permissionId', from: table),
+      ],);
+  NumberColumn get permissionId => NumberColumn(
+      column: 'permissionId',
+      offtable: 'hasbusinesspermission',
+      depends: _joins,);
+  TextColumn get createdAt => TextColumn(
+      column: 'createdAt', offtable: 'hasbusinesspermission', depends: _joins,);
+  final _joins = <Join>[];
+  static List<String> get columns => <String>[
+        'hasbusinesspermissionId',
+        'employeeId',
+        'businessId',
+        'permissionId',
+        'createdAt',
+      ];
 }
 
 class ProductQuery {

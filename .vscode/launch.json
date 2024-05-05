@@ -7,7 +7,13 @@
         {
             "name": "Debug",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": ["1"]
+        },
+        {
+            "name": "Release",
+            "request": "launch",
+            "type": "dart",
         }
     ]
 }

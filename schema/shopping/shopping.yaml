@@ -1,0 +1,305 @@
+paths:
+  # filters: price, distance
+  /items:
+    parameters:
+      - name: catagoryId
+        in: query
+        schema:
+          $ref: ../components.yaml#/components/schemas/Id
+      - name: brandId
+        in: query
+        schema:
+          $ref: ../components.yaml#/components/schemas/Id
+      - name: search
+        in: query
+        schema:
+          type: string
+          example: Computer
+      - name: lat
+        in: query
+        schema:
+          type: number
+          format: int64
+          example: 90.0
+      - name: lng
+        in: query
+        schema:
+          type: number
+          format: int64
+          example: 108.8
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          format: int64
+          example: 0
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int64
+          example: 10
+    get:
+      operationId: getItems
+      summary: Get items
+      tags: 
+        - Shopping🛒
+      security:
+        - ApiKey: []
+      responses:
+        200:
+          description: Request Successfully completed
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: "../components.yaml#/components/schemas/Product"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - detail
+                properties:
+                  detail:
+                    type: string
+                    example:  query parameters value may not be valid
+
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  /businesses/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          schema: 
+            $ref: ../components.yaml#/components/schemas/Id
+      operationId: GetShopById
+      summary:  Get shop by id
+      tags: 
+        - Shopping🛒
+      security:
+        - ApiKey: []
+      responses:
+        200:
+          description: Provide Id to get shop
+          content:
+            application/json:
+              schema:
+                type: array
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+          # TODO: shall we use location to get shopping items
+  /businesses/popular:
+    get:
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int64
+            example: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+            example: 10
+        
+      operationId: GetPopularBusinesses
+      summary:  Get popular businesses
+      tags: 
+        - Shopping🛒
+      security:
+        - ApiKey: []
+      responses:
+        200:
+          description: Provide Id to get shop
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../components.yaml#/components/schemas/Bussiness
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  /businesses/suggested:
+    get:
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int64
+            example: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+            example: 10
+      operationId: GetSuggestedBusiness
+      summary:  Get suggested businesses
+      tags: 
+        - Shopping🛒
+      security:
+        - ApiKey: []
+      responses:
+        200:
+          description: Provide Id to get shop
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../components.yaml#/components/schemas/Bussiness
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  /products/popular:
+    get:
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int64
+            example: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+            example: 10
+        
+      operationId: GetPopularProducts
+      summary:  Get popular products
+      tags: 
+        - Shopping🛒
+      security:
+        - ApiKey: []
+      responses:
+        200:
+          description: Provide Id to get shop
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../components.yaml#/components/schemas/Product
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  /products/suggested:
+    get:
+      parameters:
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int64
+            example: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+            example: 10
+      operationId: GetSuggestedProducts
+      summary:  Get suggested products
+      tags: 
+        - Shopping🛒
+      security:
+        - ApiKey: []
+      responses:
+        200:
+          description: Provide Id to get shop
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../components.yaml#/components/schemas/Product
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  # /shops/catagories:
+  #   get:
+  #     operationId: GetCatagories
+  #     summary:  Get shop Catagories
+  #     tags: 
+  #       - Shopping🛒
+  #     security:
+  #       - ApiKey: []
+  #     responses:
+  #       200:
+  #         description: Provide Id to get shop
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                   type: object
+  #       403:
+  #         $ref: "../error_responses.yaml#/responses/403"
+  # /shops/brands:
+  #   get:
+  #     operationId: GetBrands
+  #     summary:  Get shop Brands
+  #     tags: 
+  #       - Shopping🛒
+  #     security:
+  #       - ApiKey: []
+  #     responses:
+  #       200:
+  #         description: Provide Id to get shop
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                   type: object
+  #       403:
+  #         $ref: "../error_responses.yaml#/responses/403"
+
+          
+  /products/{bizId}:
+    get:
+      parameters:
+        - name: bizId
+          required: true
+          in: path
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+      operationId: GetProductOfBusiness
+      description: Get products for business
+      summary: Get business products
+      tags: 
+        - Shopping🛒
+      responses:
+        200:
+          description: Request completed Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: "../components.yaml#/components/schemas/Product"
+         
+        403:
+          $ref: "../error_responses.yaml#/responses/403" 
+        404:
+          $ref: "../error_responses.yaml#/responses/404"
+        500:
+          $ref: "../error_responses.yaml#/responses/500" 
+    

@@ -38,14 +38,16 @@ Password:
       type: ForeignKey
       references: User
       isnull: false
+      onDelete: CASCADE
 InfoChangeRequest:
   columns:
     newEmail: Text
     newPhone: Text
     user: 
-      type: ForeignKey
+      type: ForeignKey  
       references: User
       isnull: false
+      onDelete: CASCADE
     createdAt: 
       type: timestamp
       default: DateTime.now()
@@ -59,6 +61,7 @@ UserInterestAndInteraction:
       type: ForeignKey
       references: User
       isnull: false
+      onDelete: CASCADE
 
 # Basic informations and Supporters
 Catagory:
@@ -77,6 +80,7 @@ Brand:
     catagory:
       type: ForeignKey
       references: Catagory
+      onDelete: CASCADE
     desc: Text
 Unit:
   columns:
@@ -111,9 +115,12 @@ Business:
       references: Address
       isnull: false
       unique: true
+      onDelete: RESTRICT
     catagory:
       type: ForeignKey
       references: Catagory
+      isnull: true
+      onDelete: SET NULL
     logo: Text
     bgImage: Text
     createdAt:
@@ -128,6 +135,7 @@ BusinessPrefrences:
       type: ForeignKey
       references: Business
       unique: true
+      isnull: false
     isAvailableOnline: 
       type: boolean
       default: true
@@ -137,12 +145,18 @@ BusinessPrefrences:
     receiveOrder:
       type: boolean
       default: false
-BusinessAcitiviy:
+BusinessAcitivity:
   columns:
+    business:
+      type: ForeignKey
+      references: Business
+      isnull: false
+      onDelete: CASCADE
     user:
       type: ForeignKey
       references: User
-      isnull: false
+      isnull: true
+      onDelete: SET NULL
     action: Text
 BusinessReview:
   columns:
@@ -154,6 +168,47 @@ BusinessReview:
       type: ForeignKey
       references: Business
       isnull: false
+BusinessEmploye:
+  columns:
+    user:
+      type: ForeignKey
+      references: User
+      isnull: false
+      onDelete: CASCADE
+    business:
+      type: ForeignKey
+      references: Business
+      isnull: false
+      onDelete: CASCADE
+    createdAt: 
+      type: timestamp
+      default: DateTime.now()
+  
+BusinessPermission:
+  columns:
+    name:
+      type: Text
+      isnull: false
+HasBusinessPermission:
+  columns:
+    employee:
+      type: ForeignKey
+      references: BusinessEmploye
+      isnull: false
+      onDelete: CASCADE
+    business: 
+      type: ForeignKey
+      references: Business
+      isnull: false
+      onDelete: CASCADE
+    permission:
+      type: ForeignKey
+      references: BusinessPermission
+      isnull: false
+      onDelete: CASCADE
+    createdAt:
+      type: timestamp
+      default: DateTime.now()
 
 Product:
   columns:
@@ -174,15 +229,19 @@ Product:
       type: ForeignKey
       references: Business
       isnull: false
+      onDelete: CASCADE
     brand:
       type: ForeignKey
       references: Brand
+      onDelete: SET NULL
     catagory:
       type: ForeignKey
       references: Catagory
+      onDelete: SET NULL
     unit:
       type: ForeignKey
       references: Unit
+      onDelete: SET NULL
     expireDate:  timestamp
     manDate:  timestamp
     desc: Text
@@ -193,16 +252,19 @@ Like:
       type: ForeignKey
       isnull: false
       references: Product
+      onDelete: CASCADE
 Follow:
   columns:
     business:
       type: ForeignKey
       isnull: false
       references: Business
+      onDelete: CASCADE
     user:
       type: ForeignKey
       isnull: false
       references: User
+      onDelete: CASCADE
 
 Order:
   columns:
@@ -213,16 +275,19 @@ Order:
       type: ForeignKey
       references: Business
       isnull: false
+      onDelete: CASCADE
     user:
       type: ForeignKey
       references: User
       isnull: false
+      onDelete: CASCADE
 Items:
   columns:
     product:
       type: ForeignKey
       references: Product
       isnull: false
+      onDelete: CASCADE
     quantity:
       type: integer
       isnull: false
@@ -230,6 +295,7 @@ Items:
     order:
       type: ForeignKey
       references: Order
+      onDelete: SET NULL
     createdAt:
       type: timestamp
       default: DateTime.now()
@@ -261,15 +327,19 @@ GiftCard:
       type: ForeignKey
       references: User
       isnull: false
+      onDelete: RESTRICT
     createdBy:
       type: ForeignKey
       references: User
+      onDelete: SET NULL
     product:
       type: ForeignKey
       references: Product
+      onDelete: SET NULL
     business:
       type: ForeignKey
       references: Business
+      onDelete: SET NULL
     redeemed:
       type: boolean
       default: false
@@ -281,12 +351,15 @@ Blocked:
     user:
       type: ForeignKey
       references: User
+      onDelete: SET NULL
     business:
       type: ForeignKey
       references: Business
+      onDelete: SET NULL
     product:
       type: ForeignKey
       references: Product
+      onDelete: SET NULL
     endDate: timestamp
 Policy:
   columns:
@@ -302,18 +375,23 @@ Report:
     policy:
       type: ForeignKey
       references: Policy
+      onDelete: SET NULL
     business:
       type: ForeignKey
       isnull: false
       references: Business
+      onDelete: CASCADE
     user:
       type: ForeignKey
       isnull: false
       references: User
+      onDelete: CASCADE
     violator:
       type: ForeignKey
       references: User
+      onDelete: SET NULL
     product:
       type: ForeignKey
       references: Product
+      onDelete: SET NULL
     desc: Text

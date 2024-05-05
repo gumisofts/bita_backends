@@ -93,14 +93,32 @@ DROP Constraint If Exists product_brand_brand_fk;
 Alter Table IF Exists "product"
 DROP Constraint If Exists product_business_business_fk;
 
+Alter Table IF Exists "hasbusinesspermission"
+DROP Constraint If Exists hasbusinesspermission_permission_businesspermission_fk;
+
+Alter Table IF Exists "hasbusinesspermission"
+DROP Constraint If Exists hasbusinesspermission_business_business_fk;
+
+Alter Table IF Exists "hasbusinesspermission"
+DROP Constraint If Exists hasbusinesspermission_employee_businessemploye_fk;
+
+Alter Table IF Exists "businessemploye"
+DROP Constraint If Exists businessemploye_business_business_fk;
+
+Alter Table IF Exists "businessemploye"
+DROP Constraint If Exists businessemploye_user_user_fk;
+
 Alter Table IF Exists "businessreview"
 DROP Constraint If Exists businessreview_business_business_fk;
 
 Alter Table IF Exists "businessreview"
 DROP Constraint If Exists businessreview_user_user_fk;
 
-Alter Table IF Exists "businessacitiviy"
-DROP Constraint If Exists businessacitiviy_user_user_fk;
+Alter Table IF Exists "businessacitivity"
+DROP Constraint If Exists businessacitivity_user_user_fk;
+
+Alter Table IF Exists "businessacitivity"
+DROP Constraint If Exists businessacitivity_business_business_fk;
 
 Alter Table IF Exists "businessprefrences"
 DROP Constraint If Exists businessprefrences_business_business_fk;
@@ -149,9 +167,15 @@ Drop Table If Exists "like";
 
 Drop Table If Exists "product";
 
+Drop Table If Exists "hasbusinesspermission";
+
+Drop Table If Exists "businesspermission";
+
+Drop Table If Exists "businessemploye";
+
 Drop Table If Exists "businessreview";
 
-Drop Table If Exists "businessacitiviy";
+Drop Table If Exists "businessacitivity";
 
 Drop Table If Exists "businessprefrences";
 

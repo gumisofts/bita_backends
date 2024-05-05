@@ -24,6 +24,36 @@ Router _$BusinessApiRouter(BusinessApi service) {
     service.updateBiz,
   );
   router.add(
+    'PATCH',
+    r'/address',
+    service.updateAddress,
+  );
+  router.add(
+    'POST',
+    r'/employeeThroughPhone/<shopId>',
+    service.createEmployee,
+  );
+  router.add(
+    'GET',
+    r'/employee',
+    service.getEmployees,
+  );
+  router.add(
+    'DELETE',
+    r'/employee',
+    service.deleteEmployees,
+  );
+  router.add(
+    'PATCH',
+    r'/changePermission',
+    service.changeEmployePermission,
+  );
+  router.add(
+    'GET',
+    r'/activities/<shopId>',
+    service.getActivities,
+  );
+  router.add(
     'POST',
     r'/products',
     service.createProducts,

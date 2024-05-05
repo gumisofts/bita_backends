@@ -15,9 +15,7 @@ paths:
                   type: object
                   properties:
                     phoneNumber:
-                      type: string
-                      format: phone
-                      example: "928808587"
+                      $ref: "../components.yaml#/components/schemas/phoneNumber"
       responses:
         200:  
             description: User is created if does not exist and returns user status
@@ -69,8 +67,7 @@ paths:
                       - email
                     properties:
                       email:
-                        type: string
-                        example: nuradhussen082@gmail.com
+                        $ref: "../components.yaml#/components/schemas/email"
       responses:
         200:
           $ref: '#/paths/~1users~1getStartedWithPhone/post/responses/200'
@@ -93,7 +90,6 @@ paths:
       tags: 
         - Auth🔑
       description: Verifies OTP and returns access 
-
       requestBody:
         content:
           application/json:
@@ -119,6 +115,57 @@ paths:
 
       responses:
         200:
+            description: Login succesfully
+            content:
+                application/json:
+                    schema:
+                        $ref: ../components.yaml#/components/schemas/UserInfo 
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - password
+                       properties:
+                        password:
+                          type: string
+                    example:
+                      password: this field is required
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /users/login:
+    post:
+      security:
+        $ref: '#/paths/~1users~1getStartedWithPhone/post/security'
+      operationId: LoginUser
+      summary: Login User
+      tags: 
+        - Auth🔑
+      description: Provides access token for the user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - password
+              properties:
+                userId:
+                  type: integer
+                  format: int64
+                  example: 10
+                password: 
+                  description: Account password
+                  type: string
+                  example: "******"
+      responses:
+        200:
             description: OTP is Verified succesfully
             content:
                 application/json:
@@ -137,7 +184,6 @@ paths:
                           type: string
                     example:
                       otp: this field is required
-
         403:
           $ref: ../error_responses.yaml#/responses/403
         500:
@@ -152,7 +198,7 @@ paths:
           $ref: "../components.yaml#/components/schemas/Id"
     get:
         security: [{ApiKey: [], BearerToken: []}]
-        summary: Get User By Id
+        summary: Get user by id
         tags: 
           - Users
         operationId: GetUserById
@@ -174,7 +220,7 @@ paths:
   /me:
     get:
         security: [{ApiKey: [], BearerToken: []}]
-        summary: Get Current User
+        summary: Get current user
         operationId: GetCurrentUser
         tags: 
           - Users
@@ -193,7 +239,7 @@ paths:
            $ref: ../error_responses.yaml#/responses/500
     delete:
       security: [{ApiKey: [],BearerToken: []}]
-      summary: Delete User
+      summary: Delete current user
       tags: 
         - Users
       description: Schedules user to be deleted after 14 days

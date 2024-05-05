@@ -14,6 +14,15 @@ services:
     #   limits:
     #     cpus: 4
     #     memory: 4g
-
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: "rabbitmq"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq/
+      # - rabbit_data/log/:/var/log/rabbitmq
 volumes:
   pg_data_test:
+  rabbit_data:

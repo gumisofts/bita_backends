@@ -106,18 +106,94 @@ class BusinessApi {
           return jsonResponse(body: biz.toJson());
         },
       );
-// TODO(nuradic): Add Employee
-// TODO(nuradic): Remove Employee
+  @Route('PATCH', '/address')
+  Future<Response> updateAddress(Request request) =>
+      handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          return jsonResponse();
+        },
+      );
 // TODO(nuradic): Business Preferences
 
 // TODO(nuradic): Employee Role and Permissions
 // TODO(nuradic): Business Activities(Imuttable log)
 
-// TODO(nuradic): update address.
 // TODO(nuradic): Transefer Business ownership
 // TODO(nuradic): Delete Businnes
 // TODO(nuradic): Business Rate and Feedback
 // TODO(nuradic): Rate Products
+  @Route.post('/employeeThroughPhone/<shopId>')
+  Future<Response> createEmployee(Request request, String shopId) =>
+      handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          final data = await form(
+            request,
+            fields: [
+              FieldValidator<String>(name: 'phoneNumber', isRequired: true),
+            ],
+          );
+
+          User? user;
+
+          user = await UserDb.get(
+            where: (where) =>
+                where.phoneNumber.equals(data['phoneNumber'] as String),
+          );
+
+          user ??=
+              await UserDb.create(phoneNumber: data['phoneNumber'] as String);
+
+          final result = await BusinessEmployeDb.create(
+            userId: user.id!,
+            businessId: int.parse(shopId),
+          );
+
+          return jsonResponse(body: result.toJson());
+        },
+      );
+  @Route.get('/employee')
+  Future<Response> getEmployees(Request request) => handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          return jsonResponse();
+        },
+      );
+  @Route.delete('/employee')
+  Future<Response> deleteEmployees(Request request) =>
+      handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          return jsonResponse();
+        },
+      );
+  @Route('PATCH', '/changePermission')
+  Future<Response> changeEmployePermission(Request request) =>
+      handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          return jsonResponse();
+        },
+      );
+
+  @Route.get('/activities/<shopId>')
+  Future<Response> getActivities(Request request, String shopId) =>
+      handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          final activities = await BusinessAcitivityDb.filter(
+            where: (where) => where.id.equals(1),
+          );
+          return jsonResponse(body: activities.map((e) => e.toJson()));
+        },
+      );
   @Route.post('/products')
   Future<Response> createProducts(Request request) =>
       handleRequestWithPermission(

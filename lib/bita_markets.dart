@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:bita_markets/endpoints/business_api.dart';
+import 'package:bita_markets/endpoints/shopping_api.dart';
 import 'package:bita_markets/endpoints/users_api.dart';
 import 'package:bita_markets/middlewares/authentication.dart';
 import 'package:bita_markets/middlewares/content_type.dart';
@@ -11,8 +13,43 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_hotreload/shelf_hotreload.dart';
 import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_static/shelf_static.dart';
 
 void main(List<String> args) {
+  initDb;
+  if (args.isEmpty) {
+    createServer;
+  } else {
+    createDevServer;
+  }
+}
+
+Future<void> get createServer async {
+  for (var index = 0; index < Platform.numberOfProcessors; index++) {
+    await Isolate.spawn(
+      debugName: 'Isolate $index',
+      (message) {
+        logger.i('Isolate $index spawned');
+        initDb;
+        serve(
+          (Request request) async {
+            logger.d('Isolate $index handling the request');
+            return application(request);
+          },
+          'localhost',
+          8000,
+          shared: true,
+        ).then((value) => value..autoCompress = true);
+      },
+      'Isolate $index',
+    );
+  }
+
+  final server = await serve(application, 'localhost', 8000, shared: true);
+  server.autoCompress = true;
+}
+
+void get initDb {
   Database.init(
     endpoints: [
       Endpoint(
@@ -27,15 +64,20 @@ void main(List<String> args) {
     ],
     poolSetting: const PoolSettings(
       maxConnectionAge: Duration(milliseconds: 1000),
-      maxConnectionCount: 90,
+      maxConnectionCount: 10,
       sslMode: SslMode.disable,
     ),
     logger: logger.f,
   );
-  withHotreload(createServer);
 }
 
-Future<HttpServer> createServer() async {
+void get createDevServer => withHotreload(() async {
+      final server = await serve(application, 'localhost', 8000, shared: true);
+
+      return server;
+    });
+
+Handler get application {
   final app = Router()
     ..mount(
       '/users',
@@ -44,18 +86,21 @@ Future<HttpServer> createServer() async {
           .addHandler(UsersApi().router.call),
     )
     ..mount(
+      '/static',
+      createStaticHandler('public', defaultDocument: 'index.html'),
+    )
+    ..mount(
       '/business',
       const Pipeline()
           .addMiddleware(contentTypeMiddleware)
           .addHandler(BusinessApi().router.call),
-    );
+    )
+    ..mount('/shopping/products', ShoppingProductApi().router.call)
+    ..mount('/shopping/bussiness', ShoppingBusinessAPI().router.call);
   final handler = const Pipeline()
       .addMiddleware(logRequests())
       .addMiddleware(authMiddleWare)
       .addHandler(app.call);
-  final server = await serve(handler, 'localhost', 8000);
 
-  server.autoCompress = true;
-
-  return server;
+  return handler;
 }
