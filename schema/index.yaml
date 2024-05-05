@@ -11,12 +11,12 @@ servers:
   - url: http://127.0.0.1:8000
   - url: https://bita.gumiapps.com
 paths:
-  # Paths related to users
-  /users/getStartedWithPhone:
+  #############################User#####################################
+  /users/get_started_with_phone:
     $ref: "user/user.yaml#/paths/~1users~1getStartedWithPhone"
-  /users/getStartedWithEmail:
+  /users/get_started_with_email:
     $ref: "user/user.yaml#/paths/~1users~1getStartedWithEmail"
-  /users/verifyOtp:
+  /users/verify_otp:
     $ref: "user/user.yaml#/paths/~1users~1verifyOtp"
   /users/login:
     $ref: "user/user.yaml#/paths/~1users~1login"
@@ -28,8 +28,7 @@ paths:
   # Shopping
   /shopping/items:
     $ref: "shopping/shopping.yaml#/paths/~1items"
-  # /shopping/bussiness/{id}:
-    # $ref: "shopping/shopping.yaml#/paths/~1business~1{id}"
+  #####################################################################
   /shopping/bussiness/popular:
     $ref: "shopping/shopping.yaml#/paths/~1businesses~1popular"
   /shopping/bussiness/suggested:
@@ -40,26 +39,22 @@ paths:
     $ref: "shopping/shopping.yaml#/paths/~1products~1suggested"
   /shopping/products/{bizId}:
     $ref: "shopping/shopping.yaml#/paths/~1products~1{bizId}"
-  # /shopping/catagories:  
-  #   $ref: "shopping/shopping.yaml#/paths/~1businesses~1catagories"
-  # /shopping/brands:
-  #   $ref: "shopping/shopping.yaml#/paths/~1businesses~1brands"
-    # inventory 
+  #####################################################################
   /inventory/catagories:
     $ref: "business/business.yaml#/paths/~1catagories"
   /business/brands:
     $ref: "business/business.yaml#/paths/~1brands"
-  # Businness
+  ##############################Businness##############################
   /business:
     $ref: "business/business.yaml#/paths/~1business"
   /business/{id}:
     $ref: "business/business.yaml#/paths/~1business~1{id}"
   /business/mine:
     $ref: "business/business.yaml#/paths/~1business~1me"
-  # Business Preference
+  #############################Business Preference#####################
   /business/bussiness/settings/{id}:
     $ref: "business/business.yaml#/paths/~1settings~1{id}"
-  # Product
+  #############################Product#################################
   /business/products:
     $ref: "business/business.yaml#/paths/~1products"
   /business/products/{bizId}:
