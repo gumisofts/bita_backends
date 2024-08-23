@@ -139,6 +139,7 @@ Create Table
     If Not Exists "product" (
         "productId" SERIAL Primary Key,
         "name" Text not null,
+        "productUId" Text not null,
         "costPrice" Real not null,
         "sellingPrice" Real not null,
         "quantity" Real not null default '0',

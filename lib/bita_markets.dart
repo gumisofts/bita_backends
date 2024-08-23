@@ -36,7 +36,7 @@ Future<void> get createServer async {
             logger.d('Isolate $index handling the request');
             return application(request);
           },
-          'localhost',
+          'localhost', // 127.0.0.1 -> loop back
           8000,
           shared: true,
         ).then((value) => value..autoCompress = true);
@@ -62,17 +62,18 @@ void get initDb {
         ),
       ),
     ],
-    poolSetting: const PoolSettings(
-      maxConnectionAge: Duration(milliseconds: 1000),
+    poolSetting: PoolSettings(
+      maxConnectionAge: const Duration(milliseconds: 1000),
       maxConnectionCount: 10,
-      sslMode: SslMode.disable,
+      sslMode:
+          env['PG_USE_SSL'] == 'true' ? SslMode.verifyFull : SslMode.disable,
     ),
     logger: logger.f,
   );
 }
 
 void get createDevServer => withHotreload(() async {
-      final server = await serve(application, 'localhost', 8000, shared: true);
+      final server = await serve(application, '0.0.0.0', 8000, shared: true);
 
       return server;
     });

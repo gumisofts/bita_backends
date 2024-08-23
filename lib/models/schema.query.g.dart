@@ -457,6 +457,8 @@ class ProductQuery {
       NumberColumn(column: 'productId', offtable: 'product', depends: _joins);
   TextColumn get name =>
       TextColumn(column: 'name', offtable: 'product', depends: _joins);
+  TextColumn get productUId =>
+      TextColumn(column: 'productUId', offtable: 'product', depends: _joins);
   NumberColumn get costPrice =>
       NumberColumn(column: 'costPrice', offtable: 'product', depends: _joins);
   NumberColumn get sellingPrice => NumberColumn(
@@ -497,6 +499,7 @@ class ProductQuery {
   static List<String> get columns => <String>[
         'productId',
         'name',
+        'productUId',
         'costPrice',
         'sellingPrice',
         'quantity',

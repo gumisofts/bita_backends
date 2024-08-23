@@ -215,6 +215,9 @@ Product:
     name:
       type: Text
       isnull: false
+    productUId:
+      type: Text
+      isnull: false
     costPrice:
       type: Real
       isnull: false

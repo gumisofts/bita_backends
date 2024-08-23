@@ -1040,6 +1040,7 @@ class HasBusinessPermission {
 class Product {
   Product({
     required String name,
+    required String productUId,
     required double costPrice,
     required double sellingPrice,
     required double quantity,
@@ -1053,6 +1054,7 @@ class Product {
     String? desc,
   }) {
     _name = name;
+    _productUId = productUId;
     _costPrice = costPrice;
     _sellingPrice = sellingPrice;
     _quantity = quantity;
@@ -1145,6 +1147,13 @@ class Product {
   set name(String m) {
     _updatedFields['name'] = m;
     _name = m;
+  }
+
+  late String _productUId;
+  String get productUId => _productUId;
+  set productUId(String m) {
+    _updatedFields['productUId'] = m;
+    _productUId = m;
   }
 
   late double _costPrice;

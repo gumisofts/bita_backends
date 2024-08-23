@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bita_markets/models/schema.dart';
 import 'package:bita_markets/utils/function/request_handler_wrapper.dart';
 import 'package:bita_markets/utils/utils.dart';
+import 'package:d_orm/database/database.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 part 'business_api.g.dart';
@@ -52,7 +53,15 @@ class BusinessApi {
             ownerId: request.contextUser!.id!,
             addressId: address.id!,
           );
-          return jsonResponse(body: bb.toJson());
+          final add = await AddressDb.get(
+            where: (where) => where.id.equals(bb.addressId),
+          );
+          return jsonResponse(
+            body: {
+              ...bb.toJson(),
+              ...{'address': add?.toJson()},
+            },
+          );
         },
       );
   @Route.get('/mine')
@@ -69,7 +78,14 @@ class BusinessApi {
             where: (where) =>
                 where.ownerId.equals(request.contextUser?.id ?? 0),
           );
-          return jsonResponse(body: bizs.map((e) => e.toJson()).toList());
+          final data = <Map<String, dynamic>>[];
+
+          for (final item in bizs) {
+            final address = (await item.address)?.toJson() ?? {};
+            data.add({...item.toJson(), 'address': address});
+          }
+          // TODO(db): Fix with include
+          return jsonResponse(body: data);
         },
       );
   @Route('PATCH', '/<id>')
@@ -182,6 +198,47 @@ class BusinessApi {
         },
       );
 
+  // @Route.get('/products/<bizId>')
+//   Future<Response> getShopProducts(Request request, String bizId) =>
+//       handleRequestWithPermission(
+//         request,
+//         permission: () {
+//           if (!request.isAuthenticated) {
+//             throw unAuthorizedException;
+//           }
+//         },
+//         endpoint: () async {
+//           final offset = request.url.queryParameters['offset'] == null
+//               ? 0
+//               : int.parse(request.url.queryParameters['offset']!);
+//           final limit = request.url.queryParameters['limit'] == null
+//               ? null
+//               : int.parse(request.url.queryParameters['limit']!);
+//           final search = request.url.queryParameters['search'];
+
+//           if (search == null) {
+//             final products = await ProductDb.filter(
+//               where: (where) =>
+//                   where.businessId.equals(int.parse(bizId)) &
+//                   where.business.ownerId.equals(request.contextUser?.id ?? 0),
+//               offset: offset,
+//               limit: limit,
+//             );
+//             return jsonResponse(body: products.map((e) => e.toJson()));
+//           } else {
+//             final sql = '''
+// SELECT * from products where "name" like '%$search%' or "productUId" like '%$search%' offset $offset  limit $limit'
+// ''';
+
+//             final result = await Database.execute(sql);
+
+//             final products = ProductDb.fromResult(result);
+
+//             return jsonResponse(body: products.map((e) => e.toJson()));
+//           }
+//         },
+//       );
+
   @Route.get('/activities/<shopId>')
   Future<Response> getActivities(Request request, String shopId) =>
       handleRequestWithPermission(
@@ -209,10 +266,12 @@ class BusinessApi {
             request,
             fields: [
               FieldValidator<String>(name: 'name', isRequired: true),
+              FieldValidator<String>(name: 'productUId', isRequired: true),
               FieldValidator<double>(name: 'costPrice', isRequired: true),
               FieldValidator<double>(name: 'sellingPrice', isRequired: true),
               FieldValidator<double>(name: 'quantity', isRequired: true),
               FieldValidator<int>(name: 'bizId', isRequired: true),
+              FieldValidator<int>(name: 'catagoryId'),
               FieldValidator<int>(name: 'brandId'),
               FieldValidator<int>(name: 'unitId'),
               FieldValidator<String>(name: 'expireDate'),
@@ -222,10 +281,11 @@ class BusinessApi {
           );
 
           final product = await ProductDb.create(
+            productUId: data['productUId'] as String,
             name: data['name'] as String,
             costPrice: data['costPrice'] as double,
             sellingPrice: data['costPrice'] as double,
-            quantity: data['costPrice'] as double,
+            quantity: data['quantity'] as double,
             businessId: data['bizId'] as int,
             catagoryId: data['catagoryId'] as int?,
             brandId: data['brandId'] as int?,
@@ -237,7 +297,6 @@ class BusinessApi {
           return jsonResponse(body: product.toJson());
         },
       );
-
   @Route.get('/products/<bizId>')
   Future<Response> getShopProducts(Request request, String bizId) =>
       handleRequestWithPermission(
@@ -254,14 +313,29 @@ class BusinessApi {
           final limit = request.url.queryParameters['limit'] == null
               ? null
               : int.parse(request.url.queryParameters['limit']!);
-          final products = await ProductDb.filter(
-            where: (where) =>
-                where.businessId.equals(int.parse(bizId)) &
-                where.business.ownerId.equals(request.contextUser?.id ?? 0),
-            offset: offset,
-            limit: limit,
-          );
-          return jsonResponse(body: products.map((e) => e.toJson()).toList());
+          final search = request.url.queryParameters['search'];
+
+          if (search == null) {
+            final products = await ProductDb.filter(
+              where: (where) =>
+                  where.businessId.equals(int.parse(bizId)) &
+                  where.business.ownerId.equals(request.contextUser?.id ?? 0),
+              offset: offset,
+              limit: limit,
+            );
+            return jsonResponse(body: products.map((e) => e.toJson()).toList());
+          } else {
+            final sql = '''
+SELECT "product".* from "product" 
+join "business" on "business"."businessId"="product"."businessId" where "business"."businessId"='$bizId' and ("product"."name" ilike '%$search%' or "product"."productUId" ilike '%$search%') offset $offset  limit $limit
+''';
+            logger.f(sql);
+            final result = await Database.execute(sql);
+
+            final products = ProductDb.fromResult(result);
+
+            return jsonResponse(body: products.map((e) => e.toJson()).toList());
+          }
         },
       );
   @Route.delete('/products/<bizId>/<productId>')
@@ -295,7 +369,7 @@ class BusinessApi {
 
           // delete products
 
-          // await product.delete();
+          await product.delete();
 
           return jsonResponse(body: product.toJson());
         },
@@ -376,6 +450,35 @@ class BusinessApi {
           await product.save();
 
           return jsonResponse(body: product.toJson());
+        },
+      );
+
+  @Route.get('/catagories')
+  Future<Response> getCatagories(Request request) =>
+      handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          final catagories = await CatagoryDb.filter(where: (where) => null);
+          return jsonResponse(body: catagories.map((e) => e.toJson()).toList());
+        },
+      );
+  @Route.get('/brands')
+  Future<Response> getBrands(Request request) => handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          final brands = await BrandDb.filter(where: (where) => null);
+          return jsonResponse(body: brands.map((e) => e.toJson()).toList());
+        },
+      );
+  @Route.get('/units')
+  Future<Response> getUnits(Request request) => handleRequestWithPermission(
+        request,
+        permission: () {},
+        endpoint: () async {
+          final units = await UnitDb.filter(where: (where) => null);
+          return jsonResponse(body: units.map((e) => e.toJson()).toList());
         },
       );
 }

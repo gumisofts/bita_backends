@@ -92,7 +92,7 @@ class UsersApi {
     return jsonResponse(body: user.toJson());
   }
 
-  @Route.post('/getStartedWithEmail')
+  @Route.post('/get_started_with_email')
   Future<Response> getStartedEmail(Request request) =>
       handleRequestWithPermission(
         request,
@@ -135,7 +135,7 @@ class UsersApi {
           );
         },
       );
-  @Route.post('/getStartedWithPhone')
+  @Route.post('/get_started_with_phone')
   Future<Response> getStartedPhone(Request request) =>
       handleRequestWithPermission(
         request,
@@ -192,7 +192,7 @@ class UsersApi {
         },
       );
 
-  @Route.post('/verifyOtp')
+  @Route.post('/verify_otp')
   Future<Response> verifyOtp(Request request) => handleRequestWithPermission(
         request,
         permission: () {},
@@ -203,7 +203,6 @@ class UsersApi {
               FieldValidator<int>(
                 name: 'otp',
                 isRequired: true,
-                // parse: int.parse,
                 validator: (value) => value > 99999 && value <= 999999
                     ? null
                     : 'otp should be six digit',
@@ -217,15 +216,17 @@ class UsersApi {
               ),
               FieldValidator<int>(
                 name: 'userId',
-                // parse: int.parse,
                 isRequired: true,
               ),
             ],
           );
 
           final sql = Sql.named('''
-SELECT "user".*,"password".* from "user" join "password" on "user"."userId"="password"."userId" where "user"."userId"= @userId and "password"."${data['otpType']}Otp"=@otp
+SELECT "user".*,"password".* from "user" 
+join "password" on "user"."userId"="password"."userId" 
+where "user"."userId"= @userId and "password"."${data['otpType']}Otp"=@otp
     ''');
+
           data.remove('otpType');
           final res = await Database.execute(sql, parameters: data);
 

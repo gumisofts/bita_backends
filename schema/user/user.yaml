@@ -166,7 +166,7 @@ paths:
                   example: "******"
       responses:
         200:
-            description: OTP is Verified succesfully
+            description: Login is succesfull
             content:
                 application/json:
                     schema:

@@ -6,7 +6,7 @@ class SMSHahu {
   static const _url = '';
   static Future<bool> send({required String phone, required String msg}) async {
     try {
-      await http.post(Uri.parse(_url));
+      // await http.post(Uri.parse(_url));
     } catch (e) {
       return false;
     }
@@ -30,7 +30,6 @@ your verification code for Bita Markets is $otp
     return SMSHahu.send(phone: user.phoneNumber!, msg: template);
   }
 }
-
 void main(List<String> args) {
   http.post(Uri.parse('https://hahu.io/api/send/sms'));
 }

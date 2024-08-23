@@ -73,5 +73,20 @@ Router _$BusinessApiRouter(BusinessApi service) {
     r'/products/<bizId>/<productId>',
     service.updateBizProduct,
   );
+  router.add(
+    'GET',
+    r'/catagories',
+    service.getCatagories,
+  );
+  router.add(
+    'GET',
+    r'/brands',
+    service.getBrands,
+  );
+  router.add(
+    'GET',
+    r'/units',
+    service.getUnits,
+  );
   return router;
 }

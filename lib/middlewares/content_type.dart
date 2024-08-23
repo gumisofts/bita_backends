@@ -17,7 +17,10 @@ FutureOr<Response> Function(Request request) contentTypeMiddleware(
         request.headers[HttpHeaders.contentTypeHeader]?.split(';').first;
     if (!contentTypes.contains(contentType) &&
         ['PATCH', 'PUT', 'POST'].contains(request.method)) {
-      return jsonResponse(statusCode: HttpStatus.unsupportedMediaType);
+      return jsonResponse(
+        statusCode: HttpStatus.unsupportedMediaType,
+        body: {'detail': 'unsupported media type'},
+      );
     }
 
     return innerHanler(request);

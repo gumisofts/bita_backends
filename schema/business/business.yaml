@@ -126,7 +126,10 @@ paths:
             schema:
               type: object
               properties:
-                $ref: "../components.yaml#/components/schemas/Bussiness/properties"
+                name: 
+                  $ref: "../components.yaml#/components/schemas/Bussiness/properties/name"
+                catagoryId:
+                  $ref: "../components.yaml#/components/schemas/Bussiness/properties/catagoryId"
       responses:
         200:
           description:  Created Successfully
@@ -134,6 +137,98 @@ paths:
             application/json:
               schema:
                 $ref: "../components.yaml#/components/schemas/Bussiness"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: this field is required
+                  catagoryId:
+                    type: string
+                    example: this field is required
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  /business/contacts/{id}:
+    patch:
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+      security: [{ApiKey: [], BearerToken: []}]
+      operationId: updateContact
+      description: Update contacts
+      summary: Update contacts instance
+      tags: 
+        - Business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                $ref: "../components.yaml#/components/schemas/Contact/properties"
+      responses:
+        200:
+          description:  Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components.yaml#/components/schemas/Contact"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: this field is required
+                  catagoryId:
+                    type: string
+                    example: this field is required
+        403:
+          $ref: "../error_responses.yaml#/responses/403"
+        
+        500:
+          $ref: "../error_responses.yaml#/responses/500"
+  /business/addresses/{id}:
+    patch:
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+      security: [{ApiKey: [], BearerToken: []}]
+      operationId: updateAddress
+      description: Update address
+      summary: Update addresss instance
+      tags: 
+        - Business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                $ref: "../components.yaml#/components/schemas/Address/properties"
+      responses:
+        200:
+          description:  Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: "../components.yaml#/components/schemas/Address"
         400:
           description: Bad request
           content:

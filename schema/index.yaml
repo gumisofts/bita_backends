@@ -40,7 +40,7 @@ paths:
   /shopping/products/{bizId}:
     $ref: "shopping/shopping.yaml#/paths/~1products~1{bizId}"
   #####################################################################
-  /inventory/catagories:
+  /business/catagories:
     $ref: "business/business.yaml#/paths/~1catagories"
   /business/brands:
     $ref: "business/business.yaml#/paths/~1brands"
@@ -54,6 +54,10 @@ paths:
   #############################Business Preference#####################
   /business/bussiness/settings/{id}:
     $ref: "business/business.yaml#/paths/~1settings~1{id}"
+  /business/bussiness/contacts/{id}:
+    $ref: "business/business.yaml#/paths/~1business~1contacts~1{id}"
+  /business/bussiness/address/{id}:
+    $ref: "business/business.yaml#/paths/~1business~1addresses~1{id}"
   #############################Product#################################
   /business/products:
     $ref: "business/business.yaml#/paths/~1products"

@@ -1561,6 +1561,7 @@ extension ProductDb on Product {
     final json = {
       'id': id,
       'name': name,
+      'productUId': productUId,
       'costPrice': costPrice,
       'sellingPrice': sellingPrice,
       'quantity': quantity,
@@ -1588,6 +1589,7 @@ extension ProductDb on Product {
     return Product(
       id: map['productId'] as int,
       name: map['name'] as String,
+      productUId: map['productUId'] as String,
       costPrice: map['costPrice'] as double,
       sellingPrice: map['sellingPrice'] as double,
       quantity: map['quantity'] as double,
@@ -1607,6 +1609,7 @@ extension ProductDb on Product {
 
   static Future<Product> create({
     required String name,
+    required String productUId,
     required double costPrice,
     required double sellingPrice,
     required double quantity,
@@ -1620,6 +1623,7 @@ extension ProductDb on Product {
   }) async {
     final model = Product(
       name: name,
+      productUId: productUId,
       costPrice: costPrice,
       sellingPrice: sellingPrice,
       quantity: quantity,

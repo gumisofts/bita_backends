@@ -11,8 +11,9 @@ export 'jwt.dart';
 export 'sms/sms.dart';
 
 int generateSecureRandom({int length = 6}) {
-  final max = (pow(10, length) - 1).toInt();
-  return Random.secure().nextInt(max);
+  final max = (pow(10, length) - 1).toInt(); //999,999
+  final min = pow(10, length - 1).toInt();
+  return Random.secure().nextInt(max - min) + min; //s
 }
 
 final logger = Logger(

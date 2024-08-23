@@ -25,12 +25,12 @@ Router _$UsersApiRouter(UsersApi service) {
   );
   router.add(
     'POST',
-    r'/getStartedWithEmail',
+    r'/get_started_with_email',
     service.getStartedEmail,
   );
   router.add(
     'POST',
-    r'/getStartedWithPhone',
+    r'/get_started_with_phone',
     service.getStartedPhone,
   );
   router.add(
@@ -40,7 +40,7 @@ Router _$UsersApiRouter(UsersApi service) {
   );
   router.add(
     'POST',
-    r'/verifyOtp',
+    r'/verify_otp',
     service.verifyOtp,
   );
   router.add(
