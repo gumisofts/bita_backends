@@ -193,9 +193,11 @@ packages:
   d_orm:
     dependency: "direct main"
     description:
-      path: "/home/nurad/d-orm"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "57ec7020388792c493c2a1d8ab6f6ce124cc9103"
+      url: "git@github.com:gumi-apps/d_orm.git"
+    source: git
     version: "1.0.0"
   dart_amqp:
     dependency: "direct main"

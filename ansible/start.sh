@@ -1,0 +1,1 @@
+ansible all --key-file ~/.ssh/aws -i inventory.yaml -m ping

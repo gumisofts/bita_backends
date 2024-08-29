@@ -1,0 +1,6 @@
+myhosts:
+  hosts:
+    aws:
+      ansible_host: bita-dev-v01.gumiapps.com
+  vars:
+    ansible_user: ubuntu

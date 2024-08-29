@@ -10,7 +10,7 @@ publish_to: none
 dependencies:
   # path: ^1.8.0
   d_orm:
-    path: /home/nurad/d-orm
+    git: git@github.com:gumi-apps/d_orm.git
   dart_amqp: ^0.2.5
   dart_jsonwebtoken: 
   dotenv: ^4.2.0

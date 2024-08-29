@@ -23,7 +23,8 @@ final logger = Logger(
     // lineLength: 120, // Width of the output
     // colors: true, // Colorful log messages
     // printEmojis: true, // Print an emoji for each log message
-    printTime: true, // Should each log print contain a timestamp
+    dateTimeFormat: (datetime) =>
+        datetime.toIso8601String(), // Should each log print contain a timestamp
   ),
 );
-final env = DotEnv(includePlatformEnvironment: true)..load();
+final env = DotEnv(includePlatformEnvironment: true, quiet: true)..load();

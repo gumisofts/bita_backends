@@ -17,14 +17,16 @@ import 'package:shelf_static/shelf_static.dart';
 
 void main(List<String> args) {
   initDb;
+  final port = int.parse(env.getOrElse('PORT', () => '8000'));
   if (args.isEmpty) {
-    createServer;
+    createServer(port);
   } else {
-    createDevServer;
+    createDevServer(port);
   }
+  logger.i('Started serving on $port');
 }
 
-Future<void> get createServer async {
+Future<void> createServer(int port) async {
   for (var index = 0; index < Platform.numberOfProcessors; index++) {
     await Isolate.spawn(
       debugName: 'Isolate $index',
@@ -37,7 +39,7 @@ Future<void> get createServer async {
             return application(request);
           },
           'localhost', // 127.0.0.1 -> loop back
-          8000,
+          port,
           shared: true,
         ).then((value) => value..autoCompress = true);
       },
@@ -45,7 +47,12 @@ Future<void> get createServer async {
     );
   }
 
-  final server = await serve(application, 'localhost', 8000, shared: true);
+  final server = await serve(
+    application,
+    'localhost',
+    port,
+    shared: true,
+  );
   server.autoCompress = true;
 }
 
@@ -65,15 +72,14 @@ void get initDb {
     poolSetting: PoolSettings(
       maxConnectionAge: const Duration(milliseconds: 1000),
       maxConnectionCount: 10,
-      sslMode:
-          env['PG_USE_SSL'] == 'true' ? SslMode.verifyFull : SslMode.disable,
+      sslMode: env['PG_USE_SSL'] == 'true' ? SslMode.require : SslMode.disable,
     ),
     logger: logger.f,
   );
 }
 
-void get createDevServer => withHotreload(() async {
-      final server = await serve(application, '0.0.0.0', 8000, shared: true);
+void createDevServer(int port) => withHotreload(() async {
+      final server = await serve(application, '0.0.0.0', port, shared: true);
 
       return server;
     });
