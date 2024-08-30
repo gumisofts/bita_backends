@@ -1,0 +1,13 @@
+[Unit]
+Description=Bita Markets Service
+[Install]
+WantedBy=multi-user.target
+[Service]
+Type=simple
+ExecStart=/var/bita_markets_build/bita_markets.exe
+WorkingDirectory=/var/bita_markets_build
+Restart=always
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=%n

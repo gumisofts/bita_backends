@@ -16,11 +16,12 @@
       ansible.builtin.apt:
         upgrade: yes
 
-    - name: Install Dart
+    - name: Install Dart and Nginx
       become: true
       ansible.builtin.apt:
         name:
           - dart
+          - nginx
 
     - name: Getting code base
       ansible.builtin.git:
@@ -29,14 +30,28 @@
         update: yes
         name: git@github.com:gumi-apps/bita_markets.git
         dest: bita_markets
+        force: yes
     - name: Build Executable
       shell: cd bita_markets && dart pub get && dart compile exe bin/bita_markets.dart
     - name: Copy Environmental Variables
+      become: true
       ansible.builtin.copy:
-        dest: /var/bita_markets_build
+        dest: /var/bita_markets_build/
         force: true
         src: ~/bita_markets/.env
     - name: Copy Build
       become: true
-      ansible.builtin.shell:
-        name: cp bin/bita_markets.exe /var/bita_markets_build/bita_markets.exe
+      shell: cp /home/ubuntu/bita_markets/bin/bita_markets.exe /var/bita_markets_build/bita_markets.exe
+    - name: Register service
+      shell: cp /home/ubuntu/bita_markets/bita_markets.service /etc/systemd/system/bita_markets.service
+    - name: Enable Nginx Services on Boot
+      ansible.builtin.systemd_service:
+        name: nginx
+        enabled: true
+        state: started
+    - name: Enable Bita_markets Service
+      ansible.builtin.systemd_service:
+        name: bita_markets
+        enabled: true
+        state: started
+        daemon_reload: true
