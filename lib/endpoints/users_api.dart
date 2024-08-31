@@ -271,5 +271,5 @@ where "user"."userId"= @userId and "password"."${data['otpType']}Otp"=@otp
       );
 }
 
-// user.join()=> 
-// 
+// user.join()=>
+//

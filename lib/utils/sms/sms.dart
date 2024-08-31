@@ -30,6 +30,7 @@ your verification code for Bita Markets is $otp
     return SMSHahu.send(phone: user.phoneNumber!, msg: template);
   }
 }
+
 void main(List<String> args) {
   http.post(Uri.parse('https://hahu.io/api/send/sms'));
 }

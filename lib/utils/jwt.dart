@@ -43,7 +43,7 @@ class JWTAuth {
 //   print(user);
 //   user!.firstName = null;
 //   await user.save();
-  // final data = JWTAuth.decode(
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicGhvbmVOdW1iZXIiOiI3MjgwMDAwMDAiLCJlbWFpbCI6Im5vdHQiLCJpYXQiOjE3MTM5NzU1MDcsImV4cCI6MTcxNjU2NzUwNywianRpIjoiIn0.uXrUlJX8xM7b7zz_OU4cTFmrDZE0PejrdcfCZW1BeEQ',
-  // );
+// final data = JWTAuth.decode(
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicGhvbmVOdW1iZXIiOiI3MjgwMDAwMDAiLCJlbWFpbCI6Im5vdHQiLCJpYXQiOjE3MTM5NzU1MDcsImV4cCI6MTcxNjU2NzUwNywianRpIjoiIn0.uXrUlJX8xM7b7zz_OU4cTFmrDZE0PejrdcfCZW1BeEQ',
+// );
 // }

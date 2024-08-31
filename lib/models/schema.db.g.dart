@@ -1,8 +1,11 @@
 part of 'schema.dart';
 
 extension FileTbDb on FileTb {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'url': url,
@@ -82,8 +85,9 @@ extension FileTbDb on FileTb {
     return fromResult(result);
   }
 
-  static Future<FileTb?> get(
-      {required Operation Function(FileTbQuery) where,}) async {
+  static Future<FileTb?> get({
+    required Operation Function(FileTbQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -91,8 +95,11 @@ extension FileTbDb on FileTb {
 }
 
 extension UserDb on User {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'firstName': firstName,
@@ -188,8 +195,9 @@ extension UserDb on User {
     return fromResult(result);
   }
 
-  static Future<User?> get(
-      {required Operation Function(UserQuery) where,}) async {
+  static Future<User?> get({
+    required Operation Function(UserQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -197,8 +205,11 @@ extension UserDb on User {
 }
 
 extension PasswordDb on Password {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'password': password,
@@ -294,8 +305,9 @@ extension PasswordDb on Password {
     return fromResult(result);
   }
 
-  static Future<Password?> get(
-      {required Operation Function(PasswordQuery) where,}) async {
+  static Future<Password?> get({
+    required Operation Function(PasswordQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -303,8 +315,11 @@ extension PasswordDb on Password {
 }
 
 extension InfoChangeRequestDb on InfoChangeRequest {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'newEmail': newEmail,
@@ -363,7 +378,10 @@ extension InfoChangeRequestDb on InfoChangeRequest {
     final q = Query.delete(
       table: 'infochangerequest',
       operation: Operation(
-          'infochangerequestId'.safeTk, Operator.eq, infochangerequest.id,),
+        'infochangerequestId'.safeTk,
+        Operator.eq,
+        infochangerequest.id,
+      ),
     );
     try {
       await Database.execute(q.toString());
@@ -393,8 +411,9 @@ extension InfoChangeRequestDb on InfoChangeRequest {
     return fromResult(result);
   }
 
-  static Future<InfoChangeRequest?> get(
-      {required Operation Function(InfoChangeRequestQuery) where,}) async {
+  static Future<InfoChangeRequest?> get({
+    required Operation Function(InfoChangeRequestQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -402,8 +421,11 @@ extension InfoChangeRequestDb on InfoChangeRequest {
 }
 
 extension UserInterestAndInteractionDb on UserInterestAndInteraction {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'catagoryId': catagoryId,
@@ -451,11 +473,15 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
   }
 
   static Future<bool> delete(
-      UserInterestAndInteraction userinterestandinteraction,) async {
+    UserInterestAndInteraction userinterestandinteraction,
+  ) async {
     final q = Query.delete(
       table: 'userinterestandinteraction',
-      operation: Operation('userinterestandinteractionId'.safeTk, Operator.eq,
-          userinterestandinteraction.id,),
+      operation: Operation(
+        'userinterestandinteractionId'.safeTk,
+        Operator.eq,
+        userinterestandinteraction.id,
+      ),
     );
     try {
       await Database.execute(q.toString());
@@ -485,9 +511,9 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
     return fromResult(result);
   }
 
-  static Future<UserInterestAndInteraction?> get(
-      {required Operation Function(UserInterestAndInteractionQuery)
-          where,}) async {
+  static Future<UserInterestAndInteraction?> get({
+    required Operation Function(UserInterestAndInteractionQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -495,8 +521,11 @@ extension UserInterestAndInteractionDb on UserInterestAndInteraction {
 }
 
 extension CatagoryDb on Catagory {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'name': name,
@@ -576,8 +605,9 @@ extension CatagoryDb on Catagory {
     return fromResult(result);
   }
 
-  static Future<Catagory?> get(
-      {required Operation Function(CatagoryQuery) where,}) async {
+  static Future<Catagory?> get({
+    required Operation Function(CatagoryQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -585,8 +615,11 @@ extension CatagoryDb on Catagory {
 }
 
 extension BrandDb on Brand {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'name': name,
@@ -670,8 +703,9 @@ extension BrandDb on Brand {
     return fromResult(result);
   }
 
-  static Future<Brand?> get(
-      {required Operation Function(BrandQuery) where,}) async {
+  static Future<Brand?> get({
+    required Operation Function(BrandQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -679,8 +713,11 @@ extension BrandDb on Brand {
 }
 
 extension UnitDb on Unit {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'name': name,
@@ -756,8 +793,9 @@ extension UnitDb on Unit {
     return fromResult(result);
   }
 
-  static Future<Unit?> get(
-      {required Operation Function(UnitQuery) where,}) async {
+  static Future<Unit?> get({
+    required Operation Function(UnitQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -765,8 +803,11 @@ extension UnitDb on Unit {
 }
 
 extension AddressDb on Address {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'lat': lat,
@@ -870,8 +911,9 @@ extension AddressDb on Address {
     return fromResult(result);
   }
 
-  static Future<Address?> get(
-      {required Operation Function(AddressQuery) where,}) async {
+  static Future<Address?> get({
+    required Operation Function(AddressQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -879,8 +921,11 @@ extension AddressDb on Address {
 }
 
 extension BusinessDb on Business {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'name': name,
@@ -980,8 +1025,9 @@ extension BusinessDb on Business {
     return fromResult(result);
   }
 
-  static Future<Business?> get(
-      {required Operation Function(BusinessQuery) where,}) async {
+  static Future<Business?> get({
+    required Operation Function(BusinessQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -989,8 +1035,11 @@ extension BusinessDb on Business {
 }
 
 extension BusinessPrefrencesDb on BusinessPrefrences {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'isAvailableOnline': isAvailableOnline,
@@ -1049,7 +1098,10 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
     final q = Query.delete(
       table: 'businessprefrences',
       operation: Operation(
-          'businessprefrencesId'.safeTk, Operator.eq, businessprefrences.id,),
+        'businessprefrencesId'.safeTk,
+        Operator.eq,
+        businessprefrences.id,
+      ),
     );
     try {
       await Database.execute(q.toString());
@@ -1079,8 +1131,9 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
     return fromResult(result);
   }
 
-  static Future<BusinessPrefrences?> get(
-      {required Operation Function(BusinessPrefrencesQuery) where,}) async {
+  static Future<BusinessPrefrences?> get({
+    required Operation Function(BusinessPrefrencesQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1088,8 +1141,11 @@ extension BusinessPrefrencesDb on BusinessPrefrences {
 }
 
 extension BusinessAcitivityDb on BusinessAcitivity {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'action': action,
@@ -1144,7 +1200,10 @@ extension BusinessAcitivityDb on BusinessAcitivity {
     final q = Query.delete(
       table: 'businessacitivity',
       operation: Operation(
-          'businessacitivityId'.safeTk, Operator.eq, businessacitivity.id,),
+        'businessacitivityId'.safeTk,
+        Operator.eq,
+        businessacitivity.id,
+      ),
     );
     try {
       await Database.execute(q.toString());
@@ -1174,8 +1233,9 @@ extension BusinessAcitivityDb on BusinessAcitivity {
     return fromResult(result);
   }
 
-  static Future<BusinessAcitivity?> get(
-      {required Operation Function(BusinessAcitivityQuery) where,}) async {
+  static Future<BusinessAcitivity?> get({
+    required Operation Function(BusinessAcitivityQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1183,8 +1243,11 @@ extension BusinessAcitivityDb on BusinessAcitivity {
 }
 
 extension BusinessReviewDb on BusinessReview {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'userId': userId,
@@ -1265,8 +1328,9 @@ extension BusinessReviewDb on BusinessReview {
     return fromResult(result);
   }
 
-  static Future<BusinessReview?> get(
-      {required Operation Function(BusinessReviewQuery) where,}) async {
+  static Future<BusinessReview?> get({
+    required Operation Function(BusinessReviewQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1274,8 +1338,11 @@ extension BusinessReviewDb on BusinessReview {
 }
 
 extension BusinessEmployeDb on BusinessEmploye {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'createdAt': createdAt?.toIso8601String(),
@@ -1330,7 +1397,10 @@ extension BusinessEmployeDb on BusinessEmploye {
     final q = Query.delete(
       table: 'businessemploye',
       operation: Operation(
-          'businessemployeId'.safeTk, Operator.eq, businessemploye.id,),
+        'businessemployeId'.safeTk,
+        Operator.eq,
+        businessemploye.id,
+      ),
     );
     try {
       await Database.execute(q.toString());
@@ -1360,8 +1430,9 @@ extension BusinessEmployeDb on BusinessEmploye {
     return fromResult(result);
   }
 
-  static Future<BusinessEmploye?> get(
-      {required Operation Function(BusinessEmployeQuery) where,}) async {
+  static Future<BusinessEmploye?> get({
+    required Operation Function(BusinessEmployeQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1369,8 +1440,11 @@ extension BusinessEmployeDb on BusinessEmploye {
 }
 
 extension BusinessPermissionDb on BusinessPermission {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'name': name,
@@ -1417,7 +1491,10 @@ extension BusinessPermissionDb on BusinessPermission {
     final q = Query.delete(
       table: 'businesspermission',
       operation: Operation(
-          'businesspermissionId'.safeTk, Operator.eq, businesspermission.id,),
+        'businesspermissionId'.safeTk,
+        Operator.eq,
+        businesspermission.id,
+      ),
     );
     try {
       await Database.execute(q.toString());
@@ -1447,8 +1524,9 @@ extension BusinessPermissionDb on BusinessPermission {
     return fromResult(result);
   }
 
-  static Future<BusinessPermission?> get(
-      {required Operation Function(BusinessPermissionQuery) where,}) async {
+  static Future<BusinessPermission?> get({
+    required Operation Function(BusinessPermissionQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1456,8 +1534,11 @@ extension BusinessPermissionDb on BusinessPermission {
 }
 
 extension HasBusinessPermissionDb on HasBusinessPermission {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'createdAt': createdAt?.toIso8601String(),
@@ -1513,11 +1594,15 @@ extension HasBusinessPermissionDb on HasBusinessPermission {
   }
 
   static Future<bool> delete(
-      HasBusinessPermission hasbusinesspermission,) async {
+    HasBusinessPermission hasbusinesspermission,
+  ) async {
     final q = Query.delete(
       table: 'hasbusinesspermission',
-      operation: Operation('hasbusinesspermissionId'.safeTk, Operator.eq,
-          hasbusinesspermission.id,),
+      operation: Operation(
+        'hasbusinesspermissionId'.safeTk,
+        Operator.eq,
+        hasbusinesspermission.id,
+      ),
     );
     try {
       await Database.execute(q.toString());
@@ -1547,8 +1632,9 @@ extension HasBusinessPermissionDb on HasBusinessPermission {
     return fromResult(result);
   }
 
-  static Future<HasBusinessPermission?> get(
-      {required Operation Function(HasBusinessPermissionQuery) where,}) async {
+  static Future<HasBusinessPermission?> get({
+    required Operation Function(HasBusinessPermissionQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1556,8 +1642,11 @@ extension HasBusinessPermissionDb on HasBusinessPermission {
 }
 
 extension ProductDb on Product {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'name': name,
@@ -1677,8 +1766,9 @@ extension ProductDb on Product {
     return fromResult(result);
   }
 
-  static Future<Product?> get(
-      {required Operation Function(ProductQuery) where,}) async {
+  static Future<Product?> get({
+    required Operation Function(ProductQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1686,8 +1776,11 @@ extension ProductDb on Product {
 }
 
 extension LikeDb on Like {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'productId': productId,
@@ -1763,8 +1856,9 @@ extension LikeDb on Like {
     return fromResult(result);
   }
 
-  static Future<Like?> get(
-      {required Operation Function(LikeQuery) where,}) async {
+  static Future<Like?> get({
+    required Operation Function(LikeQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1772,8 +1866,11 @@ extension LikeDb on Like {
 }
 
 extension FollowDb on Follow {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'businessId': businessId,
@@ -1853,8 +1950,9 @@ extension FollowDb on Follow {
     return fromResult(result);
   }
 
-  static Future<Follow?> get(
-      {required Operation Function(FollowQuery) where,}) async {
+  static Future<Follow?> get({
+    required Operation Function(FollowQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1862,8 +1960,11 @@ extension FollowDb on Follow {
 }
 
 extension OrderDb on Order {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'status': status,
@@ -1955,8 +2056,9 @@ extension OrderDb on Order {
     return fromResult(result);
   }
 
-  static Future<Order?> get(
-      {required Operation Function(OrderQuery) where,}) async {
+  static Future<Order?> get({
+    required Operation Function(OrderQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -1964,8 +2066,11 @@ extension OrderDb on Order {
 }
 
 extension ItemsDb on Items {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'quantity': quantity,
@@ -2053,8 +2158,9 @@ extension ItemsDb on Items {
     return fromResult(result);
   }
 
-  static Future<Items?> get(
-      {required Operation Function(ItemsQuery) where,}) async {
+  static Future<Items?> get({
+    required Operation Function(ItemsQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -2062,8 +2168,11 @@ extension ItemsDb on Items {
 }
 
 extension NotificationDb on Notification {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'timestamp': timestamp.toIso8601String(),
@@ -2156,8 +2265,9 @@ extension NotificationDb on Notification {
     return fromResult(result);
   }
 
-  static Future<Notification?> get(
-      {required Operation Function(NotificationQuery) where,}) async {
+  static Future<Notification?> get({
+    required Operation Function(NotificationQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -2165,8 +2275,11 @@ extension NotificationDb on Notification {
 }
 
 extension GiftCardDb on GiftCard {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'couponId': couponId,
@@ -2266,8 +2379,9 @@ extension GiftCardDb on GiftCard {
     return fromResult(result);
   }
 
-  static Future<GiftCard?> get(
-      {required Operation Function(GiftCardQuery) where,}) async {
+  static Future<GiftCard?> get({
+    required Operation Function(GiftCardQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -2275,8 +2389,11 @@ extension GiftCardDb on GiftCard {
 }
 
 extension BlockedDb on Blocked {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'endDate': endDate?.toIso8601String(),
@@ -2364,8 +2481,9 @@ extension BlockedDb on Blocked {
     return fromResult(result);
   }
 
-  static Future<Blocked?> get(
-      {required Operation Function(BlockedQuery) where,}) async {
+  static Future<Blocked?> get({
+    required Operation Function(BlockedQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -2373,8 +2491,11 @@ extension BlockedDb on Blocked {
 }
 
 extension PolicyDb on Policy {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'number': number,
@@ -2458,8 +2579,9 @@ extension PolicyDb on Policy {
     return fromResult(result);
   }
 
-  static Future<Policy?> get(
-      {required Operation Function(PolicyQuery) where,}) async {
+  static Future<Policy?> get({
+    required Operation Function(PolicyQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
@@ -2467,8 +2589,11 @@ extension PolicyDb on Policy {
 }
 
 extension ReportDb on Report {
-  Map<String, dynamic> toJson(
-      {bool excludeNull = false, List<String>? exclude, List<String>? only,}) {
+  Map<String, dynamic> toJson({
+    bool excludeNull = false,
+    List<String>? exclude,
+    List<String>? only,
+  }) {
     final json = {
       'id': id,
       'desc': desc,
@@ -2507,7 +2632,9 @@ extension ReportDb on Report {
   }
 
   static Future<Report> create({
-    required int businessId, required int userId, int? policyId,
+    required int businessId,
+    required int userId,
+    int? policyId,
     int? violatorId,
     int? productId,
     String? desc,
@@ -2562,8 +2689,9 @@ extension ReportDb on Report {
     return fromResult(result);
   }
 
-  static Future<Report?> get(
-      {required Operation Function(ReportQuery) where,}) async {
+  static Future<Report?> get({
+    required Operation Function(ReportQuery) where,
+  }) async {
     final res = await filter(where: where);
     if (res.isEmpty) return null;
     return res.first;
