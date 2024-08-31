@@ -1,6 +1,6 @@
 myhosts:
   hosts:
     aws:
-      ansible_host: bita-dev-v01.gumiapps.com
+      ansible_host: 13.60.156.50
   vars:
     ansible_user: ubuntu

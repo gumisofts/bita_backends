@@ -1,6 +1,7 @@
 - name: CI for Bita Markets
   hosts: myhosts
   tasks:
+    # Install Necessary Packages
     - name: Add Google Linux GPG public key
       become: true
       ansible.builtin.apt_key:
@@ -23,6 +24,8 @@
           - dart
           - nginx
 
+    # Builds
+
     - name: Getting code base
       ansible.builtin.git:
         accept_hostkey: true
@@ -39,17 +42,44 @@
         dest: /var/bita_markets_build/
         force: true
         src: ~/bita_markets/.env
+    # Disable Services
+    - name: Disable Bita_markets Service
+      become: true
+      ansible.builtin.systemd_service:
+        name: bita_markets
+        state: stopped
+        daemon_reload: true
     - name: Copy Build
       become: true
       shell: cp /home/ubuntu/bita_markets/bin/bita_markets.exe /var/bita_markets_build/bita_markets.exe
     - name: Register service
+      become: true
       shell: cp /home/ubuntu/bita_markets/bita_markets.service /etc/systemd/system/bita_markets.service
+    - name: Upload Certificate
+      become: true
+      ansible.builtin.copy:
+        dest: /etc/ssl/certs/
+        force: true
+        src: ~/bita_markets/deployment/bita.pem
+    - name: Upload Certificate Key
+      become: true
+      ansible.builtin.copy:
+        dest: /etc/ssl/certs/
+        force: true
+        src: ~/bita_markets/deployment/bita.key
+    - name: Upload nginx conf
+      become: true
+      ansible.builtin.copy:
+        force: true
+        src: ~/bita_markets/deployment/nginx.conf
+        dest: /etc/nginx/conf.d/
     - name: Enable Nginx Services on Boot
       ansible.builtin.systemd_service:
         name: nginx
         enabled: true
         state: started
     - name: Enable Bita_markets Service
+      become: true
       ansible.builtin.systemd_service:
         name: bita_markets
         enabled: true
