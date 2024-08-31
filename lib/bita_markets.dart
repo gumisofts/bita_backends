@@ -8,7 +8,7 @@ import 'package:bita_markets/endpoints/users_api.dart';
 import 'package:bita_markets/middlewares/authentication.dart';
 import 'package:bita_markets/middlewares/content_type.dart';
 import 'package:bita_markets/utils/utils.dart';
-import 'package:d_orm/d_orm.dart';
+import 'package:pg_dorm/pg_dorm.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_hotreload/shelf_hotreload.dart';

@@ -9,8 +9,6 @@ publish_to: none
 # Add regular dependencies here.
 dependencies:
   # path: ^1.8.0
-  d_orm:
-    git: git@github.com:gumi-apps/d_orm.git
   dart_amqp: ^0.2.5
   dart_jsonwebtoken: 
   dotenv: ^4.2.0
@@ -21,6 +19,7 @@ dependencies:
   mailer: 
   meta: ^1.9.0
   mime: ^1.0.4
+  pg_dorm: ^0.0.1+2
   postgres: any
   shelf: ^1.4.1
   shelf_cors_headers: 

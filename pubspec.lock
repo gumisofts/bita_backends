@@ -190,15 +190,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.5"
-  d_orm:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "57ec7020388792c493c2a1d8ab6f6ce124cc9103"
-      url: "git@github.com:gumi-apps/d_orm.git"
-    source: git
-    version: "1.0.0"
   dart_amqp:
     dependency: "direct main"
     description:
@@ -447,6 +438,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  pg_dorm:
+    dependency: "direct main"
+    description:
+      name: pg_dorm
+      sha256: "63943c48b1ccfac24af4a3a86e13ce4c137d03b288057b96915703dfea38d251"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1+2"
   pointycastle:
     dependency: transitive
     description:
