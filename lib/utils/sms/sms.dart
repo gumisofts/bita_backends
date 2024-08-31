@@ -6,7 +6,7 @@ class SMSHahu {
   static const _url = '';
   static Future<bool> send({required String phone, required String msg}) async {
     try {
-      // await http.post(Uri.parse(_url));
+      await http.post(Uri.parse(_url));
     } catch (e) {
       return false;
     }
