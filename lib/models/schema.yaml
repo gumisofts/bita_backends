@@ -55,7 +55,7 @@ EmailChangeRequest:
     token:
       type: Text
       isnull: false
-    expires_at: timestamp
+    expiresAt: timestamp
 
 PhoneChangeRequest:
   columns:
@@ -73,7 +73,7 @@ PhoneChangeRequest:
     createdAt: 
         type: timestamp
         default: DateTime.now()
-    expires_at: timestamp
+    expiresAt: timestamp
 UserInterestAndInteraction:
   columns:
     catagory:

@@ -149,8 +149,7 @@ class Password {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -214,12 +213,12 @@ class EmailChangeRequest {
     required int userId,
     this.id,
     DateTime? createdAt,
-    DateTime? expires_at,
+    DateTime? expiresAt,
   }) {
     _newEmail = newEmail;
     _createdAt = createdAt;
     _token = token;
-    _expires_at = expires_at;
+    _expiresAt = expiresAt;
     _userId = userId;
   }
   late int _userId;
@@ -232,8 +231,7 @@ class EmailChangeRequest {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -275,11 +273,11 @@ class EmailChangeRequest {
     _token = m;
   }
 
-  DateTime? _expires_at;
-  DateTime? get expires_at => _expires_at;
-  set expires_at(DateTime? m) {
-    _updatedFields['expires_at'] = m;
-    _expires_at = m;
+  DateTime? _expiresAt;
+  DateTime? get expiresAt => _expiresAt;
+  set expiresAt(DateTime? m) {
+    _updatedFields['expiresAt'] = m;
+    _expiresAt = m;
   }
 }
 
@@ -290,12 +288,12 @@ class PhoneChangeRequest {
     required int userId,
     this.id,
     DateTime? createdAt,
-    DateTime? expires_at,
+    DateTime? expiresAt,
   }) {
     _newPhone = newPhone;
     _token = token;
     _createdAt = createdAt;
-    _expires_at = expires_at;
+    _expiresAt = expiresAt;
     _userId = userId;
   }
   late int _userId;
@@ -308,8 +306,7 @@ class PhoneChangeRequest {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -351,11 +348,11 @@ class PhoneChangeRequest {
     _createdAt = m;
   }
 
-  DateTime? _expires_at;
-  DateTime? get expires_at => _expires_at;
-  set expires_at(DateTime? m) {
-    _updatedFields['expires_at'] = m;
-    _expires_at = m;
+  DateTime? _expiresAt;
+  DateTime? get expiresAt => _expiresAt;
+  set expiresAt(DateTime? m) {
+    _updatedFields['expiresAt'] = m;
+    _expiresAt = m;
   }
 }
 
@@ -378,9 +375,8 @@ class UserInterestAndInteraction {
   ModelHolder<Catagory>? _getcatagory;
   Future<Catagory?> get catagory {
     _getcatagory ??= ModelHolder<Catagory>(
-      getModelInstance: () =>
-          CatagoryDb.get(where: (t) => t.id.equals(catagoryId)),
-    );
+        getModelInstance: () =>
+            CatagoryDb.get(where: (t) => t.id.equals(catagoryId)),);
     return _getcatagory!.instance;
   }
 
@@ -394,8 +390,7 @@ class UserInterestAndInteraction {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -481,9 +476,8 @@ class Brand {
   ModelHolder<Catagory>? _getcatagory;
   Future<Catagory?> get catagory {
     _getcatagory ??= ModelHolder<Catagory>(
-      getModelInstance: () =>
-          CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),
-    );
+        getModelInstance: () =>
+            CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),);
     return _getcatagory!.instance;
   }
 
@@ -677,8 +671,7 @@ class Business {
   ModelHolder<User>? _getowner;
   Future<User?> get owner {
     _getowner ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(ownerId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(ownerId)),);
     return _getowner!.instance;
   }
 
@@ -692,9 +685,8 @@ class Business {
   ModelHolder<Address>? _getaddress;
   Future<Address?> get address {
     _getaddress ??= ModelHolder<Address>(
-      getModelInstance: () =>
-          AddressDb.get(where: (t) => t.id.equals(addressId)),
-    );
+        getModelInstance: () =>
+            AddressDb.get(where: (t) => t.id.equals(addressId)),);
     return _getaddress!.instance;
   }
 
@@ -708,9 +700,8 @@ class Business {
   ModelHolder<Catagory>? _getcatagory;
   Future<Catagory?> get catagory {
     _getcatagory ??= ModelHolder<Catagory>(
-      getModelInstance: () =>
-          CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),
-    );
+        getModelInstance: () =>
+            CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),);
     return _getcatagory!.instance;
   }
 
@@ -783,9 +774,8 @@ class BusinessPrefrences {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -849,9 +839,8 @@ class BusinessAcitivity {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -865,8 +854,7 @@ class BusinessAcitivity {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId!)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId!)),);
     return _getuser!.instance;
   }
 
@@ -914,8 +902,7 @@ class BusinessReview {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -929,9 +916,8 @@ class BusinessReview {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -974,8 +960,7 @@ class BusinessEmploye {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -989,9 +974,8 @@ class BusinessEmploye {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -1076,9 +1060,8 @@ class HasBusinessPermission {
   ModelHolder<BusinessEmploye>? _getemployee;
   Future<BusinessEmploye?> get employee {
     _getemployee ??= ModelHolder<BusinessEmploye>(
-      getModelInstance: () =>
-          BusinessEmployeDb.get(where: (t) => t.id.equals(employeeId)),
-    );
+        getModelInstance: () =>
+            BusinessEmployeDb.get(where: (t) => t.id.equals(employeeId)),);
     return _getemployee!.instance;
   }
 
@@ -1092,9 +1075,8 @@ class HasBusinessPermission {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -1108,9 +1090,8 @@ class HasBusinessPermission {
   ModelHolder<BusinessPermission>? _getpermission;
   Future<BusinessPermission?> get permission {
     _getpermission ??= ModelHolder<BusinessPermission>(
-      getModelInstance: () =>
-          BusinessPermissionDb.get(where: (t) => t.id.equals(permissionId)),
-    );
+        getModelInstance: () =>
+            BusinessPermissionDb.get(where: (t) => t.id.equals(permissionId)),);
     return _getpermission!.instance;
   }
 
@@ -1178,9 +1159,8 @@ class Product {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -1194,8 +1174,8 @@ class Product {
   ModelHolder<Brand>? _getbrand;
   Future<Brand?> get brand {
     _getbrand ??= ModelHolder<Brand>(
-      getModelInstance: () => BrandDb.get(where: (t) => t.id.equals(brandId!)),
-    );
+        getModelInstance: () =>
+            BrandDb.get(where: (t) => t.id.equals(brandId!)),);
     return _getbrand!.instance;
   }
 
@@ -1209,9 +1189,8 @@ class Product {
   ModelHolder<Catagory>? _getcatagory;
   Future<Catagory?> get catagory {
     _getcatagory ??= ModelHolder<Catagory>(
-      getModelInstance: () =>
-          CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),
-    );
+        getModelInstance: () =>
+            CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),);
     return _getcatagory!.instance;
   }
 
@@ -1225,8 +1204,7 @@ class Product {
   ModelHolder<Unit>? _getunit;
   Future<Unit?> get unit {
     _getunit ??= ModelHolder<Unit>(
-      getModelInstance: () => UnitDb.get(where: (t) => t.id.equals(unitId!)),
-    );
+        getModelInstance: () => UnitDb.get(where: (t) => t.id.equals(unitId!)),);
     return _getunit!.instance;
   }
 
@@ -1321,9 +1299,8 @@ class Like {
   ModelHolder<Product>? _getproduct;
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
-      getModelInstance: () =>
-          ProductDb.get(where: (t) => t.id.equals(productId)),
-    );
+        getModelInstance: () =>
+            ProductDb.get(where: (t) => t.id.equals(productId)),);
     return _getproduct!.instance;
   }
 
@@ -1364,9 +1341,8 @@ class Follow {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -1380,8 +1356,7 @@ class Follow {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -1428,9 +1403,8 @@ class Order {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -1444,8 +1418,7 @@ class Order {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -1511,9 +1484,8 @@ class Items {
   ModelHolder<Product>? _getproduct;
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
-      getModelInstance: () =>
-          ProductDb.get(where: (t) => t.id.equals(productId)),
-    );
+        getModelInstance: () =>
+            ProductDb.get(where: (t) => t.id.equals(productId)),);
     return _getproduct!.instance;
   }
 
@@ -1527,8 +1499,8 @@ class Items {
   ModelHolder<Order>? _getorder;
   Future<Order?> get order {
     _getorder ??= ModelHolder<Order>(
-      getModelInstance: () => OrderDb.get(where: (t) => t.id.equals(orderId!)),
-    );
+        getModelInstance: () =>
+            OrderDb.get(where: (t) => t.id.equals(orderId!)),);
     return _getorder!.instance;
   }
 
@@ -1589,8 +1561,7 @@ class Notification {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -1669,8 +1640,7 @@ class GiftCard {
   ModelHolder<User>? _getowner;
   Future<User?> get owner {
     _getowner ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(ownerId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(ownerId)),);
     return _getowner!.instance;
   }
 
@@ -1684,9 +1654,8 @@ class GiftCard {
   ModelHolder<User>? _getcreatedBy;
   Future<User?> get createdBy {
     _getcreatedBy ??= ModelHolder<User>(
-      getModelInstance: () =>
-          UserDb.get(where: (t) => t.id.equals(createdById!)),
-    );
+        getModelInstance: () =>
+            UserDb.get(where: (t) => t.id.equals(createdById!)),);
     return _getcreatedBy!.instance;
   }
 
@@ -1700,9 +1669,8 @@ class GiftCard {
   ModelHolder<Product>? _getproduct;
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
-      getModelInstance: () =>
-          ProductDb.get(where: (t) => t.id.equals(productId!)),
-    );
+        getModelInstance: () =>
+            ProductDb.get(where: (t) => t.id.equals(productId!)),);
     return _getproduct!.instance;
   }
 
@@ -1716,9 +1684,8 @@ class GiftCard {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId!)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId!)),);
     return _getbusiness!.instance;
   }
 
@@ -1784,8 +1751,7 @@ class Blocked {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId!)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId!)),);
     return _getuser!.instance;
   }
 
@@ -1799,9 +1765,8 @@ class Blocked {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId!)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId!)),);
     return _getbusiness!.instance;
   }
 
@@ -1815,9 +1780,8 @@ class Blocked {
   ModelHolder<Product>? _getproduct;
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
-      getModelInstance: () =>
-          ProductDb.get(where: (t) => t.id.equals(productId!)),
-    );
+        getModelInstance: () =>
+            ProductDb.get(where: (t) => t.id.equals(productId!)),);
     return _getproduct!.instance;
   }
 
@@ -1899,9 +1863,7 @@ class Policy {
 
 class Report {
   Report({
-    required int businessId,
-    required int userId,
-    int? policyId,
+    required int businessId, required int userId, int? policyId,
     int? violatorId,
     int? productId,
     this.id,
@@ -1924,9 +1886,8 @@ class Report {
   ModelHolder<Policy>? _getpolicy;
   Future<Policy?> get policy {
     _getpolicy ??= ModelHolder<Policy>(
-      getModelInstance: () =>
-          PolicyDb.get(where: (t) => t.id.equals(policyId!)),
-    );
+        getModelInstance: () =>
+            PolicyDb.get(where: (t) => t.id.equals(policyId!)),);
     return _getpolicy!.instance;
   }
 
@@ -1940,9 +1901,8 @@ class Report {
   ModelHolder<Business>? _getbusiness;
   Future<Business?> get business {
     _getbusiness ??= ModelHolder<Business>(
-      getModelInstance: () =>
-          BusinessDb.get(where: (t) => t.id.equals(businessId)),
-    );
+        getModelInstance: () =>
+            BusinessDb.get(where: (t) => t.id.equals(businessId)),);
     return _getbusiness!.instance;
   }
 
@@ -1956,8 +1916,7 @@ class Report {
   ModelHolder<User>? _getuser;
   Future<User?> get user {
     _getuser ??= ModelHolder<User>(
-      getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),
-    );
+        getModelInstance: () => UserDb.get(where: (t) => t.id.equals(userId)),);
     return _getuser!.instance;
   }
 
@@ -1971,9 +1930,8 @@ class Report {
   ModelHolder<User>? _getviolator;
   Future<User?> get violator {
     _getviolator ??= ModelHolder<User>(
-      getModelInstance: () =>
-          UserDb.get(where: (t) => t.id.equals(violatorId!)),
-    );
+        getModelInstance: () =>
+            UserDb.get(where: (t) => t.id.equals(violatorId!)),);
     return _getviolator!.instance;
   }
 
@@ -1987,9 +1945,8 @@ class Report {
   ModelHolder<Product>? _getproduct;
   Future<Product?> get product {
     _getproduct ??= ModelHolder<Product>(
-      getModelInstance: () =>
-          ProductDb.get(where: (t) => t.id.equals(productId!)),
-    );
+        getModelInstance: () =>
+            ProductDb.get(where: (t) => t.id.equals(productId!)),);
     return _getproduct!.instance;
   }
 
