@@ -12,6 +12,12 @@ It contains services for
 - stock
 - shopping
 
+## Dependencies
+
+- Dart 3.x.x
+- Redis
+- Postgres
+
 ## API Documentations
 
 Refer to api doc --> [Documentations](https://gumi-apps.github.io/bita_markets)

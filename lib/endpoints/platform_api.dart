@@ -11,7 +11,7 @@ class PlatformApi {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );

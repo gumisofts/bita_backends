@@ -12,19 +12,31 @@ servers:
   - url: https://bita.gumiapps.com
 paths:
   #############################User#####################################
-  /users/get_started_with_phone:
-    $ref: "user/user.yaml#/paths/~1users~1getStartedWithPhone"
-  /users/get_started_with_email:
-    $ref: "user/user.yaml#/paths/~1users~1getStartedWithEmail"
-  /users/verify_otp:
-    $ref: "user/user.yaml#/paths/~1users~1verifyOtp"
-  /users/login:
-    $ref: "user/user.yaml#/paths/~1users~1login"
+  /auth/get_started_with_phone:
+    $ref: "accounts/auth.yaml#/paths/~1auth~1get_started_with_phone"
+  /auth/get_started_with_email:
+    $ref: "accounts/auth.yaml#/paths/~1auth~1get_started_with_email"
+  /auth/verify_otp:
+    $ref: "accounts/auth.yaml#/paths/~1auth~1verify_otp"
+  /auth/login:
+    $ref: "accounts/auth.yaml#/paths/~1auth~1login"
+  /auth/change_phone:
+    $ref: accounts/auth.yaml#/paths/~1auth~1change_phone
+  /auth/verify_change_phone/{requestId}/{token}:
+    $ref: accounts/auth.yaml#/paths/~1auth~1verify_change_phone~1{requestId}~1{token}
+  /auth/change_email:
+    $ref: accounts/auth.yaml#/paths/~1auth~1change_email
+  /auth/verify_change_email/{requestId}/{token}:
+    $ref: accounts/auth.yaml#/paths/~1auth~1verify_change_email~1{requestId}~1{token}
+  /auth/change_password:
+    $ref: accounts/auth.yaml#/paths/~1auth~1change_password
+  /auth/set_password:
+    $ref: accounts/auth.yaml#/paths/~1auth~1set_password
+  /auth/me:
+    $ref: "accounts/auth.yaml#/paths/~1me"
 
   /users/{id}:
-    $ref: "user/user.yaml#/paths/~1{id}"
-  /users/me:
-    $ref: "user/user.yaml#/paths/~1me"
+    $ref: "accounts/user.yaml#/paths/~1{id}"
   # Shopping
   /shopping/items:
     $ref: "shopping/shopping.yaml#/paths/~1items"

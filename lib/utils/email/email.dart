@@ -10,18 +10,24 @@ class SendMail {
 
   static SmtpServer get _server =>
       SmtpServer(_host, password: _password, username: _username);
-  static Future<void> sendOtp(String otp, User user) async {
-    final content =
-        (await EmailOtpTemplate.content).replaceFirst('{{OTP_HERE}}', otp);
+  static Future<bool> sendOtp({
+    required String email,
+    required int otp,
+  }) async {
+    final content = (await EmailOtpTemplate.content)
+        .replaceFirst('{{OTP_HERE}}', otp.toString());
 
     final message = Message()
       ..subject = 'Verify your account'
       ..from = 'bita@gumiapps.com'
-      ..recipients.add(user.email)
+      ..recipients.add(email)
       ..html = content;
     try {
       await send(message, _server);
-    } catch (_) {}
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 }
 

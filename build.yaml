@@ -1,0 +1,8 @@
+targets:
+  $default:
+    builders:
+      pg_dorm:modelFromYamlGen:
+        generate_for:
+          include:
+            - lib/models/**
+        enabled: true

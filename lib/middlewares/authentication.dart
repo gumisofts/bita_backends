@@ -8,7 +8,7 @@ FutureOr<Response> Function(Request request) authMiddleWare(
   FutureOr<Response> Function(Request request) innerHanler,
 ) {
   return (request) async {
-    final auth = request.headers['auth'] ?? '';
+    final auth = request.headers['authorization'] ?? '';
     final splitted = auth.split(RegExp(r'\s+'));
 
     if (splitted.length != 2 || splitted.first != 'Bearer') {

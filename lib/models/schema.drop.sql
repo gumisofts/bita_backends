@@ -141,8 +141,11 @@ DROP Constraint If Exists userinterestandinteraction_user_user_fk;
 Alter Table IF Exists "userinterestandinteraction"
 DROP Constraint If Exists userinterestandinteraction_catagory_catagory_fk;
 
-Alter Table IF Exists "infochangerequest"
-DROP Constraint If Exists infochangerequest_user_user_fk;
+Alter Table IF Exists "phonechangerequest"
+DROP Constraint If Exists phonechangerequest_user_user_fk;
+
+Alter Table IF Exists "emailchangerequest"
+DROP Constraint If Exists emailchangerequest_user_user_fk;
 
 Alter Table IF Exists "password"
 DROP Constraint If Exists password_user_user_fk;
@@ -191,7 +194,9 @@ Drop Table If Exists "catagory";
 
 Drop Table If Exists "userinterestandinteraction";
 
-Drop Table If Exists "infochangerequest";
+Drop Table If Exists "phonechangerequest";
+
+Drop Table If Exists "emailchangerequest";
 
 Drop Table If Exists "password";
 

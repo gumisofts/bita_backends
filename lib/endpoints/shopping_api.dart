@@ -11,7 +11,7 @@ class ShoppingProductApi {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           final query = request.url.queryParameters['query'];
           if (query == null) return jsonResponse();
           return jsonResponse();
@@ -23,7 +23,7 @@ class ShoppingProductApi {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -34,7 +34,7 @@ class ShoppingProductApi {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -45,7 +45,7 @@ class ShoppingProductApi {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -55,7 +55,7 @@ class ShoppingProductApi {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -65,7 +65,7 @@ class ShoppingProductApi {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -79,7 +79,7 @@ class ShoppingBusinessAPI {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -89,7 +89,7 @@ class ShoppingBusinessAPI {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -99,7 +99,7 @@ class ShoppingBusinessAPI {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -110,7 +110,7 @@ class ShoppingBusinessAPI {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -120,7 +120,7 @@ class ShoppingBusinessAPI {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );
@@ -130,7 +130,7 @@ class ShoppingBusinessAPI {
         request,
         permission: () {},
         endpoint: () async {
-          // TODO(nuradic): Complete this endpoint
+          // TODO(nurads): Complete this endpoint
           return jsonResponse();
         },
       );

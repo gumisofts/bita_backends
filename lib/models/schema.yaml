@@ -39,10 +39,11 @@ Password:
       references: User
       isnull: false
       onDelete: CASCADE
-InfoChangeRequest:
+EmailChangeRequest:
   columns:
-    newEmail: Text
-    newPhone: Text
+    newEmail: 
+      type: Text
+      isnull: false
     user: 
       type: ForeignKey  
       references: User
@@ -51,6 +52,28 @@ InfoChangeRequest:
     createdAt: 
       type: timestamp
       default: DateTime.now()
+    token:
+      type: Text
+      isnull: false
+    expires_at: timestamp
+
+PhoneChangeRequest:
+  columns:
+    newPhone: 
+      type: Text
+      isnull: false
+    user: 
+        type: ForeignKey  
+        references: User
+        isnull: false
+        onDelete: CASCADE
+    token:
+      type: Text
+      isnull: false
+    createdAt: 
+        type: timestamp
+        default: DateTime.now()
+    expires_at: timestamp
 UserInterestAndInteraction:
   columns:
     catagory:

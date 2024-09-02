@@ -15,6 +15,49 @@ components:
       type: string
       format: ".+@.+\\..+"
       example: nuradhussen082@gmail.com
+    DateTime:
+      description: Datetime object
+      type: string
+      format: Iso8601String
+      example: 2024-09-02T08:04:41.236939Z
+
+    PhoneChangeRequest:
+      type: object
+      required:
+        - id
+        - userId
+        - createdAt
+        - newPhone
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+        newPhone:
+          $ref: "#/components/schemas/phoneNumber"
+        userId:
+          $ref: "#/components/schemas/Id"
+        createdAt:
+          $ref: "#/components/schemas/DateTime"
+        expires_at:
+          $ref: "#/components/schemas/DateTime"
+    EmailChangeRequest:
+      type: object
+      required:
+        - id
+        - userId
+        - createdAt
+        - newEmail
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+        newEmail:
+          $ref: "#/components/schemas/email"
+        userId:
+          $ref: "#/components/schemas/Id"
+        createdAt:
+          $ref: "#/components/schemas/DateTime"
+        expires_at:
+          $ref: "#/components/schemas/DateTime"
+          
 
     Contact:
       type: object

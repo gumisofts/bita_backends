@@ -1,2 +1,3 @@
-SELECT
-    1;
+DROP SCHEMA public CASCADE;
+
+CREATE SCHEMA public;

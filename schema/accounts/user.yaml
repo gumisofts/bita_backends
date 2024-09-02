@@ -1,0 +1,36 @@
+paths:
+
+  /{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: "../components.yaml#/components/schemas/Id"
+    get:
+        security: [{ApiKey: [], BearerToken: []}]
+        summary: Get user by id
+        tags: 
+          - Users
+        operationId: GetUserById
+        responses:
+          200:
+            description: returns user with specified id
+            content:
+              application/json:
+                  schema:
+                    $ref: ../components.yaml#/components/schemas/User
+          401:
+            $ref: ../error_responses.yaml#/responses/401
+          403:
+            $ref: ../error_responses.yaml#/responses/403
+          404:
+            $ref: ../error_responses.yaml#/responses/404
+          500:
+           $ref: ../error_responses.yaml#/responses/500
+  
+              
+
+      
+
+

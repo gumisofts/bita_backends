@@ -131,15 +131,15 @@ class BusinessApi {
           return jsonResponse();
         },
       );
-// TODO(nuradic): Business Preferences
+// TODO(nurads): Business Preferences
 
-// TODO(nuradic): Employee Role and Permissions
-// TODO(nuradic): Business Activities(Imuttable log)
+// TODO(nurads): Employee Role and Permissions
+// TODO(nurads): Business Activities(Imuttable log)
 
-// TODO(nuradic): Transefer Business ownership
-// TODO(nuradic): Delete Businnes
-// TODO(nuradic): Business Rate and Feedback
-// TODO(nuradic): Rate Products
+// TODO(nurads): Transefer Business ownership
+// TODO(nurads): Delete Businnes
+// TODO(nurads): Business Rate and Feedback
+// TODO(nurads): Rate Products
   @Route.post('/employeeThroughPhone/<shopId>')
   Future<Response> createEmployee(Request request, String shopId) =>
       handleRequestWithPermission(

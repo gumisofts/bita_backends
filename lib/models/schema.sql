@@ -30,12 +30,23 @@ Create Table
     );
 
 Create Table
-    If Not Exists "infochangerequest" (
-        "infochangerequestId" SERIAL Primary Key,
-        "newEmail" Text,
-        "newPhone" Text,
+    If Not Exists "emailchangerequest" (
+        "emailchangerequestId" SERIAL Primary Key,
+        "newEmail" Text not null,
         "userId" integer not null,
-        "createdAt" timestamp default now ()
+        "createdAt" timestamp default now (),
+        "token" Text not null,
+        "expires_at" timestamp
+    );
+
+Create Table
+    If Not Exists "phonechangerequest" (
+        "phonechangerequestId" SERIAL Primary Key,
+        "newPhone" Text not null,
+        "userId" integer not null,
+        "token" Text not null,
+        "createdAt" timestamp default now (),
+        "expires_at" timestamp
     );
 
 Create Table
@@ -236,7 +247,9 @@ Create Table
 
 ALTER TABLE "password" ADD CONSTRAINT password_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId") on Delete cascade;
 
-ALTER TABLE "infochangerequest" ADD CONSTRAINT infochangerequest_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId") on Delete cascade;
+ALTER TABLE "emailchangerequest" ADD CONSTRAINT emailchangerequest_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId") on Delete cascade;
+
+ALTER TABLE "phonechangerequest" ADD CONSTRAINT phonechangerequest_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId") on Delete cascade;
 
 ALTER TABLE "userinterestandinteraction" ADD CONSTRAINT userinterestandinteraction_catagory_catagory_fk FOREIGN KEY ("catagoryId") REFERENCES "catagory" ("catagoryId") on Delete NO ACTION;
 

@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:bita_markets/endpoints/auth.dart';
 import 'package:bita_markets/endpoints/business_api.dart';
 import 'package:bita_markets/endpoints/shopping_api.dart';
-import 'package:bita_markets/endpoints/users_api.dart';
+import 'package:bita_markets/endpoints/users.dart';
 import 'package:bita_markets/middlewares/authentication.dart';
 import 'package:bita_markets/middlewares/content_type.dart';
 import 'package:bita_markets/utils/utils.dart';
@@ -70,7 +71,8 @@ void get initDb {
       ),
     ],
     poolSetting: PoolSettings(
-      maxConnectionAge: const Duration(milliseconds: 1000),
+      maxConnectionAge: const Duration(days: 100),
+      connectTimeout: const Duration(seconds: 10),
       maxConnectionCount: 10,
       sslMode: env['PG_USE_SSL'] == 'true' ? SslMode.require : SslMode.disable,
     ),
@@ -88,9 +90,11 @@ Handler get application {
   final app = Router()
     ..mount(
       '/users',
-      const Pipeline()
-          .addMiddleware(contentTypeMiddleware)
-          .addHandler(UsersApi().router.call),
+      UsersApi().router.call,
+    )
+    ..mount(
+      '/auth',
+      AuthApi().router.call,
     )
     ..mount(
       '/static',
@@ -98,15 +102,14 @@ Handler get application {
     )
     ..mount(
       '/business',
-      const Pipeline()
-          .addMiddleware(contentTypeMiddleware)
-          .addHandler(BusinessApi().router.call),
+      BusinessApi().router.call,
     )
     ..mount('/shopping/products', ShoppingProductApi().router.call)
     ..mount('/shopping/bussiness', ShoppingBusinessAPI().router.call);
   final handler = const Pipeline()
       .addMiddleware(logRequests())
       .addMiddleware(authMiddleWare)
+      .addMiddleware(contentTypeMiddleware)
       .addHandler(app.call);
 
   return handler;

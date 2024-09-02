@@ -1,0 +1,535 @@
+paths:
+  /auth/get_started_with_phone:
+    post:
+      security:
+        - ApiKey: []
+      operationId: get_started_with_phone
+      summary: get started with phone number
+      description: Initiates Login or Signup with phone
+      tags: 
+        - Auth
+      requestBody:
+        content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                    phoneNumber:
+                      $ref: "../components.yaml#/components/schemas/phoneNumber"
+      responses:
+        200:  
+            description: User is created if does not exist and returns user status
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        required:
+                          - user
+                          - isRegistrationComplete
+                        properties:
+                          user:
+                            $ref: ../components.yaml#/components/schemas/User 
+                          isRegistrationComplete:
+                            type: boolean
+                          isPhoneVerified: 
+                            type: boolean
+                          isEmailVerified:
+                            type: boolean
+                          isPasswordSet: 
+                            type: boolean
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - phoneNumber
+                       properties:
+                        phoneNumber:
+                          type: string
+                    example:
+                      phoneNumber: Invalid phoneNumber
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/get_started_with_email:
+    post:
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: get_started_with_email
+      summary: get started with email
+      tags: 
+        - Auth
+      description: Initiates Login or Signup with Email
+      requestBody:
+        content:
+            application/json:
+                schema:
+                    type: object
+                    required: 
+                      - email
+                    properties:
+                      email:
+                        $ref: "../components.yaml#/components/schemas/email"
+      responses:
+        200:
+          $ref: '#/paths/~1auth~1get_started_with_phone/post/responses/200'
+
+        400:
+          
+          $ref: '#/paths/~1auth~1get_started_with_phone/post/responses/400'
+           
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/verify_otp:
+    post:
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: verify_otp
+      summary: verify otp
+      tags: 
+        - Auth
+      description: Verifies OTP and returns access 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - otp
+                - otpType
+                - userId
+              properties:
+                otp: 
+                  description: six digit number sent to user's email or phone ; used as temporary password or verification
+                  type: integer
+                  example: 123456
+                otpType:
+                  type: string
+                  enum: ['email','phone']
+                  example: email
+                userId:
+                  type: integer
+                  format: int64
+                  example: 10
+
+      responses:
+        200:
+            description: Login succesfully
+            content:
+                application/json:
+                    schema:
+                        $ref: ../components.yaml#/components/schemas/UserInfo 
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - password
+                       properties:
+                        password:
+                          type: string
+                    example:
+                      password: this field is required
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/change_phone:
+    post:
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: change_phone
+      summary: change phone
+      tags: 
+        - Auth
+      description: Creates Change phone number request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - newPhone
+              properties:
+                newPhone:
+                  $ref: "../components.yaml#/components/schemas/phoneNumber"
+
+      responses:
+        200:
+            description: succesfully created change request
+            content:
+                application/json:
+                    schema:
+                      $ref: "../components.yaml#/components/schemas/PhoneChangeRequest"
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - newPhone
+                       properties:
+                        newPhone:
+                          type: string
+                    example:
+                      newPhone: this field is required
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/change_email:
+    post:
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: change_email
+      summary: change email
+      tags: 
+        - Auth
+      description: Creates Change email request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - newEmail
+              properties:
+                newEmail:
+                  $ref: "../components.yaml#/components/schemas/email"
+
+      responses:
+        200:
+            description: succesfully created change request
+            content:
+                application/json:
+                    schema:
+                      $ref: "../components.yaml#/components/schemas/EmailChangeRequest"
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - newPhone
+                       properties:
+                        newPhone:
+                          type: string
+                    example:
+                      newPhone: this field is required
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/change_password:
+    post:
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: change_password
+      summary: change password
+      tags: 
+        - Auth
+      description: Change user login password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - old_password
+                - new_password
+              properties:
+                new_password:
+                  type: string
+                  example: "******"
+                old_password:
+                  type: string
+                  example: "******"
+
+      responses:
+        200:
+            description: Succesfully updated
+            content:
+                application/json:
+                    schema:
+                      type: object
+                      required: 
+                        - detail
+                      properties:
+                        detail:
+                          type: string
+                          example: Succesfully updated
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - detail
+                       properties:
+                        detail:
+                          type: string
+                          example: wrong old password
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/set_password:
+    post:
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: set_password
+      summary: set password
+      tags: 
+        - Auth
+      description: set user login password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  type: string
+                  example: "******"
+      responses:
+        200:
+            description: Succesfully updated
+            content:
+                application/json:
+                    schema:
+                      type: object
+                      required: 
+                        - detail
+                      properties:
+                        detail:
+                          type: string
+                          example: password set succesfully
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - detail
+                       properties:
+                        detail:
+                          type: string
+                          example: password already set
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/verify_change_phone/{requestId}/{token}:
+    get:
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+        - name: token
+          in: path
+          required: true
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: verify_change_phone
+      summary: verify changed phone
+      tags: 
+        - Auth
+      description: verify change phone
+      
+      responses:
+        200:
+            description: Phone changed successfully
+            content:
+                application/json:
+                    schema:
+                      type: object
+                      required: 
+                        - detail
+                      properties:
+                        detail:
+                          type: string
+                          example: Phone changed successfully
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - detail
+                       properties:
+                        detail:
+                          type: string
+                          example: unable to verify
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/verify_change_email/{requestId}/{token}:
+    get:
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+        - name: token
+          in: path
+          required: true
+          schema:
+            $ref: "../components.yaml#/components/schemas/Id"
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: verify_change_email
+      summary: verify changed email
+      tags: 
+        - Auth
+      description: verify change phone
+      
+      responses:
+        200:
+            description: Email changed successfully
+            content:
+                application/json:
+                    schema:
+                      type: object
+                      required: 
+                        - detail
+                      properties:
+                        detail:
+                          type: string
+                          example: Email changed successfully
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - detail
+                       properties:
+                        detail:
+                          type: string
+                          example: unable to verify
+
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /auth/login:
+    post:
+      security:
+        $ref: '#/paths/~1auth~1get_started_with_phone/post/security'
+      operationId: LoginUser
+      summary: login
+      tags: 
+        - Auth
+      description: Provides access token for the user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - password
+              properties:
+                userId:
+                  type: integer
+                  format: int64
+                  example: 10
+                password: 
+                  description: Account password
+                  type: string
+                  example: "******"
+      responses:
+        200:
+            description: Login is succesfull
+            content:
+                application/json:
+                    schema:
+                        $ref: ../components.yaml#/components/schemas/UserInfo 
+        400:
+            description: Bad request
+            content:
+                application/json:
+                    schema:
+                       type: object
+                       required:
+                        - otp
+                       properties:
+                        otp:
+                          type: string
+                    example:
+                      otp: this field is required
+        403:
+          $ref: ../error_responses.yaml#/responses/403
+        500:
+          $ref: ../error_responses.yaml#/responses/500
+  /me:
+    get:
+        security: [{ApiKey: [], BearerToken: []}]
+        summary: get current user
+        operationId: get_current_user
+        tags: 
+          - Auth
+        responses:
+          200:
+            description: Get Current User
+            content:
+              application/json:
+                  schema:
+                    $ref: ../components.yaml#/components/schemas/User
+          401:
+            $ref: ../error_responses.yaml#/responses/401
+          403:
+            $ref: ../error_responses.yaml#/responses/403
+          500:
+           $ref: ../error_responses.yaml#/responses/500
+    delete:
+      security: [{ApiKey: [],BearerToken: []}]
+      summary: Delete current user
+      tags: 
+        - Users
+      description: Schedules user to be deleted after 14 days
+      operationId: deleteUser
+      responses:
+        200:
+          description: User is deleted succesfully
+          content:
+            application/json: 
+              schema:
+                type: object
+        401:
+          $ref: ../error_responses.yaml#/responses/401
+
+        403:
+         $ref: ../error_responses.yaml#/responses/403
+
+        500:
+          $ref: ../error_responses.yaml#/responses/500
