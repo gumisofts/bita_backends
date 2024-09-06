@@ -4,7 +4,7 @@ Description=Bita Markets Service
 WantedBy=multi-user.target
 [Service]
 Type=simple
-ExecStart=bita_markets.exe
+ExecStart=/var/bita_markets_build/bita_markets.exe
 WorkingDirectory=/var/bita_markets_build
 Restart=always
 RestartSec=5

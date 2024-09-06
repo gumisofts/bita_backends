@@ -74,7 +74,8 @@
         src: ~/bita_markets/deployment/nginx.conf
         dest: /etc/nginx/conf.d/
     - name: Copy Email templates
-      shell: cp /home/ubuntu/bita_markets/templates /var/bita_markets_build/templates
+      become: true
+      shell: cp -r /home/ubuntu/bita_markets/templates /var/bita_markets_build/templates
     - name: Enable Nginx Services on Boot
       ansible.builtin.systemd_service:
         name: nginx
