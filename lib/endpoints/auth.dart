@@ -45,6 +45,8 @@ class AuthApi {
             final otp = generateSecureRandom();
             pass.emailOtp = otp.toString();
 
+            logger.i(otp);
+
             await pass.save();
             await SendMail.sendOtp(email: user.email!, otp: otp);
           }
@@ -158,7 +160,7 @@ class AuthApi {
                     join "password" on "user"."userId"="password"."userId" 
                     where "user"."userId"= @userId and "password"."${data['otpType']}Otp"=@otp''');
 
-          data.remove('otpType');
+          final otpType = data.remove('otpType');
           final res = await Database.execute(sql, parameters: data);
 
           if (res.isEmpty) {
@@ -171,7 +173,7 @@ class AuthApi {
           final user = UserDb.fromResult(res).first;
           final pass = PasswordDb.fromResult(res).first;
 
-          data['otpType'] == 'email'
+          otpType == 'email'
               ? pass.isEmailVerified = true
               : pass.isPhoneVerified = true;
 
