@@ -41,12 +41,14 @@ class AuthApi {
 
           pass ??= await PasswordDb.create(userId: user.id!);
 
-          final otp = generateSecureRandom();
-          pass.emailOtp = otp.toString();
+          if (pass.password == null) {
+            final otp = generateSecureRandom();
+            pass.emailOtp = otp.toString();
 
-          await pass.save();
+            await pass.save();
+            await SendMail.sendOtp(email: user.email!, otp: otp);
+          }
 
-          await SendMail.sendOtp(email: user.email!, otp: otp);
           return jsonResponse(
             body: {
               'user': user.toJson(),
