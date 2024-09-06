@@ -282,7 +282,7 @@ class AuthApi {
 
           pass ??= await PasswordDb.create(userId: request.contextUser!.id!);
 
-          if (pass.password != null) {
+          if (request.contextUser?.firstName == null && pass.password != null) {
             return jsonResponse(
               body: {'detail': 'password already set'},
               statusCode: 400,
