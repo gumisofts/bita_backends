@@ -28,47 +28,57 @@ class UsersApi {
       );
 
   @Route('PATCH', '/<id>')
-  Future<Response> updateUser(Request request, String id) async {
-    final user = await UserDb.get(where: (t) => t.id.equals(int.parse(id)));
+  Future<Response> updateUser(Request request, String id) =>
+      handleRequestWithPermission(
+        request,
+        permission: () {
+          if (!request.isAuthenticated) {
+            throw unAuthorizedException;
+          }
+        },
+        endpoint: () async {
+          final user =
+              await UserDb.get(where: (t) => t.id.equals(int.parse(id)));
 
-    if (user == null) {
-      return jsonResponse(
-        body: {'detail': 'user not found'},
-        statusCode: HttpStatus.notFound,
+          if (user == null) {
+            return jsonResponse(
+              body: {'detail': 'user not found'},
+              statusCode: HttpStatus.notFound,
+            );
+          }
+
+          final data = await form(
+            request,
+            fields: [
+              FieldValidator<String?>(
+                name: 'firstName',
+                validator: (value) {
+                  if (value != null) return null;
+                  if (value!.length > 25) {
+                    return 'firstName is to long';
+                  }
+                  return null;
+                },
+              ),
+              FieldValidator<String?>(
+                name: 'lastName',
+                validator: (value) {
+                  if (value != null) return null;
+                  if (value!.length > 25) {
+                    return 'lastName is to long';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          );
+          user
+            ..firstName = (data['firstName'] as String?) ?? user.firstName
+            ..lastName = (data['lastName'] as String?) ?? user.lastName;
+
+          await user.save();
+
+          return jsonResponse(body: user.toJson());
+        },
       );
-    }
-
-    final data = await form(
-      request,
-      fields: [
-        FieldValidator<String?>(
-          name: 'firstName',
-          validator: (value) {
-            if (value != null) return null;
-            if (value!.length > 25) {
-              return 'firstName is to long';
-            }
-            return null;
-          },
-        ),
-        FieldValidator<String?>(
-          name: 'lastName',
-          validator: (value) {
-            if (value != null) return null;
-            if (value!.length > 25) {
-              return 'lastName is to long';
-            }
-            return null;
-          },
-        ),
-      ],
-    );
-    user
-      ..firstName = (data['firstName'] as String?) ?? user.firstName
-      ..lastName = (data['lastName'] as String?) ?? user.lastName;
-
-    await user.save();
-
-    return jsonResponse(body: user.toJson());
-  }
 }
