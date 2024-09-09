@@ -3,6 +3,9 @@ Create Table If Not Exists"filetb"(
 "filetbId" SERIAL Primary Key
 ,"url" Text not null 
 ,"isAbsolute" boolean  default false
+,"size" Real  
+,"hasDependent" boolean  default false
+,"createdAt" timestamp  default now()
 );
 Create Table If Not Exists"user"(
 "userId" SERIAL Primary Key
@@ -75,7 +78,7 @@ Create Table If Not Exists"business"(
 ,"ownerId" integer not null 
 ,"addressId" integer not null 
 ,"catagoryId" integer  
-,"logo" Text  
+,"logoId" integer  
 ,"bgImage" Text  
 ,"createdAt" timestamp  default now()
 );
@@ -202,6 +205,7 @@ ALTER TABLE "brand" ADD CONSTRAINT brand_catagory_catagory_fk FOREIGN KEY ("cata
 ALTER TABLE "business" ADD CONSTRAINT business_owner_user_fk FOREIGN KEY ("ownerId") REFERENCES "user" ("userId") on Delete cascade;
 ALTER TABLE "business" ADD CONSTRAINT business_address_address_fk FOREIGN KEY ("addressId") REFERENCES "address" ("addressId") on Delete restrict;
 ALTER TABLE "business" ADD CONSTRAINT business_catagory_catagory_fk FOREIGN KEY ("catagoryId") REFERENCES "catagory" ("catagoryId") on Delete set null;
+ALTER TABLE "business" ADD CONSTRAINT business_logo_filetb_fk FOREIGN KEY ("logoId") REFERENCES "filetb" ("filetbId") on Delete NO ACTION;
 ALTER TABLE "businessprefrences" ADD CONSTRAINT businessprefrences_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId") on Delete NO ACTION;
 ALTER TABLE "businessacitivity" ADD CONSTRAINT businessacitivity_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId") on Delete cascade;
 ALTER TABLE "businessacitivity" ADD CONSTRAINT businessacitivity_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId") on Delete set null;

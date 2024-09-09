@@ -175,7 +175,6 @@ final data = {
 
 Future<void> addCatagories() async {
   final c = await CatagoryDb.filter(where: (where) => null);
-  print(data.length);
   if (c.isEmpty) {
     for (final item in data.entries) {
       await CatagoryDb.create(name: item.key);

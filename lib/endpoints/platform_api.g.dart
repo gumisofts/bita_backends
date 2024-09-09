@@ -13,5 +13,10 @@ Router _$PlatformApiRouter(PlatformApi service) {
     r'/interests',
     service.userInterest,
   );
+  router.add(
+    'POST',
+    r'/upload',
+    service.testFile,
+  );
   return router;
 }

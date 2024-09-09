@@ -6,6 +6,15 @@ FileTb:
     isAbsolute:
       type: boolean
       default: false
+    size:
+      type: Real
+      isnull: true
+    hasDependent:
+      type: boolean
+      default: false
+    createdAt: 
+      type: timestamp
+      default: DateTime.now()
 # Related To User Management
 User:
   columns:
@@ -144,7 +153,10 @@ Business:
       references: Catagory
       isnull: true
       onDelete: SET NULL
-    logo: Text
+    logo: 
+      type: ForeignKey
+      references: FileTb
+      isnull: true
     bgImage: Text
     createdAt:
       type: timestamp

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bita_markets/models/schema.dart';
+import 'package:bita_markets/utils/forms/parsers/form_data.dart';
 import 'package:bita_markets/utils/function/request_handler_wrapper.dart';
 import 'package:bita_markets/utils/utils.dart';
 import 'package:pg_dorm/database/database.dart';
@@ -26,6 +27,7 @@ class BusinessApi {
                 name: 'name',
                 isRequired: true,
               ),
+              FieldValidator<int>(name: 'logoId'),
               FieldValidator<int>(
                 name: 'catagoryId',
                 isRequired: true,
@@ -36,6 +38,14 @@ class BusinessApi {
               ),
             ],
           );
+
+          // final logo = data['image'] as UploadedFile?;
+
+          // String? logoUrl;
+
+          // if (logo != null) {
+          //   logoUrl = await uploadFileTo(file: logo);
+          // }
 
           final address = await AddressDb.create(
             lat: data['address']!['lat'] as double?,
@@ -266,6 +276,7 @@ class BusinessApi {
             request,
             fields: [
               FieldValidator<String>(name: 'name', isRequired: true),
+              FieldValidator<UploadedFile>(name: 'image'),
               FieldValidator<String>(name: 'productUId', isRequired: true),
               FieldValidator<double>(name: 'costPrice', isRequired: true),
               FieldValidator<double>(name: 'sellingPrice', isRequired: true),

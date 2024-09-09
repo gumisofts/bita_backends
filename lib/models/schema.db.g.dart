@@ -10,6 +10,9 @@ extension FileTbDb on FileTb {
       'id': id,
       'url': url,
       'isAbsolute': isAbsolute,
+      'size': size,
+      'hasDependent': hasDependent,
+      'createdAt': createdAt?.toIso8601String(),
     };
     if (excludeNull) {
       json.removeWhere((key, value) => value == null);
@@ -28,6 +31,9 @@ extension FileTbDb on FileTb {
       id: map['filetbId'] as int,
       url: map['url'] as String,
       isAbsolute: map['isAbsolute'] as bool?,
+      size: map['size'] as double?,
+      hasDependent: map['hasDependent'] as bool?,
+      createdAt: map['createdAt'] as DateTime?,
     );
   }
 
@@ -38,10 +44,16 @@ extension FileTbDb on FileTb {
   static Future<FileTb> create({
     required String url,
     bool? isAbsolute,
+    double? size,
+    bool? hasDependent,
+    DateTime? createdAt,
   }) async {
     final model = FileTb(
       url: url,
       isAbsolute: isAbsolute,
+      size: size,
+      hasDependent: hasDependent,
+      createdAt: createdAt,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(
@@ -1043,12 +1055,12 @@ extension BusinessDb on Business {
     final json = {
       'id': id,
       'name': name,
-      'logo': logo,
       'bgImage': bgImage,
       'createdAt': createdAt?.toIso8601String(),
       'ownerId': ownerId,
       'addressId': addressId,
       'catagoryId': catagoryId,
+      'logoId': logoId,
     };
     if (excludeNull) {
       json.removeWhere((key, value) => value == null);
@@ -1066,12 +1078,12 @@ extension BusinessDb on Business {
     return Business(
       id: map['businessId'] as int,
       name: map['name'] as String,
-      logo: map['logo'] as String?,
       bgImage: map['bgImage'] as String?,
       createdAt: map['createdAt'] as DateTime?,
       ownerId: map['ownerId'] as int,
       addressId: map['addressId'] as int,
       catagoryId: map['catagoryId'] as int?,
+      logoId: map['logoId'] as int?,
     );
   }
 
@@ -1084,18 +1096,18 @@ extension BusinessDb on Business {
     required int ownerId,
     required int addressId,
     int? catagoryId,
-    String? logo,
+    int? logoId,
     String? bgImage,
     DateTime? createdAt,
   }) async {
     final model = Business(
       name: name,
-      logo: logo,
       bgImage: bgImage,
       createdAt: createdAt,
       ownerId: ownerId,
       addressId: addressId,
       catagoryId: catagoryId,
+      logoId: logoId,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(

@@ -4,12 +4,12 @@ import 'dart:isolate';
 
 import 'package:bita_markets/endpoints/auth.dart';
 import 'package:bita_markets/endpoints/business_api.dart';
+import 'package:bita_markets/endpoints/platform_api.dart';
 import 'package:bita_markets/endpoints/shopping_api.dart';
 import 'package:bita_markets/endpoints/users.dart';
 import 'package:bita_markets/middlewares/authentication.dart';
 import 'package:bita_markets/middlewares/content_type.dart';
 import 'package:bita_markets/utils/utils.dart';
-import 'package:pg_dorm/pg_dorm.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_hotreload/shelf_hotreload.dart';
@@ -57,29 +57,6 @@ Future<void> createServer(int port) async {
   server.autoCompress = true;
 }
 
-void get initDb {
-  Database.init(
-    endpoints: [
-      Endpoint(
-        host: env.getOrElse('PG_HOST', () => 'localhost'),
-        database: env.getOrElse('POSTGRES_DB', () => ''),
-        username: env['POSTGRES_USER'],
-        password: env['POSTGRES_PASSWORD'],
-        port: int.parse(
-          env.getOrElse('PG_PORT', () => '5432'),
-        ),
-      ),
-    ],
-    poolSetting: PoolSettings(
-      maxConnectionAge: const Duration(days: 100),
-      connectTimeout: const Duration(seconds: 10),
-      maxConnectionCount: 10,
-      sslMode: env['PG_USE_SSL'] == 'true' ? SslMode.require : SslMode.disable,
-    ),
-    logger: logger.f,
-  );
-}
-
 void createDevServer(int port) => withHotreload(() async {
       final server = await serve(application, '0.0.0.0', port, shared: true);
 
@@ -97,12 +74,16 @@ Handler get application {
       AuthApi().router.call,
     )
     ..mount(
-      '/static',
+      mediaUrl,
       createStaticHandler('public', defaultDocument: 'index.html'),
     )
     ..mount(
       '/business',
       BusinessApi().router.call,
+    )
+    ..mount(
+      '/platform',
+      PlatformApi().router.call,
     )
     ..mount('/shopping/products', ShoppingProductApi().router.call)
     ..mount('/shopping/bussiness', ShoppingBusinessAPI().router.call);

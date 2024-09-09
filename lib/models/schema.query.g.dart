@@ -11,8 +11,21 @@ class FileTbQuery {
       TextColumn(column: 'url', offtable: 'filetb', depends: _joins);
   TextColumn get isAbsolute =>
       TextColumn(column: 'isAbsolute', offtable: 'filetb', depends: _joins);
+  NumberColumn get size =>
+      NumberColumn(column: 'size', offtable: 'filetb', depends: _joins);
+  TextColumn get hasDependent =>
+      TextColumn(column: 'hasDependent', offtable: 'filetb', depends: _joins);
+  TextColumn get createdAt =>
+      TextColumn(column: 'createdAt', offtable: 'filetb', depends: _joins);
   final _joins = <Join>[];
-  static List<String> get columns => <String>['filetbId', 'url', 'isAbsolute'];
+  static List<String> get columns => <String>[
+        'filetbId',
+        'url',
+        'isAbsolute',
+        'size',
+        'hasDependent',
+        'createdAt',
+      ];
 }
 
 class UserQuery {
@@ -354,8 +367,14 @@ class BusinessQuery {
       );
   NumberColumn get catagoryId =>
       NumberColumn(column: 'catagoryId', offtable: 'business', depends: _joins);
-  TextColumn get logo =>
-      TextColumn(column: 'logo', offtable: 'business', depends: _joins);
+  FileTbQuery get logo => FileTbQuery.referenced(
+        joins: [
+          ..._joins,
+          Join(table: 'filetb', onn: 'logoId', from: table),
+        ],
+      );
+  NumberColumn get logoId =>
+      NumberColumn(column: 'logoId', offtable: 'business', depends: _joins);
   TextColumn get bgImage =>
       TextColumn(column: 'bgImage', offtable: 'business', depends: _joins);
   TextColumn get createdAt =>
@@ -367,7 +386,7 @@ class BusinessQuery {
         'ownerId',
         'addressId',
         'catagoryId',
-        'logo',
+        'logoId',
         'bgImage',
         'createdAt',
       ];

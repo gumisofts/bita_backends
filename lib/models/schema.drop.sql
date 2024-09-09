@@ -40,6 +40,7 @@ Alter Table IF Exists "businessreview" DROP Constraint If Exists businessreview_
 Alter Table IF Exists "businessacitivity" DROP Constraint If Exists businessacitivity_user_user_fk;
 Alter Table IF Exists "businessacitivity" DROP Constraint If Exists businessacitivity_business_business_fk;
 Alter Table IF Exists "businessprefrences" DROP Constraint If Exists businessprefrences_business_business_fk;
+Alter Table IF Exists "business" DROP Constraint If Exists business_logo_filetb_fk;
 Alter Table IF Exists "business" DROP Constraint If Exists business_catagory_catagory_fk;
 Alter Table IF Exists "business" DROP Constraint If Exists business_address_address_fk;
 Alter Table IF Exists "business" DROP Constraint If Exists business_owner_user_fk;

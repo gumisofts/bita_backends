@@ -7,9 +7,15 @@ class FileTb {
     required String url,
     this.id,
     bool? isAbsolute,
+    double? size,
+    bool? hasDependent,
+    DateTime? createdAt,
   }) {
     _url = url;
     _isAbsolute = isAbsolute;
+    _size = size;
+    _hasDependent = hasDependent;
+    _createdAt = createdAt;
   }
 
   final _updatedFields = <String, dynamic>{};
@@ -41,6 +47,27 @@ class FileTb {
   set isAbsolute(bool? m) {
     _updatedFields['isAbsolute'] = m;
     _isAbsolute = m;
+  }
+
+  double? _size;
+  double? get size => _size;
+  set size(double? m) {
+    _updatedFields['size'] = m;
+    _size = m;
+  }
+
+  bool? _hasDependent;
+  bool? get hasDependent => _hasDependent;
+  set hasDependent(bool? m) {
+    _updatedFields['hasDependent'] = m;
+    _hasDependent = m;
+  }
+
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  set createdAt(DateTime? m) {
+    _updatedFields['createdAt'] = m;
+    _createdAt = m;
   }
 }
 
@@ -654,18 +681,18 @@ class Business {
     required int ownerId,
     required int addressId,
     int? catagoryId,
+    int? logoId,
     this.id,
-    String? logo,
     String? bgImage,
     DateTime? createdAt,
   }) {
     _name = name;
-    _logo = logo;
     _bgImage = bgImage;
     _createdAt = createdAt;
     _ownerId = ownerId;
     _addressId = addressId;
     _catagoryId = catagoryId;
+    _logoId = logoId;
   }
   late int _ownerId;
   int get ownerId => _ownerId;
@@ -714,6 +741,21 @@ class Business {
     return _getcatagory!.instance;
   }
 
+  int? _logoId;
+  int? get logoId => _logoId;
+  set logoId(int? id) {
+    _updatedFields['logo'] = id;
+    _logoId = id;
+  }
+
+  ModelHolder<FileTb>? _getlogo;
+  Future<FileTb?> get logo {
+    _getlogo ??= ModelHolder<FileTb>(
+      getModelInstance: () => FileTbDb.get(where: (t) => t.id.equals(logoId!)),
+    );
+    return _getlogo!.instance;
+  }
+
   final _updatedFields = <String, dynamic>{};
   int? id;
   Future<void> save() async {
@@ -736,13 +778,6 @@ class Business {
   set name(String m) {
     _updatedFields['name'] = m;
     _name = m;
-  }
-
-  String? _logo;
-  String? get logo => _logo;
-  set logo(String? m) {
-    _updatedFields['logo'] = m;
-    _logo = m;
   }
 
   String? _bgImage;
