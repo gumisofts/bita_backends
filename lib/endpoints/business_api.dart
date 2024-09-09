@@ -288,7 +288,7 @@ class BusinessApi {
               FieldValidator<int>(name: 'bizId', isRequired: true),
               FieldValidator<int>(name: 'catagoryId'),
               FieldValidator<int>(name: 'brandId'),
-              FieldValidator<int>(name: 'unitId'),
+              FieldValidator<String>(name: 'unit'),
               FieldValidator<String>(name: 'expireDate'),
               FieldValidator<String>(name: 'manDate'),
               FieldValidator<String>(name: 'desc'),

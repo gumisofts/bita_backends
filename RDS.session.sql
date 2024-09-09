@@ -15,3 +15,7 @@ SELECT
     *
 from
     "password";
+
+--@block
+Alter table "product"
+add column "unit" Text;
