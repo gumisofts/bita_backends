@@ -1780,13 +1780,13 @@ extension ProductDb on Product {
       'costPrice': costPrice,
       'sellingPrice': sellingPrice,
       'quantity': quantity,
+      'unit': unit,
       'expireDate': expireDate?.toIso8601String(),
       'manDate': manDate?.toIso8601String(),
       'desc': desc,
       'businessId': businessId,
       'brandId': brandId,
       'catagoryId': catagoryId,
-      'unitId': unitId,
     };
     if (excludeNull) {
       json.removeWhere((key, value) => value == null);
@@ -1808,13 +1808,13 @@ extension ProductDb on Product {
       costPrice: map['costPrice'] as double,
       sellingPrice: map['sellingPrice'] as double,
       quantity: map['quantity'] as double,
+      unit: map['unit'] as String?,
       expireDate: map['expireDate'] as DateTime?,
       manDate: map['manDate'] as DateTime?,
       desc: map['desc'] as String?,
       businessId: map['businessId'] as int,
       brandId: map['brandId'] as int?,
       catagoryId: map['catagoryId'] as int?,
-      unitId: map['unitId'] as int?,
     );
   }
 
@@ -1831,7 +1831,7 @@ extension ProductDb on Product {
     required int businessId,
     int? brandId,
     int? catagoryId,
-    int? unitId,
+    String? unit,
     DateTime? expireDate,
     DateTime? manDate,
     String? desc,
@@ -1842,13 +1842,13 @@ extension ProductDb on Product {
       costPrice: costPrice,
       sellingPrice: sellingPrice,
       quantity: quantity,
+      unit: unit,
       expireDate: expireDate,
       manDate: manDate,
       desc: desc,
       businessId: businessId,
       brandId: brandId,
       catagoryId: catagoryId,
-      unitId: unitId,
     );
     final data = model.toJson(excludeNull: true);
     final q = Query.insert(

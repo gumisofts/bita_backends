@@ -276,10 +276,7 @@ Product:
       type: ForeignKey
       references: Catagory
       onDelete: SET NULL
-    unit:
-      type: ForeignKey
-      references: Unit
-      onDelete: SET NULL
+    unit: Text
     expireDate:  timestamp
     manDate:  timestamp
     desc: Text

@@ -127,7 +127,7 @@ Create Table If Not Exists"product"(
 ,"businessId" integer not null 
 ,"brandId" integer  
 ,"catagoryId" integer  
-,"unitId" integer  
+,"unit" Text  
 ,"expireDate" timestamp  
 ,"manDate" timestamp  
 ,"desc" Text  
@@ -219,7 +219,6 @@ ALTER TABLE "hasbusinesspermission" ADD CONSTRAINT hasbusinesspermission_permiss
 ALTER TABLE "product" ADD CONSTRAINT product_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId") on Delete cascade;
 ALTER TABLE "product" ADD CONSTRAINT product_brand_brand_fk FOREIGN KEY ("brandId") REFERENCES "brand" ("brandId") on Delete set null;
 ALTER TABLE "product" ADD CONSTRAINT product_catagory_catagory_fk FOREIGN KEY ("catagoryId") REFERENCES "catagory" ("catagoryId") on Delete set null;
-ALTER TABLE "product" ADD CONSTRAINT product_unit_unit_fk FOREIGN KEY ("unitId") REFERENCES "unit" ("unitId") on Delete set null;
 ALTER TABLE "like" ADD CONSTRAINT like_product_product_fk FOREIGN KEY ("productId") REFERENCES "product" ("productId") on Delete cascade;
 ALTER TABLE "follow" ADD CONSTRAINT follow_business_business_fk FOREIGN KEY ("businessId") REFERENCES "business" ("businessId") on Delete cascade;
 ALTER TABLE "follow" ADD CONSTRAINT follow_user_user_fk FOREIGN KEY ("userId") REFERENCES "user" ("userId") on Delete cascade;

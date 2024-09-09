@@ -1184,8 +1184,8 @@ class Product {
     required int businessId,
     int? brandId,
     int? catagoryId,
-    int? unitId,
     this.id,
+    String? unit,
     DateTime? expireDate,
     DateTime? manDate,
     String? desc,
@@ -1195,13 +1195,13 @@ class Product {
     _costPrice = costPrice;
     _sellingPrice = sellingPrice;
     _quantity = quantity;
+    _unit = unit;
     _expireDate = expireDate;
     _manDate = manDate;
     _desc = desc;
     _businessId = businessId;
     _brandId = brandId;
     _catagoryId = catagoryId;
-    _unitId = unitId;
   }
   late int _businessId;
   int get businessId => _businessId;
@@ -1248,21 +1248,6 @@ class Product {
           CatagoryDb.get(where: (t) => t.id.equals(catagoryId!)),
     );
     return _getcatagory!.instance;
-  }
-
-  int? _unitId;
-  int? get unitId => _unitId;
-  set unitId(int? id) {
-    _updatedFields['unit'] = id;
-    _unitId = id;
-  }
-
-  ModelHolder<Unit>? _getunit;
-  Future<Unit?> get unit {
-    _getunit ??= ModelHolder<Unit>(
-      getModelInstance: () => UnitDb.get(where: (t) => t.id.equals(unitId!)),
-    );
-    return _getunit!.instance;
   }
 
   final _updatedFields = <String, dynamic>{};
@@ -1315,6 +1300,13 @@ class Product {
   set quantity(double m) {
     _updatedFields['quantity'] = m;
     _quantity = m;
+  }
+
+  String? _unit;
+  String? get unit => _unit;
+  set unit(String? m) {
+    _updatedFields['unit'] = m;
+    _unit = m;
   }
 
   DateTime? _expireDate;

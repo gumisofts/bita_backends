@@ -680,14 +680,8 @@ class ProductQuery {
       );
   NumberColumn get catagoryId =>
       NumberColumn(column: 'catagoryId', offtable: 'product', depends: _joins);
-  UnitQuery get unit => UnitQuery.referenced(
-        joins: [
-          ..._joins,
-          Join(table: 'unit', onn: 'unitId', from: table),
-        ],
-      );
-  NumberColumn get unitId =>
-      NumberColumn(column: 'unitId', offtable: 'product', depends: _joins);
+  TextColumn get unit =>
+      TextColumn(column: 'unit', offtable: 'product', depends: _joins);
   TextColumn get expireDate =>
       TextColumn(column: 'expireDate', offtable: 'product', depends: _joins);
   TextColumn get manDate =>
@@ -705,7 +699,7 @@ class ProductQuery {
         'businessId',
         'brandId',
         'catagoryId',
-        'unitId',
+        'unit',
         'expireDate',
         'manDate',
         'desc',

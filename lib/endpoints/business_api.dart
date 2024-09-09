@@ -27,6 +27,9 @@ class BusinessApi {
                 name: 'name',
                 isRequired: true,
               ),
+              FieldValidator<int?>(
+                name: 'logoId',
+              ),
               FieldValidator<int>(name: 'logoId'),
               FieldValidator<int>(
                 name: 'catagoryId',
@@ -62,6 +65,7 @@ class BusinessApi {
             name: data['name'] as String,
             ownerId: request.contextUser!.id!,
             addressId: address.id!,
+            logoId: data['logoId'] as int?,
           );
           final add = await AddressDb.get(
             where: (where) => where.id.equals(bb.addressId),
@@ -300,7 +304,7 @@ class BusinessApi {
             businessId: data['bizId'] as int,
             catagoryId: data['catagoryId'] as int?,
             brandId: data['brandId'] as int?,
-            unitId: data['unitId'] as int?,
+            unit: data['unit'] as String?,
             expireDate: data['expireDate'] as DateTime?,
             manDate: data['manDate'] as DateTime?,
             desc: data['desc'] as String?,
@@ -446,7 +450,7 @@ join "business" on "business"."businessId"="product"."businessId" where "busines
             product.brandId = data['brandId'] as int?;
           }
           if (data.containsKey('unitId')) {
-            product.unitId = data['unitId'] as int?;
+            product.unit = data['unit'] as String?;
           }
           if (data.containsKey('desc')) {
             product.desc = data['desc'] as String?;

@@ -26,7 +26,6 @@ Alter Table IF Exists "order" DROP Constraint If Exists order_business_business_
 Alter Table IF Exists "follow" DROP Constraint If Exists follow_user_user_fk;
 Alter Table IF Exists "follow" DROP Constraint If Exists follow_business_business_fk;
 Alter Table IF Exists "like" DROP Constraint If Exists like_product_product_fk;
-Alter Table IF Exists "product" DROP Constraint If Exists product_unit_unit_fk;
 Alter Table IF Exists "product" DROP Constraint If Exists product_catagory_catagory_fk;
 Alter Table IF Exists "product" DROP Constraint If Exists product_brand_brand_fk;
 Alter Table IF Exists "product" DROP Constraint If Exists product_business_business_fk;
