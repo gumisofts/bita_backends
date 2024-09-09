@@ -42,6 +42,7 @@ class PlatformApi {
                   'image/png',
                   'image/jpeg',
                   'image/jfif',
+                  'application/octet-stream',
                   'image/heic',
                   'image/gif',
                   'text/csv',
