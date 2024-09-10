@@ -427,7 +427,7 @@ join "business" on "business"."businessId"="product"."businessId" where "busines
               FieldValidator<double>(name: 'quantity'),
               FieldValidator<int>(name: 'bizId'),
               FieldValidator<int>(name: 'brandId'),
-              FieldValidator<int>(name: 'unitId'),
+              FieldValidator<String>(name: 'unit'),
               FieldValidator<String>(name: 'expireDate'),
               FieldValidator<String>(name: 'manDate'),
               FieldValidator<String>(name: 'desc'),
@@ -449,7 +449,7 @@ join "business" on "business"."businessId"="product"."businessId" where "busines
           if (data.containsKey('brandId')) {
             product.brandId = data['brandId'] as int?;
           }
-          if (data.containsKey('unitId')) {
+          if (data.containsKey('unit')) {
             product.unit = data['unit'] as String?;
           }
           if (data.containsKey('desc')) {
