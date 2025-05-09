@@ -1,0 +1,8 @@
+[Unit]
+Description=Bita Markets socket
+
+[Socket]
+ListenStream=/run/bita_markets.sock
+
+[Install]
+WantedBy=sockets.target

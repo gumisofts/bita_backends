@@ -4,6 +4,5 @@
 .vscode
 *.env
 anima/
-deployment/
-
 public/
+env/

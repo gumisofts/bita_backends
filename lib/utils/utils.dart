@@ -75,9 +75,9 @@ void get initDb {
     endpoints: [
       Endpoint(
         host: env.getOrElse('PG_HOST', () => 'localhost'),
-        database: env.getOrElse('POSTGRES_DB', () => ''),
-        username: env['POSTGRES_USER'],
-        password: env['POSTGRES_PASSWORD'],
+        database: env.getOrElse('PG_DB_NAME', () => ''),
+        username: env['PG_USER'],
+        password: env['PG_PASSWORD'],
         port: int.parse(
           env.getOrElse('PG_PORT', () => '5432'),
         ),
@@ -98,9 +98,9 @@ void get initTestDb {
     endpoints: [
       Endpoint(
         host: env.getOrElse('PG_HOST', () => 'localhost'),
-        database: env.getOrElse('POSTGRES_DB', () => ''),
-        username: env['POSTGRES_USER'],
-        password: env['POSTGRES_PASSWORD'],
+        database: env.getOrElse('PG_DB_NAME', () => ''),
+        username: env['PG_USER'],
+        password: env['PG_PASSWORD'],
         port: int.parse(
           env.getOrElse('PG_PORT', () => '5432'),
         ),
