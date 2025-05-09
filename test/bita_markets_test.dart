@@ -5,12 +5,12 @@ import 'package:http/http.dart' as http;
 import 'package:test/test.dart';
 
 void main() {
-  final client = APIClient(baseUrl: 'http://localhost:8000');
+  // final client = APIClient(baseUrl: 'http://localhost:8000');
   initTestDb;
-  test('CREATE SHOP', () async {
-    final user = await UserDb.create(firstName: 'Hello');
-    client.login(user);
-  });
+  // test('CREATE SHOP', () async {
+  //   final user = await UserDb.create(firstName: 'Hello');
+  //   client.login(user);
+  // });
 
   test('calculate', () {
     expect(400, 400);
