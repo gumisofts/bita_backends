@@ -42,6 +42,13 @@
         dest: /var/bita_markets_build/
         force: true
         src: ~/bita_backends/.env
+
+    - name: Ensure Public directory exists
+      tags: dir
+      become: true
+      ansible.builtin.file:
+        path: /var/bita_markets_build/public
+        state: directory
     # Disable Services
     - name: Disable Bita_markets Service
       become: true
@@ -71,13 +78,19 @@
     #     src: ~/bita_markets/deployment/bita.key
     - name: Upload nginx conf
       become: true
+      tags: failed
       ansible.builtin.copy:
         force: true
-        src: ~/bita_markets/deployment/nginx.conf
+        src: ~/bita_backends/deployment/nginx.conf
         dest: /etc/nginx/conf.d/
+
     - name: Copy Email templates
       become: true
       shell: cp -r /home/ubuntu/bita_markets/templates /var/bita_markets_build/templates
+    - name: Copy Public Files
+      become: true
+      shell: cp -r /home/ubuntu/bita_markets/public /var/bita_markets_build/public
+
     - name: Enable Nginx Services on Boot
       ansible.builtin.systemd_service:
         name: nginx

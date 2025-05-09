@@ -124,4 +124,4 @@ jobs:
 
       - name: Run Ansible Playbook
         run: |
-          ansible all -i ansible/inventory.yaml --private-key ~/.ssh/id_rsa -u ${{ secrets.REMOTE_USER }}
+          ansible-playbook ansible/playbook.yaml -i ansible/inventory.yaml --private-key ~/.ssh/aws
