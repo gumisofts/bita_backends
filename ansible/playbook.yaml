@@ -32,7 +32,7 @@
         clone: yes
         update: yes
         name: git@github.com:gumisofts/bita_backends.git
-        dest: bita_markets
+        dest: bita_backends
         force: yes
     - name: Build Executable
       shell: cd bita_markets && dart pub get && dart compile exe bin/bita_markets.dart
@@ -43,12 +43,6 @@
         force: true
         src: ~/bita_backends/.env
 
-    - name: Ensure Public directory exists
-      tags: dir
-      become: true
-      ansible.builtin.file:
-        path: /var/bita_markets_build/public
-        state: directory
     # Disable Services
     - name: Disable Bita_markets Service
       become: true
