@@ -75,7 +75,10 @@ Handler get application {
     )
     ..mount(
       mediaUrl,
-      createStaticHandler('public', defaultDocument: 'index.html'),
+      createStaticHandler(
+        '/var/bita_market_build/public',
+        defaultDocument: 'index.html',
+      ),
     )
     ..mount(
       '/business',

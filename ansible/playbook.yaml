@@ -80,10 +80,10 @@
 
     - name: Copy Email templates
       become: true
-      shell: cp -r /home/ubuntu/bita_markets/templates /var/bita_markets_build/templates
+      shell: cp -r /home/ubuntu/bita_backends/templates /var/bita_markets_build/templates/
     - name: Copy Public Files
       become: true
-      shell: cp -r /home/ubuntu/bita_markets/public /var/bita_markets_build/public
+      shell: cp -r /home/ubuntu/bita_backends/public /var/bita_markets_build/public/
 
     - name: Enable Nginx Services on Boot
       ansible.builtin.systemd_service:
